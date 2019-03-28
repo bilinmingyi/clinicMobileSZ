@@ -769,3 +769,18 @@ input {
 
 
 /*订单列表*/
+
+
+/* 深圳诊所微信端样式 */
+
+.gray-font {
+    color: #7C7C7C;
+    font-size: 32px;
+    font-weight: 400;
+}
+
+.black-title {
+    color: #3F3F3F;
+    font-size: 32px;
+    font-weight: 500;
+}
