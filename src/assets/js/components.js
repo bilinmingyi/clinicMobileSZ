@@ -58,6 +58,6 @@ const dateFormat = function (date, fmt) {
   return d.getTime() === d.getTime() ? d.Format(fmt) : '';
 };
 
-export {
+export default {
   dateFormat
 }

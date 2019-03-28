@@ -1,5 +1,5 @@
 import HelloWorld from '@/components/HelloWorld.vue'
 
-export {
+export default {
   HelloWorld
 }
