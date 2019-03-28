@@ -3,6 +3,16 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import filters from './assets/js/filters'
+import components from './assets/js/components'
+
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
+
+Object.keys(components).forEach( key => {
+  Vue.component(key, components[key])
+})
 
 Vue.config.productionTip = false
 
@@ -10,6 +20,6 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: {App},
   template: '<App/>'
 })
