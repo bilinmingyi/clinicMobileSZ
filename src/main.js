@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import filters from './assets/js/filters'
 import components from './assets/js/components'
+import store from './store/index'
 
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
@@ -20,6 +21,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: {App},
   template: '<App/>'
 })
