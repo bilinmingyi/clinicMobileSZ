@@ -1,8 +1,16 @@
 # clinic-chat-room
 
-> A Vue.js project
+> 深圳诊所微信端页面
 
 ## Build Setup
+
+## 编写代码规范统一 >>>>>>>>管理与维护 
+
+* JS类的命名  用驼峰式写法 例如 `getDataList`
+* CSS类的命名 用小写字母用横杠链接 例如 `common-header` + `all-page-list`
+* 路由命名、Vue文件的name  用驼峰式命名
+* 公共组件放在 `src/components/common`文件夹自己引入
+* 页面的私有组件放在自己的页面的components组件里面 例如 `pages/homePage/components`
 
 
 
@@ -15,18 +23,5 @@ npm run dev
 
 # build for production with minification
 npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

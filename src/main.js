@@ -6,22 +6,28 @@ import router from './router'
 import filters from './assets/js/filters'
 import components from './assets/js/components'
 import store from './store/index'
+import "./assets/css/reset.css";
+//配置Vue脚手架移动适配--rem
+import 'lib-flexible/flexible'
 
 Object.keys(filters).forEach(key => {
-  Vue.filter(key, filters[key])
+    Vue.filter(key, filters[key])
 })
 
-Object.keys(components).forEach( key => {
-  Vue.component(key, components[key])
-})
-
+Object.keys(components).forEach(key => {
+        Vue.component(key, components[key])
+    })
+    // console.log(window.location)
 Vue.config.productionTip = false
-
-/* eslint-disable no-new */
+    // (function (doc,win){
+    //   var docEl = doc.documentElememt,
+    //    resizeEvt = 'orientationchange'
+    // })
+    /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  store,
-  components: {App},
-  template: '<App/>'
+    el: '#app',
+    router,
+    store,
+    components: { App },
+    template: '<App/>'
 })
