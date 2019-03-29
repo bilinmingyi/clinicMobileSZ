@@ -12,14 +12,15 @@
   </div>
   <hr class="full-screen-hr"></hr>
   <div class="home-mid">
-    <div class="mid-left">
+    <div class="mid-left flex-mid-center flex-one">
       <img src="@/assets/images/lx.png" alt="">
       <span>联系代表</span>
     </div>
-    <div class="mid-right">
+    <div class=" flex-mid-center flex-one" @click="goPatientInfo">
       <img src="@/assets/images/ly.png" alt="">
       <span>患者信息</span>
     </div>
+
   </div>
 </div>
 </template>
@@ -28,11 +29,17 @@
 export default {
   data() {
     return {};
+  },
+  methods:{
+    goPatientInfo(){
+      this.$router.push({path:'homePage/patientInfo'})
+    }
   }
 };
 </script>
 <style lang="scss" scoped>
 .home-top {
+  margin-top: 88px;
   padding: 40px 36px 48px 36px;
   width: 100%;
   height: 184px;
@@ -67,8 +74,20 @@ export default {
     background: #ffffff;;
     display: flex;
     .mid-left{
+      flex: 1;
       width: 50%;
-      border-right: 1px solid #7c7c7c;
+      border-right: 1px solid #d9d9d9;
+     
+    }
+    img{
+      width: 64px;
+      height: 64px;
+    }
+    span{
+      color: #3f3f3f;
+      font-size:32px;
+      font-weight: 400;
+      padding-left: 20px;
     }
   }
 </style>
