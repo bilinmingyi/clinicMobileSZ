@@ -9,10 +9,10 @@
             <span class="yunicon">{{navtiveIndex==1? '&#xe60a;':'&#xe60c; '}}</span>
             <span class="footer-text">工作</span>
         </div>
-         <div :class="['footer-item',{'cur':navtiveIndex==2}] ">
+         <!-- <div :class="['footer-item',{'cur':navtiveIndex==2}] ">
             <span class="yunicon">{{navtiveIndex==0? '&#xe60f;':'&#xe610; '}}</span>
             <span class="footer-text">云药房</span>
-        </div>
+        </div> -->
          <div :class="['footer-item',{'cur':navtiveIndex==3}] ">
             <span class="yunicon">{{navtiveIndex==0? '&#xe60d;':'&#xe609;'}}</span>
             <span class="footer-text">个人</span>
@@ -30,15 +30,20 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import "@/assets/css/common.scss";
 .common-bottom{
-  position: fixed;
-  height: 110px;
-  width: 100;
-  bottom: 0;
-  left: 0;
-  z-index: 999;
+ @include psFixed(bottom,110px);
   .bottom-list{
-    display: flex;
+    @extend %aglinItem;
+    .footer-item{
+     .yunicon{
+       font-size:48px;
+     }
+     .footer-text{
+       font-size: 22px;
+     }
+      flex: 1;
+    }
   }
 }
 </style>

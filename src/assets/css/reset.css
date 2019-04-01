@@ -61,8 +61,12 @@ html,
 body,
 .content {
     height: 100%;
-    -webkit-flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
 }
 
@@ -544,6 +548,14 @@ input {
     margin-left: 16px;
 }
 
+.ml64 {
+    margin-left: 64px;
+}
+
+.ml26 {
+    margin-left: 26px;
+}
+
 .ml20 {
     margin-left: 20px;
 }
@@ -591,6 +603,10 @@ input {
     margin-right: 28px;
 }
 
+.mr64 {
+    margin-right: 64px;
+}
+
 
 /* margin-top */
 
@@ -632,6 +648,10 @@ input {
 
 .mt188 {
     margin-top: 188px;
+}
+
+.mt24 {
+    margin-top: 24px;
 }
 
 .mt240 {
@@ -689,6 +709,10 @@ input {
     margin-bottom: 56px;
 }
 
+.mb88 {
+    margin-bottom: 88px;
+}
+
 .add_more {
     color: #7C7C7C;
     font-size: 14px;
@@ -703,11 +727,15 @@ input {
     bottom: 0;
     background: #FFFFFF;
     width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     padding: 8px 10px;
 }
 
 .pay_operation button {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
     flex: 1;
     color: #3F3F3F;
     font-size: 15px;
@@ -759,11 +787,15 @@ input {
 
 .order_item_top {
     color: #3F3F3F;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     padding: 10px 15px 10px;
 }
 
 .order_item_top span:first-child {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
     flex: 1;
     font-weight: bold;
 }
@@ -773,11 +805,15 @@ input {
 }
 
 .order_item_middle {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     padding: 0 15px 4px;
 }
 
 .order_item_middle span:first-child {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
     flex: 1;
 }
 
@@ -786,10 +822,14 @@ input {
 }
 
 .order_item_bottom span:first-child {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
     flex: 1;
 }
 
 .order_item_bottom {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     padding: 0 15px 10px;
 }
@@ -820,12 +860,20 @@ input {
 /* div 垂直水平居中*/
 
 .flex-mid-center {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
 }
 
 .flex-one {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
     flex: 1;
 }
 
@@ -836,6 +884,7 @@ input {
     -webkit-box-align: center;
     align-items: center;
     -ms-flex-align: center;
+    -ms-flex-pack: distribute;
     justify-content: space-around;
     width: 100vw;
     height: 50px;
@@ -901,4 +950,12 @@ input {
 
 .mt88 {
     margin-top: 88px;
+}
+
+input,
+textarea,
+select,
+a:focus {
+    outline: none;
+    border: 1px;
 }

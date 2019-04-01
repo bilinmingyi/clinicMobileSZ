@@ -2,9 +2,9 @@
   <div class="common-input">
     <div class="input-box">
       <img @click.stop="searchName()" src="@/assets/images/sousuo@2x.png">
-      <input class="serach-input" type="text" :placeholder="placeholder">
+      <input class="serach-input " type="text" :placeholder="placeholder">
     </div>
-    <div class="search-button">搜索</div>
+    <div class="search-button ml26">搜索</div>
   </div>
 </template>
 <script>
@@ -21,19 +21,19 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "@/assets/css/common.scss";
 .common-input {
   width: 100%;
   height: 96px;
-  display: flex;
-  align-items: center;
+ @extend %aglinItem;
   padding: 0 30px;
   .input-box {
-    width: 560px;
+    
+   flex:1;
     height: 64px;
     position: relative;
     img {
-      width: 40px;
-      height: 40px;
+    @extend %searchIcon;
       position: absolute;
       top: 12px;
       left: 24px;
@@ -48,39 +48,27 @@ export default {
     }
   }
   .search-button {
-    width: 104px;
-    height: 64px;
-    line-height: 64px;
-    background: rgba(8, 186, 198, 1);
-    border-radius: 8px;
-    color:rgba(255,255,255,1);
-    text-align: center;
-    font-size: 28px;
-    margin-left: 26px;
+    @include deepButton(64px,104px)
   }
   /* placeHolder样式 */
-  ::-webkit-input-placeholder {
+  ::-webkit-input-placeholder, {
     /* Chrome/Opera/Safari */
-    font-size: 28px;
+    font-size: 32px;
   }
   ::-moz-placeholder {
     /* Firefox 19+ */
-    font-size: 28px;
+    font-size: 32px;
   }
   :-ms-input-placeholder {
     /* IE 10+ */
-    font-size: 28px;
+    font-size: 32px;
   }
   :-moz-placeholder {
     /* Firefox 18- */
-    font-size: 28px;
+    font-size: 32px;
   }
-  input,
-  textarea,
-  select,
-  a:focus {
-    outline: none;
-  }
+
+ 
 }
 </style>
 

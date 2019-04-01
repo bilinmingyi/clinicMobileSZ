@@ -24,38 +24,33 @@ export default {
   },
   methods:{
     leftToggle(){
+      
       this.$emit('leftToggle')
+       this.$router.go(-1);
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+@import "@/assets/css/common.scss";
 .common-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  width: 100%;
+ @include psFixed(top);
+ line-height: 88px;
   .header-content {
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 100%;
-    height: 88px;
-    line-height: 88px;
     text-align: center;
-    background: rgba(250, 250, 250, 1);
+    @extend %flexMidCenter;
+    background: $bgWhite;
     .header-left {
       position: absolute;
       left: 38px;
       height: 48px;
       width: 48px;
+      
     }
     .header-title {
-      font-size: 32px;
-      font-weight: 500;
-      color: #3f3f3f;
+    @extend %normalTitle;
     }
   }
 }

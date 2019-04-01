@@ -1,36 +1,48 @@
 /* 路由表 */
 /*工作模块下的路由 */
 const homePageIndex =
+    () =>
     import ( /* webpackChunkName: "index" */ "@/pages/homePage/index");
 const homePage =
+    () =>
     import ( /* webpackChunkName: "homePage" */ "@/pages/homePage/homePage");
 const patientInfo =
-    import ( /* webpackChunkName: "patientInfo" */ "@/pages/homePage/patientInfo");
+    () =>
+    import ( /* webpackChunkName: "homePage" */ "@/pages/homePage/patientInfo");
 const clinicChat =
-    import ( /* webpackChunkName: "patientInfo" */ "@/pages/homePage/clinicChat");
+    () =>
+    import ( /* webpackChunkName: "homePage" */ "@/pages/homePage/clinicChat");
+const docRecommond =
+    () =>
+    import ( /* webpackChunkName: "homePage" */ "@/pages/homePage/docRecommond");
 const routes = [{
         path: '/',
         redirect: '/homePage'
     },
     {
         path: '/homePage',
-        component: () => homePageIndex,
+        component: () => homePageIndex(),
         children: [{
                 path: '',
                 name: 'homePage',
-                component: () => homePage,
+                component: () => homePage(),
             },
             {
                 path: 'patientInfo',
                 name: 'patientInfoPage',
-                component: () => patientInfo,
+                component: () => patientInfo(),
             },
             {
                 path: 'clinicChat/:patientName',
                 name: 'clinicChatPage',
-                component: () => clinicChat,
+                component: () => clinicChat(),
                 props: true
-            }
+            },
+            {
+                path: 'docRecommond',
+                name: 'docRecommondPage',
+                component: () => docRecommond(),
+            },
         ]
     }
 ]

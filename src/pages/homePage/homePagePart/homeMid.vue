@@ -1,5 +1,5 @@
 <template>
-  <div class="home-mid">
+  <div class="home-mid mt24">
     <div class="mid-title"><span>常用功能</span></div>
      <hr class="full-screen-hr"></hr>
     <div class="function-list">
@@ -35,39 +35,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/css/common.scss";
 .home-mid{
-    margin-top: 24px;
-    
   .mid-title{
-    background: rgba(255, 255, 255, 1);
-    height: 96px;
+    background: $bgwhite2;
+    @include textLineHeight(88px);
     width: 100%;
-    line-height: 96px;
     span{
       padding-left: 30px;
-      color: #3F3F3F;
-      font-size: 32px;
+      @extend %normalTitle;
     }
   }
  .function-list{
    width: 100%;
    height: 633px;
- background: rgba(255, 255, 255, 1);
+   background:  $bgwhite2;
    float: left;
    .function-item{
      width: 250px;
      height: 200px;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     justify-content: center;
+     @extend %columnMC;
      float: left;
      img{
-       height: 88px;
-       width: 88px;
+       @extend %minICon;
      }
      span{
-       color: #3F3F3F;
+       color: $grayColor;
        font-size: 28px;
        padding-top: 20px;
      }

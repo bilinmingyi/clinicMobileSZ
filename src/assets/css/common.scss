@@ -1,0 +1,117 @@
+/*变量定义*/
+
+$bgWhite: rgba(250, 250, 250, 1);
+$bgwhite2:rgba(255, 255, 255, 1);
+$grayColor:#3f3f3f;
+$simpleGray:#7c7c7c;
+$borderColor:#d9d9d9;
+$redColor:#EB6262;
+
+/* 继承公共类*/
+
+%displayFlex {
+    display: flex;
+}
+
+%flexMidCenter {
+    @extend %displayFlex;
+    justify-content: center;
+    align-items: center;
+}
+
+%columnFlex {
+    @extend %displayFlex;
+    flex-direction: column;
+}
+
+%aglinItem {
+    display: flex;
+    align-items: center;
+}
+
+//flex为垂直方向 样式垂直居中
+%columnMC {
+    @extend %columnFlex;
+    align-items: center;
+    justify-content: center;
+}
+
+%normalTitle {
+    font-size: 32px;
+    font-weight: 500;
+    color: $grayColor;
+}
+
+%searchIcon {
+    width: 40px;
+    height: 40px;
+}
+
+%minICon {
+    height: 88px;
+    width: 88px;
+}
+
+%mediumIcon {
+    height: 112px;
+    width: 112px;
+}
+
+
+/* 混合宏 */
+
+//position:fixed 的位置
+@mixin psFixed($fixSeat, $fixHeight:88px, ) {
+    position: fixed;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+    min-height: $fixHeight;
+    @if $fixSeat==top {
+        top: 0
+    }
+    @else {
+        bottom: 0;
+    }
+}
+
+@mixin textLineHeight($height) {
+    height: $height;
+    line-height: $height;
+}
+
+//浅颜色的button 默认24px
+@mixin simpleButton($height, $width, $font-size:24px) {
+    width: $width;
+    height: $height;
+    background: rgba(235, 248, 249, 1);
+    border-radius: 8px;
+    border: 2px solid rgba(8, 186, 198, 1);
+    font-size: $font-size;
+    line-height: $height;
+    text-align: center;
+}
+
+//深色的按钮
+@mixin deepButton($height, $width, $font-size:28px) {
+    width: $width;
+    height: $height;
+    line-height: $height;
+    background: rgba(8, 186, 198, 1);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 1);
+    text-align: center;
+    font-size: $font-size;
+}
+
+//文本省略。。。
+@mixin textEllipsis($height, $width, $font-size:28px) {
+    width: $width;
+    height: $height;
+    line-height: $height;
+    color: $simpleGray;
+    font-size: $font-size;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

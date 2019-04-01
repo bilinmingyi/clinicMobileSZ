@@ -38,19 +38,18 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "@/assets/css/common.scss";
 .home-top {
   margin-top: 88px;
   padding: 40px 36px 48px 36px;
   width: 100%;
   height: 184px;
-  background: rgba(255, 255, 255, 1);
-  display: flex;
-  align-items: center;
+  background: $bgwhite2;
+  @extend %flexMidCenter;
   .top-left {
     width: 112px;
     img {
-      width: 112px;
-      height: 112px;
+      @extend %mediumIcon;
     }
   }
   .top-mid{
@@ -58,35 +57,25 @@ export default {
     flex: 1;
   }
   .top-right {
-    width: 128px;
-    height: 64px;
-    background: rgba(235, 248, 249, 1);
-    border-radius: 8px;
-    border: 2px solid rgba(8, 186, 198, 1);
-    font-size: 24px;
-    line-height: 64px;
-    text-align: center;
+  @include simpleButton(68px,124px)
   }
 }
  .home-mid{
     width: 100%;
     height: 148px;
-    background: #ffffff;;
+    background: $bgwhite2;
     display: flex;
     .mid-left{
       flex: 1;
       width: 50%;
-      border-right: 1px solid #d9d9d9;
-     
+      border-right: 1px solid $borderColor;
     }
     img{
       width: 64px;
       height: 64px;
     }
     span{
-      color: #3f3f3f;
-      font-size:32px;
-      font-weight: 400;
+      @extend %normalTitle;
       padding-left: 20px;
     }
   }
