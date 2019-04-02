@@ -1,4 +1,4 @@
-/*变量定义*/
+/* 变量定义 */
 
 $bgWhite: rgba(250, 250, 250, 1);
 $bgwhite2:rgba(255, 255, 255, 1);
@@ -6,6 +6,8 @@ $grayColor:#3f3f3f;
 $simpleGray:#7c7c7c;
 $borderColor:#d9d9d9;
 $redColor:#EB6262;
+$greenColor:#08BAC6;
+$yellowColor:#EDAB15;
 
 /* 继承公共类*/
 
@@ -61,14 +63,14 @@ $redColor:#EB6262;
 /* 混合宏 */
 
 //position:fixed 的位置
-@mixin psFixed($fixSeat, $fixHeight:88px, ) {
+@mixin psFixed($fixSeat, $fixHeight:88px) {
     position: fixed;
     left: 0;
     z-index: 999;
     width: 100%;
     min-height: $fixHeight;
     @if $fixSeat==top {
-        top: 0
+        top: 0;
     }
     @else {
         bottom: 0;
@@ -104,14 +106,38 @@ $redColor:#EB6262;
     font-size: $font-size;
 }
 
-//文本省略。。。
-@mixin textEllipsis($height, $width, $font-size:28px) {
+//第三种按钮 消息的按钮
+@mixin newsButton($height, $width, $font-size:28px) {
     width: $width;
     height: $height;
     line-height: $height;
+    text-align: center;
+    font-size: $font-size;
+    color: rgba(8, 186, 198, 1);
+    font-weight: 500;
+    border-radius: 8px;
+    border: 2px solid rgba(8, 186, 198, 1);
+}
+
+//文本省略。。。
+@mixin textEllipsis($height, $width, $clamp:1, $font-size:28px) {
+    width: $width;
+    height: $height;
     color: $simpleGray;
     font-size: $font-size;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    //$clamp 默认为1 超过单行就换行 2的话 第二行换行
     overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    @if $clamp==2 {
+        display: box;
+        -webkit-line-clamp: 2; //块元素显示的文本行数
+    }
+    @else {
+        white-space: nowrap; //不换行
+    }
+}
+
+@mixin commonBorder( $borerSeat:bottom, $color:$borderColor, $px:1px) {
+    border-#{$borerSeat}: $px solid $color;
 }

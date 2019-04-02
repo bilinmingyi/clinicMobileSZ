@@ -14,11 +14,14 @@
   <div class="home-mid">
     <div class="mid-left flex-mid-center flex-one">
       <img src="@/assets/images/lx.png" alt="">
-      <span>联系代表</span>
+      <span class="subtitle">联系代表</span>
     </div>
     <div class=" flex-mid-center flex-one" @click="goPatientInfo">
-      <img src="@/assets/images/ly.png" alt="">
-      <span>患者信息</span>
+      <div class="fix-img">
+      <img :src="patientLogo" alt="" >
+      <span class="fix-icon" v-show="haveInfo==2">5</span>
+      </div>
+      <span class="subtitle">患者信息</span>
     </div>
 
   </div>
@@ -28,7 +31,16 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      haveInfo:2,
+      imglogo1:require('@/assets/images/ly.png'),
+      imglogo2:require('@/assets/images/ly2.png')
+    };
+  },
+  computed:{
+    patientLogo(){
+      return this.haveInfo==1?this.imglogo1:this.imglogo2;
+    }
   },
   methods:{
     goPatientInfo(){
@@ -38,9 +50,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "@/assets/css/common.scss";
 .home-top {
-  margin-top: 88px;
   padding: 40px 36px 48px 36px;
   width: 100%;
   height: 184px;
@@ -57,7 +67,7 @@ export default {
     flex: 1;
   }
   .top-right {
-  @include simpleButton(68px,124px)
+  @include simpleButton(68px,124px);
   }
 }
  .home-mid{
@@ -68,15 +78,32 @@ export default {
     .mid-left{
       flex: 1;
       width: 50%;
-      border-right: 1px solid $borderColor;
+      @include commonBorder(right)
     }
     img{
       width: 64px;
       height: 64px;
     }
-    span{
+    .subtitle{
       @extend %normalTitle;
       padding-left: 20px;
+    }
+    .fix-img{
+      position: relative;
+        .fix-icon{
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        @extend %searchIcon;
+        text-align:center;
+        content: "";
+        -webkit-transform: translate(50%, -50%);
+        transform: translate(50%, -50%);
+        border: 3px solid #fff;
+        border-radius: 100px;
+        color:$bgwhite2;
+        background: $redColor;
+        }
     }
   }
 </style>

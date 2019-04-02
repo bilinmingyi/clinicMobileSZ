@@ -1,7 +1,6 @@
 <template>
   <div class="patient-info">
     <common-header :titleName="'患者信息'" ></common-header>
-    <div class="mt88"></div>
     <input-search></input-search>
     <section class="patient-bar">
       <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==0}]" @click="changeIndex(0)">最新消息</div>
@@ -92,7 +91,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "@/assets/css/common.scss";
 .patient-bar {
   width: 100%;
   height: 96px;
@@ -100,7 +98,7 @@ export default {
   color: $simpleGray;
   font-size: 32px;
   font-weight: 500;
-  border-bottom: 1px solid $borderColor;
+  @include commonBorder();
   div {
     width: 50%;
     height: 100%;
@@ -109,14 +107,14 @@ export default {
   .nt-bar {
     color: #08bac6;
     background: $bgWhite;
-    border-bottom: 4px solid #08bac6;
+     @include commonBorder(bottom,#08bac6,4px);
   }
 }
 .patient-infolist {
   width: 100%;
   height: 160px;
   background: $bgwhite2;
-  border-bottom: 1px solid $borderColor;
+   @include commonBorder();
   @extend %aglinItem;
   .infolist-item {
     position: relative;

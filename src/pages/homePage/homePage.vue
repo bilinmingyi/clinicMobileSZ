@@ -3,7 +3,7 @@
     <common-header :isShowLeft="false"></common-header>
     <home-top></home-top>
     <home-mid></home-mid>
-    <common-bottom></common-bottom>
+    <common-bottom :navtiveIndex="navtiveIndex"></common-bottom>
     
   </div>
 </template>
@@ -15,7 +15,9 @@ import commonBottom from "@/components/common/commonBottom";
 export default {
   name: "HomePage",
   data() {
-    return {};
+    return {
+      navtiveIndex:1
+    };
   },
   components: {
     commonHeader,

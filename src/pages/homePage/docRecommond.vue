@@ -1,7 +1,6 @@
 <template>
   <div class="doctor">
     <common-header :titleName="'医生查询'"></common-header>
-    <div class="mt88"></div>
     <input-search :placeholder="'医生姓名'"></input-search>
     <div class="doc-content">
       <div class="doc">
@@ -48,12 +47,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "@/assets/css/common.scss";
 .doc-content {
   width: 100%;
   height: 160px;
   background: $bgwhite2;
-  border-bottom: 1px solid $borderColor;
+  @include commonBorder();
   .doc {
     padding: 24px 30px;
     //  display: flex;
@@ -73,7 +71,7 @@ export default {
       span {
         width: 72px;
         height: 40px;
-        background: rgba(237, 171, 21, 1);
+        background: $yellowColor;
         line-height: 40px;
         text-align: center;
         margin-left: 16px;
@@ -89,14 +87,7 @@ export default {
       color: $simpleGray;
     }
     &-button {
-      width: 136px;
-      @include textLineHeight(64px);
-      text-align: center;
-      font-size:28px;
-      color:rgba(8,186,198,1);
-      font-weight: 500;
-      border-radius: 8px;
-      border: 2px solid rgba(8, 186, 198, 1);
+      @include newsButton(64px,136px);
     }
     .docColor{
       background: #4DBC89;

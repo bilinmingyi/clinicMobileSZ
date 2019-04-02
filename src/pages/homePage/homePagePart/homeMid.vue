@@ -15,10 +15,15 @@
         <img src="@/assets/images/clound_logo.png" alt="云处方开方">
         <span>云处方开方</span>
       </div>
+       <div class="function-item">
+        <img src="@/assets/images/project_logo.png" alt="项目执行">
+        <span>项目处置</span>
+      </div>
       <div class="function-item">
         <img src="@/assets/images/mall_logo.png" alt="商城订单">
         <span>商城订单</span>
       </div>
+      
     </div>
     
   </div>
@@ -35,7 +40,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/common.scss";
 .home-mid{
   .mid-title{
     background: $bgwhite2;
@@ -48,7 +52,7 @@ export default {
   }
  .function-list{
    width: 100%;
-   height: 633px;
+   min-height: 633px;
    background:  $bgwhite2;
    float: left;
    .function-item{

@@ -47,7 +47,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "@/assets/css/common.scss";
 .chat-bottom {
   @include psFixed(112px);
   background: $bgwhite2;
@@ -69,7 +68,7 @@ export default {
   }
   .function {
     width: 100%;
-    border-top: 1px solid $borderColor;
+    @include commonBorder(top);
     height: 224px;
     background: $bgwhite2;
     @extend %aglinItem;

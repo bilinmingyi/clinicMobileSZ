@@ -1,5 +1,5 @@
 /* 路由表 */
-/*工作模块下的路由 */
+/* 工作聊天室模块  */
 const homePageIndex =
     () =>
     import ( /* webpackChunkName: "index" */ "@/pages/homePage/index");
@@ -15,6 +15,20 @@ const clinicChat =
 const docRecommond =
     () =>
     import ( /* webpackChunkName: "homePage" */ "@/pages/homePage/docRecommond");
+
+/* 消息模块 */
+const messageIndex = () =>
+    import ( /* webpackChunkName: "message" */ "@/pages/messagePage/index");
+const messagePage = () =>
+    import ( /* webpackChunkName: "message" */ "@/pages/messagePage/message");
+
+/* 个人模块 */
+const personIndex = () =>
+    import ( /* webpackChunkName: "personPage" */ "@/pages/personPage/index");
+const personPage = () =>
+    import ( /* webpackChunkName: "personPage" */ "@/pages/personPage/personPage");
+
+/* 常用功能模块 */
 const routes = [{
         path: '/',
         redirect: '/homePage'
@@ -25,12 +39,12 @@ const routes = [{
         children: [{
                 path: '',
                 name: 'homePage',
-                component: () => homePage(),
+                component: () => homePage()
             },
             {
                 path: 'patientInfo',
                 name: 'patientInfoPage',
-                component: () => patientInfo(),
+                component: () => patientInfo()
             },
             {
                 path: 'clinicChat/:patientName',
@@ -44,6 +58,24 @@ const routes = [{
                 component: () => docRecommond(),
             },
         ]
+    },
+    {
+        path: '/messagePage',
+        component: () => messageIndex(),
+        children: [{
+            path: '',
+            name: 'messagePage',
+            component: () => messagePage()
+        }]
+    },
+    {
+        path: '/personPage',
+        component: () => personIndex(),
+        children: [{
+            path: '',
+            name: 'personPage',
+            component: () => personPage()
+        }]
     }
 ]
 

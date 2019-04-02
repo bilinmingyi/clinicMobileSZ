@@ -1,7 +1,7 @@
 <template>
   <div class="clinic-chat" >
     <common-header :titleName="patientName" @leftToggle="leftToggle"></common-header>
-    <div class="mt88"></div>
+    
     <div class="chat-content" @click="hideFuc">
       <div class="content-detail">
         <div class="left-chat mb24">
@@ -85,7 +85,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "@/assets/css/common.scss";
 .clinic-chat {
   .chat-content {
     width: 100%;

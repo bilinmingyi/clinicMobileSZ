@@ -21,7 +21,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "@/assets/css/common.scss";
 .common-input {
   width: 100%;
   height: 96px;
