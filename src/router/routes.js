@@ -21,6 +21,12 @@ const messageIndex = () =>
     import ( /* webpackChunkName: "message" */ "@/pages/messagePage/index");
 const messagePage = () =>
     import ( /* webpackChunkName: "message" */ "@/pages/messagePage/message");
+const platformNew = () =>
+    import ( /* webpackChunkName: "message" */ "@/pages/messagePage/platformNew");
+const addComment = () =>
+    import ( /* webpackChunkName: "message" */ "@/pages/messagePage/addComment");
+const myNew = () =>
+    import ( /* webpackChunkName: "message" */ "@/pages/messagePage/myNew");
 
 /* 个人模块 */
 const personIndex = () =>
@@ -63,10 +69,26 @@ const routes = [{
         path: '/messagePage',
         component: () => messageIndex(),
         children: [{
-            path: '',
-            name: 'messagePage',
-            component: () => messagePage()
-        }]
+                path: '',
+                name: 'messagePage',
+                component: () => messagePage()
+            }, {
+                path: 'platformNew/:platformTitle',
+                name: 'platformNewPage',
+                component: () => platformNew(),
+                props: true
+            }, {
+                path: 'addComment/:platformTitle',
+                name: 'addCommentPage',
+                component: () => addComment(),
+                props: true
+            },
+            {
+                path: 'myNew',
+                name: 'myNewPage',
+                component: () => myNew(),
+            }
+        ]
     },
     {
         path: '/personPage',

@@ -2,7 +2,7 @@
   <div>
     <section class="msg-bottom">
       <p class="msg-title">平台动态</p>
-      <div class="news pl30">
+      <div class="news pl30" @click="goPlatform('畅销感冒药')">
         <img src="@/assets/images/banner-yun.png" alt>
         <div class="news-mid">
           <p>最四款曾经畅销的感冒药已经被儿科医生 拉入了黑名单，请别给孩子用了，知道… 拉入了黑名单， 拉入了黑名单， 拉入了黑名单， 拉入了黑名单，</p>
@@ -12,7 +12,7 @@
           </div>
         </div>
       </div>
-      <div class="news pl30">
+      <div class="news pl30" @click="goPlatform('畅销感冒药')">
         <img src="@/assets/images/banner-yun.png" alt>
         <div class="news-mid">
           <p>最四款曾经畅销的感冒药已经被儿科医生 拉入了黑名单，请别给孩子用了，知道… 拉入了黑名单， 拉入了黑名单， 拉入了黑名单， 拉入了黑名单，</p>
@@ -22,14 +22,24 @@
           </div>
         </div>
       </div>
-      
+      <div class="no-platform" v-show="hasPlatform"> 暂时无平台动态</div>
     </section>
   </div>
 </template>
 <script>
+import fetch from "@/fetch/api";
 export default {
   data() {
-    return {};
+    return {
+      hasPlatform:false
+    };
+  },
+  created(){
+  },
+  methods:{
+    goPlatform(title){
+      this.$router.push({name:'platformNewPage',params:{platformTitle:title}})
+    }
   }
 };
 </script>
@@ -71,6 +81,11 @@ export default {
         text-align: right;
       }
     }
+  }
+  .no-platform{
+    @include textLineHeight(80px);
+    text-align:center;
+    @extend %normalTitle;
   }
 }
 </style>

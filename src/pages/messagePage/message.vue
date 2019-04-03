@@ -5,7 +5,7 @@
       <img src="@/assets/images/banner-yun.png" alt>
     </div>
     <div class="msg-mid">
-      <div class="msg-left ml30">
+      <div class="msg-left ml30" @click="goMyNew">
         <div :class="[{'msg-left-img':newmsg==1}]">
           <img src="@/assets/images/xiaoxi@2x.png" alt>
         </div>
@@ -34,6 +34,11 @@ export default {
     commonHeader,
     commonBottom,
     msgBottom
+  },
+  methods:{
+    goMyNew(){
+      this.$router.push({name:'myNewPage'})
+    }
   }
 };
 </script>

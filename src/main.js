@@ -8,7 +8,7 @@ import components from './assets/js/components'
 import store from './store/index'
 import "./assets/css/reset.css";
 //配置Vue脚手架移动适配--rem
-import 'lib-flexible/flexible'
+import 'lib-flexible/flexible';
 
 Object.keys(filters).forEach(key => {
     Vue.filter(key, filters[key])

@@ -4,24 +4,28 @@
      <hr class="full-screen-hr"></hr>
     <div class="function-list">
       <div class="function-item">
-        <img src="@/assets/images/patient_logo.png" alt="患者接诊">
-        <span>患者接诊</span>
+        <img src="@/assets/images/ghtj@2x.png" alt="挂号统计">
+        <span>挂号统计</span>
       </div>
       <div class="function-item">
-        <img src="@/assets/images/project_logo.png" alt="项目执行">
-        <span>项目执行</span>
+        <img src="@/assets/images/jztj@2x.png" alt="就诊统计">
+        <span>就诊统计</span>
       </div>
       <div class="function-item">
-        <img src="@/assets/images/clound_logo.png" alt="云处方开方">
-        <span>云处方开方</span>
+        <img src="@/assets/images/sftj@2x.png" alt="收费统计">
+        <span>收费统计</span>
       </div>
        <div class="function-item">
-        <img src="@/assets/images/project_logo.png" alt="项目执行">
-        <span>项目处置</span>
+        <img src="@/assets/images/rktj@2x.png" alt="入库统计">
+        <span>入库统计</span>
       </div>
       <div class="function-item">
-        <img src="@/assets/images/mall_logo.png" alt="商城订单">
-        <span>商城订单</span>
+        <img src="@/assets/images/cktj@2x.png" alt="出库统计">
+        <span>出库统计</span>
+      </div>
+        <div class="function-item">
+        <img src="@/assets/images/kuchun@2x.png" alt="库存统计">
+        <span>库存统计</span>
       </div>
       
     </div>

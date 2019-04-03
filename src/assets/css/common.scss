@@ -8,6 +8,7 @@ $borderColor:#d9d9d9;
 $redColor:#EB6262;
 $greenColor:#08BAC6;
 $yellowColor:#EDAB15;
+$blueColor:#5096E0;
 
 /* 继承公共类*/
 
@@ -62,7 +63,7 @@ $yellowColor:#EDAB15;
 
 /* 混合宏 */
 
-//position:fixed 的位置
+//position:fixed 固定的位置
 @mixin psFixed($fixSeat, $fixHeight:88px) {
     position: fixed;
     left: 0;
