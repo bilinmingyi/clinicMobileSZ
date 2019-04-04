@@ -55,7 +55,7 @@ export default {
         color: $blueColor;
       }
       &-right {
-        color: #6c6c6c;
+        color: $gray2;
       }
     }
     &-content{

@@ -975,3 +975,40 @@ a:focus {
     outline: none;
     border: 1px;
 }
+
+
+/* yun-table */
+
+.yun-table {
+    border-collapse: separate;
+    border: 1px solid #08BAC6;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.yun-table tr:nth-last-child(1) td,
+.yun-table tr:nth-last-child(1) th {
+    border-bottom: none;
+}
+
+.yun-table tr td:nth-last-child(1),
+.yun-table tr th:nth-last-child(1),
+.yun-table tr th:nth-last-child(1)>* {
+    border-right: none;
+}
+
+.yun-table tr:nth-child(1) th:nth-child(1) {
+    border-top-left-radius: 4px;
+}
+
+.yun-table tr:nth-child(1) th:nth-last-child(1) {
+    border-top-right-radius: 4px;
+}
+
+.yun-table tr:nth-last-child(1) td:nth-child(1) {
+    border-bottom-left-radius: 4px;
+}
+
+.yun-table tr:nth-last-child(1) td:nth-last-child(1) {
+    border-bottom-right-radius: 4px;
+}

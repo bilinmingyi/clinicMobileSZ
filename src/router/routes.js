@@ -1,5 +1,7 @@
 /* 路由表 */
+
 /* 工作聊天室模块  */
+
 const homePageIndex =
     () =>
     import ( /* webpackChunkName: "index" */ "@/pages/homePage/index");
@@ -17,6 +19,7 @@ const docRecommond =
     import ( /* webpackChunkName: "homePage" */ "@/pages/homePage/docRecommond");
 
 /* 消息模块 */
+
 const messageIndex = () =>
     import ( /* webpackChunkName: "message" */ "@/pages/messagePage/index");
 const messagePage = () =>
@@ -34,7 +37,25 @@ const personIndex = () =>
 const personPage = () =>
     import ( /* webpackChunkName: "personPage" */ "@/pages/personPage/personPage");
 
-/* 常用功能模块 */
+/* 常用功能模块 深圳前6个功能为一个模块*/
+
+const functionIndex = () =>
+    import ( /* webpackChunkName: "commonFunction" */ "@/pages/functionPage/index");
+const registerStatistic = () =>
+    import ( /* webpackChunkName: "commonFunction" */ "@/pages/functionPage/registerStatistic");
+const medicalStatistic = () =>
+    import ( /* webpackChunkName: "commonFunction" */ "@/pages/functionPage/medicalStatistic");
+const chargeStatistic = () =>
+    import ( /* webpackChunkName: "commonFunction" */ "@/pages/functionPage/chargeStatistic");
+const enterBound = () =>
+    import ( /* webpackChunkName: "commonFunction" */ "@/pages/functionPage/enterBound");
+const outerBound = () =>
+    import ( /* webpackChunkName: "commonFunction" */ "@/pages/functionPage/outerBound");
+const stockStatistic = () =>
+    import ( /* webpackChunkName: "commonFunction" */ "@/pages/functionPage/stockStatistic");
+
+
+
 const routes = [{
         path: '/',
         redirect: '/homePage'
@@ -98,6 +119,59 @@ const routes = [{
             name: 'personPage',
             component: () => personPage()
         }]
+    },
+    {
+        path: '/functionPage/',
+        component: () => functionIndex(),
+        children: [{
+                path: '',
+                name: 'registerStatisticPage',
+                component: () => registerStatistic(),
+                meta: {
+                    title: '挂号统计'
+                }
+            },
+            {
+                path: 'medicalStatistic',
+                name: 'medicalStatisticPage',
+                component: () => medicalStatistic(),
+                meta: {
+                    title: '就诊统计'
+                }
+            },
+            {
+                path: 'chargeStatistic',
+                name: 'chargeStatisticPage',
+                component: () => chargeStatistic(),
+                meta: {
+                    title: '收费统计'
+                }
+            },
+            {
+                path: 'enterBound',
+                name: 'enterBoundPage',
+                component: () => enterBound(),
+                meta: {
+                    title: '入库统计'
+                }
+            },
+            {
+                path: 'outerBound',
+                name: 'outerBoundPage',
+                component: () => outerBound(),
+                meta: {
+                    title: '出库统计'
+                }
+            },
+            {
+                path: 'stockStatistic',
+                name: 'stockStatisticPage',
+                component: () => stockStatistic(),
+                meta: {
+                    title: '库存统计'
+                }
+            }
+        ]
     }
 ]
 
