@@ -1,48 +1,41 @@
 <template>
   <div>
-    <date-select></date-select>
     <section class="water">
       <div class="water-content">
         <div>
           <span>2019-03-13 15:16:48</span>
-          <span>demo</span>
+          <span class="success">收费</span>
         </div>
         <div>
           <span>A5: 13728089836</span>
-          <span class="success">完成</span>
         </div>
-        <p>
-          <span>应收金额：￥0.2</span>
-          <span>优惠金额：￥0</span>
-          <span>欠费金额：￥0</span>
-        </p>
+        <div>
+          <span>医生：lbl</span>
+          <span>现金：￥0.2</span>
+        </div>
       </div>
-      <div class="water-content">
+    <div class="water-content">
         <div>
           <span>2019-03-13 15:16:48</span>
-          <span>demo</span>
+          <span class="success">收费</span>
         </div>
         <div>
           <span>A5: 13728089836</span>
-          <span class="success">完成</span>
         </div>
-        <p>
-          <span>应收金额：￥0.2222222</span>
-          <span>优惠金额：￥0.2222222</span>
-          <span>欠费金额：￥222222220</span>
-        </p>
+        <div>
+          <span>医生：ljl</span>
+          <span>现金：￥0.2</span>
+        </div>
       </div>
     </section>
   </div>
 </template>
 <script>
-import dateSelect from "@/components/common/dateSelect";
 export default {
   data() {
     return {};
   },
   components: {
-    dateSelect
   }
 };
 </script>
@@ -64,12 +57,14 @@ export default {
       padding-bottom: 16px;
       .success {
         color: $simpleGray;
+          font-weight: 600;
       }
     }
     p {
       // display: flex;
       font-size: 28px;
       color: $grayColor;
+    
       // word-wrap: break-word;
       span {
         padding-right: 30px;

@@ -4,7 +4,7 @@
       <img @click.stop="searchName()" src="@/assets/images/sousuo@2x.png">
       <input class="serach-input " type="text" :placeholder="placeholder">
     </div>
-    <div class="search-button ml26">搜索</div>
+    <div class="search-button ml26">{{buttonName}}</div>
   </div>
 </template>
 <script>
@@ -13,6 +13,10 @@ export default {
     placeholder:{
       type:String,
       default:'患者姓名/患者手机号码'
+    },
+      buttonName:{
+      type:String,
+      default:'搜索'
     }
   },
   data() {
@@ -44,6 +48,7 @@ export default {
       background: rgba(237, 237, 237, 1);
       padding-left: 60px;
       font-size: 28px;
+      line-height: 32px;
     }
   }
   .search-button {

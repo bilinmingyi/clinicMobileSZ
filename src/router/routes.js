@@ -168,7 +168,7 @@ const routes = [{
                 name: 'stockStatisticPage',
                 component: () => stockStatistic(),
                 meta: {
-                    title: '库存统计'
+                    title: '库存查询'
                 }
             }
         ]

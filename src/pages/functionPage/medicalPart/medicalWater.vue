@@ -27,9 +27,9 @@
           <span class="success">完成</span>
         </div>
         <p>
-          <span>应收金额：￥0.2222222</span>
+          <span>应收金额：￥0.222222</span>
           <span>优惠金额：￥0.2222222</span>
-          <span>欠费金额：￥222222220</span>
+          <span>欠费金额：￥2222220</span>
         </p>
       </div>
     </section>
@@ -67,10 +67,9 @@ export default {
       }
     }
     p {
-      // display: flex;
       font-size: 28px;
       color: $grayColor;
-      // word-wrap: break-word;
+      word-wrap: break-word;
       span {
         padding-right: 30px;
         word-wrap: break-word;

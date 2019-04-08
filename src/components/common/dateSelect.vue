@@ -54,6 +54,7 @@ export default {
       flex: 1;
       @include simpleButton(60px,140px);
       font-size:26px;
+      font-weight: 400;
       margin-right: 40px;
       &:nth-last-child(1){
         margin-right: 0;

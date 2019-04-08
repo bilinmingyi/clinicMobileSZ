@@ -7,7 +7,7 @@
       <span class="footer-text">消息</span>
     </div>
     <div :class="['footer-item',{'cur':navtiveIndex==1}] " @click="goRouter(1)">
-      <span class="yunicon">{{navtiveIndex==1? '&#xe60a;':'&#xe60c; '}}</span>
+      <span class="iconfont">{{navtiveIndex==1? '&#xe60a;':'&#xe60c; '}}</span>
       <span class="footer-text">工作</span>
     </div>
     <!-- <div :class="['footer-item',{'cur':navtiveIndex==2}] ">
@@ -15,7 +15,7 @@
             <span class="footer-text">云药房</span>
     </div>-->
     <div :class="['footer-item',{'cur':navtiveIndex==3}] " @click="goRouter(3)">
-      <span class="yunicon">{{navtiveIndex==3? '&#xe60d;':'&#xe609;'}}</span>
+      <span class="iconfont">{{navtiveIndex==3? '&#xe60d;':'&#xe609;'}}</span>
       <span class="footer-text">个人</span>
     </div>
   </div>
