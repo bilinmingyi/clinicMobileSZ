@@ -15,19 +15,21 @@
         <img src="@/assets/images/xiayibu@2x.png" alt>
       </div>
     </div>
-    <msg-bottom></msg-bottom>
+    <keep-alive>
+      <msg-bottom></msg-bottom>
+    </keep-alive>
     <commonBottom :navtiveIndex="navtiveIndex"></commonBottom>
   </div>
 </template>
 <script>
 import commonHeader from "@/components/common/commonHeader";
 import commonBottom from "@/components/common/commonBottom";
-import msgBottom from "./messagePart/msgBottom"
+import msgBottom from "./messagePart/msgBottom";
 export default {
   data() {
     return {
       navtiveIndex: 0,
-      newmsg: 1 //1代表有新消息                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+      newmsg: 1 //1代表有新消息
     };
   },
   components: {
@@ -35,9 +37,9 @@ export default {
     commonBottom,
     msgBottom
   },
-  methods:{
-    goMyNew(){
-      this.$router.push({name:'myNewPage'})
+  methods: {
+    goMyNew() {
+      this.$router.push({ name: "myNewPage" });
     }
   }
 };
@@ -77,18 +79,17 @@ export default {
         background: $redColor;
       }
     }
-    span{
-     font-size: 28px;
-     color: $grayColor;
+    span {
+      font-size: 28px;
+      color: $grayColor;
     }
   }
-  .msg-right{
+  .msg-right {
     padding-right: 30px;
-    img{
+    img {
       @extend %searchIcon;
     }
   }
 }
-
 </style>
 

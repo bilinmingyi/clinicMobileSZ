@@ -3,7 +3,7 @@
   <div class="mb110"></div> 
   <div class="common-bottom footerNav footer">
     <div :class="['footer-item',{'cur':navtiveIndex==0}] " @click="goRouter(0)">
-      <span class="iconfont">{{navtiveIndex==0? '&#xe60d;':'&#xe60e; '}}</span>
+      <span class="iconfont">{{navtiveIndex==0? '&#xe611;':'&#xe612;'}}</span>
       <span class="footer-text">消息</span>
     </div>
     <div :class="['footer-item',{'cur':navtiveIndex==1}] " @click="goRouter(1)">
@@ -34,16 +34,16 @@ export default {
       }
       switch (index) {
         case 0:
-          this.$router.push({ path: "messagePage" });
+          this.$router.push({ name: "messagePage" });
           break;
         case 1:
-          this.$router.push({ path: "homePage" });
+          this.$router.push({ name: "homePage" });
           break;
         case 2:
           this.$router.push({ path: "cloundDrugPage" });
           break;
         case 3:
-          this.$router.push({ path: "personPage" });
+          this.$router.push({ name: "personPage" });
           break;
       }
     }

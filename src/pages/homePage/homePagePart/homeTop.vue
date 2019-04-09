@@ -13,7 +13,7 @@
   <hr class="full-screen-hr"></hr>
   <div class="home-mid">
     <div class="mid-left flex-mid-center flex-one">
-      <img src="@/assets/images/lx.png" alt="">
+      <img src="@/assets/images/lx2.png" alt="">
       <span class="subtitle">联系代表</span>
     </div>
     <div class=" flex-mid-center flex-one" @click="goPatientInfo">
@@ -44,7 +44,7 @@ export default {
   },
   methods:{
     goPatientInfo(){
-      this.$router.push({path:'homePage/patientInfo'})
+      this.$router.push({name:'patientInfoPage'})
     }
   }
 };

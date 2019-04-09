@@ -16,6 +16,7 @@
   </div>
 </template>
 <script>
+import { registerDoctor } from "@/fetch/api";
 import dateSelect from "@/components/common/dateSelect";
 import firstTable from "@/components/common/firstTable";
 import secondTable from "@/components/common/secondTable";
@@ -74,6 +75,14 @@ export default {
     secondTable
   },
   methods: {
+    getRegisterDoctor(){
+      let params={
+        
+      }
+    }
+  },
+  created(){
+
   }
 };
 </script>

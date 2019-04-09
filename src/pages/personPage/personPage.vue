@@ -1,7 +1,7 @@
 <template>
   <div>
     <common-header :isShowLeft="false" :titleName="'个人中心'"></common-header>
-    <div class="person">
+    <div class="person" @click="goPersonInfo">
       <div class="person-content">
         <img src="@/assets/images/nan@2x.png" alt class="person-logo">
         <div class="person-mid ml30">
@@ -35,6 +35,11 @@ export default {
   components: {
     commonHeader,
     commonBottom
+  },
+  methods:{
+    goPersonInfo(){
+      this.$router.push({name:'personInfoPage'})
+    }
   }
 };
 </script>

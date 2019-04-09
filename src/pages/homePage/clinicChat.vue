@@ -2,7 +2,7 @@
   <div class="clinic-chat" >
     <common-header :titleName="patientName" @leftToggle="leftToggle"></common-header>
     
-    <div class="chat-content" @click="hideFuc">
+    <div class="chat-content" @click="hideFuc" @touchstart="hideFuc">
       <div class="content-detail">
         <div class="left-chat mb24">
           <p class="chat-time mb24">02月11日 09:34</p>

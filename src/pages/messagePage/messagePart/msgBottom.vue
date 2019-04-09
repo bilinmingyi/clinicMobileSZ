@@ -2,43 +2,83 @@
   <div>
     <section class="msg-bottom">
       <p class="msg-title">平台动态</p>
-      <div class="news pl30" @click="goPlatform('畅销感冒药')">
-        <img src="@/assets/images/banner-yun.png" alt>
+      <div
+        class="news pl30"
+        @click="goPlatform('畅销感冒药')"
+        v-for="(item,index) in platformList"
+        :key="index"
+      >
+        <img :src="item.img_url?item.img_url:normalPic" alt>
         <div class="news-mid">
-          <p>最四款曾经畅销的感冒药已经被儿科医生 拉入了黑名单，请别给孩子用了，知道… 拉入了黑名单， 拉入了黑名单， 拉入了黑名单， 拉入了黑名单，</p>
+          <p>{{item.title}}</p>
           <div class="news-mid-bottom">
             <span class="news-mid-button">资讯类别</span>
-            <span class="news-mid-time">2018-07-13</span>
+            <span class="news-mid-time">{{item.pubdate|dateFormat('yyyy-MM-dd')}}</span>
           </div>
         </div>
       </div>
-      <div class="news pl30" @click="goPlatform('畅销感冒药')">
-        <img src="@/assets/images/banner-yun.png" alt>
-        <div class="news-mid">
-          <p>最四款曾经畅销的感冒药已经被儿科医生 拉入了黑名单，请别给孩子用了，知道… 拉入了黑名单， 拉入了黑名单， 拉入了黑名单， 拉入了黑名单，</p>
-          <div class="news-mid-bottom">
-            <span class="news-mid-button">资讯类别</span>
-            <span class="news-mid-time">2018-07-13</span>
-          </div>
-        </div>
-      </div>
-      <div class="no-platform" v-show="hasPlatform"> 暂时无平台动态</div>
+      <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
+      <div class="no-platform" v-show="hasPlatform&&isLoad">暂时无平台动态</div>
     </section>
   </div>
 </template>
 <script>
-import fetch from "@/fetch/api";
+import loadMore from "@/components/common/loadMore";
+import { getPlatformList } from "@/fetch/api";
 export default {
   data() {
     return {
-      hasPlatform:false
+      page: 1,
+      pageSize: 10,
+      platformList: [],
+      normalPic: require("@/assets/images/banner-yun.png"),
+      isShowLoad: true,
+      isLoad:false
     };
   },
-  created(){
+  components: {
+    loadMore
   },
-  methods:{
-    goPlatform(title){
-      this.$router.push({name:'platformNewPage',params:{platformTitle:title}})
+  created() {
+    this.getPlatformData();
+  },
+  computed: {
+    hasPlatform() {
+      return this.platformList.length == 0;
+    }
+  },
+  methods: {
+    goPlatform(title) {
+      this.$router.push({
+        name: "platformNewPage",
+        params: { platformTitle: title }
+      });
+    },
+    getPlatformData() {
+      let params = {
+        page: this.page,
+        page_size: this.pageSize
+      };
+      getPlatformList(params).then(res => {
+        if (res.code === 1000) {
+          res.data.forEach(item => {
+            this.platformList.push(item);
+          });
+          if (this.platformList.length == this.pageSize) {
+            this.isShowLoad = true;
+          } else {
+            this.isShowLoad = false;
+          }
+          this.isLoad=true;
+        } else {
+           this.isLoad=true;
+          console.log(res);
+        }
+      });
+    },
+    loadMore() {
+      this.page++;
+      this.getPlatformData();
     }
   }
 };
@@ -82,9 +122,9 @@ export default {
       }
     }
   }
-  .no-platform{
+  .no-platform {
     @include textLineHeight(80px);
-    text-align:center;
+    text-align: center;
     @extend %normalTitle;
   }
 }

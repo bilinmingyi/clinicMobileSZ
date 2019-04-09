@@ -18,7 +18,24 @@ function fetch(url, params) {
         })
     })
 }
+/* 数据获取 */
 
+/* 消息模块 */
+const getPlatformList = params => fetch('/article/list', params);
+
+/* 个人模块 */
+const userInfo = params => fetch('/user/info', params);
+const getMessageCode = params => fetch('/sms/chkCode/mobileBind', params);
+
+/* 常用功能模块 */
+//挂号统计
+const registerDoctor = params => fetch('/statistic/appoint/appointStatList', params);
+const registerStream = params => fetch('/statistic/appoint/appointStreamList', params);
 export {
-    fetch
+    fetch,
+    getPlatformList,
+    userInfo,
+    getMessageCode,
+    registerDoctor,
+    registerStream
 }

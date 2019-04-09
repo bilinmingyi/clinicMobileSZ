@@ -36,6 +36,10 @@ const personIndex = () =>
     import ( /* webpackChunkName: "personPage" */ "@/pages/personPage/index");
 const personPage = () =>
     import ( /* webpackChunkName: "personPage" */ "@/pages/personPage/personPage");
+const personInfo = () =>
+    import ( /* webpackChunkName: "personPage" */ "@/pages/personPage/personInfo");
+const bindPhone = () =>
+    import ( /* webpackChunkName: "personPage" */ "@/pages/personPage/bindPhone");
 
 /* 常用功能模块 深圳前6个功能为一个模块*/
 
@@ -115,10 +119,30 @@ const routes = [{
         path: '/personPage',
         component: () => personIndex(),
         children: [{
-            path: '',
-            name: 'personPage',
-            component: () => personPage()
-        }]
+                path: '',
+                name: 'personPage',
+                component: () => personPage(),
+                meta: {
+                    title: "个人中心"
+                }
+            },
+            {
+                path: 'personInfo',
+                name: "personInfoPage",
+                component: () => personInfo(),
+                meta: {
+                    title: "个人资料"
+                }
+            },
+            {
+                path: 'bindPhone',
+                name: "bindPhonePage",
+                component: () => bindPhone(),
+                meta: {
+                    title: "绑定手机"
+                }
+            }
+        ]
     },
     {
         path: '/functionPage/',
