@@ -15,9 +15,7 @@
         <img src="@/assets/images/xiayibu@2x.png" alt>
       </div>
     </div>
-    <keep-alive>
       <msg-bottom></msg-bottom>
-    </keep-alive>
     <commonBottom :navtiveIndex="navtiveIndex"></commonBottom>
   </div>
 </template>

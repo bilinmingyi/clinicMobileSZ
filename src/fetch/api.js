@@ -22,10 +22,14 @@ function fetch(url, params) {
 
 /* 消息模块 */
 const getPlatformList = params => fetch('/article/list', params);
+const getArticleDetail = params => fetch('/article/detail?id=' + params);
+const getCommentList = params => fetch('/contentComment/list', params);
 
 /* 个人模块 */
 const userInfo = params => fetch('/user/info', params);
+const updateUserInfo = params => fetch('/user/update', params);
 const getMessageCode = params => fetch('/sms/chkCode/mobileBind', params);
+const updateMoblie = params => fetch('/user/mobile/update', params);
 
 /* 常用功能模块 */
 //挂号统计
@@ -34,8 +38,12 @@ const registerStream = params => fetch('/statistic/appoint/appointStreamList', p
 export {
     fetch,
     getPlatformList,
+    getArticleDetail,
+    getCommentList,
     userInfo,
+    updateUserInfo,
     getMessageCode,
+    updateMoblie,
     registerDoctor,
     registerStream
 }

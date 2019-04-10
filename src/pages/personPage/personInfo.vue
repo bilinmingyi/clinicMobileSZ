@@ -7,13 +7,8 @@
         <input type="text" placeholder="必填" v-model="name">
       </div>
       <div class="info-item">
-        <span>年龄</span>
-        <div class="input-group">
-          <input type="text" value="0" v-model="ageY">
-          <span>岁</span>
-          <input type="text" value="0" v-model="ageM">
-          <span>月</span>
-        </div>
+        <span>生日</span>
+        <input type="date" placeholder="出生日期" v-model="birthdayTime" class="date-input">
       </div>
       <div class="info-item">
         <span>性别</span>
@@ -46,33 +41,53 @@
       </div>
     </div>
     <footer>
-      <div class="cancel">取消</div>
-      <div class="confirm">确定</div>
+      <div class="cancel" @click="jumpTo('cancel')">取消</div>
+      <div class="confirm" @click="saveData">确定</div>
     </footer>
   </div>
 </template>
 <script>
-import { userInfo } from "@/fetch/api";
+import { updateUserInfo} from "@/fetch/api";
+import { dateFormat } from "@/assets/js/filters";
+import { mapState,mapActions} from "vuex";
 import commonTitle from "@/components/common/commonTitle";
 export default {
+  props: ["userData"],
   data() {
     return {
-      mobile: 13631784517,
-      ageY: 18,
-      ageM: 8,
       name: "",
-      sex_statues: 2
+      ageY: "",
+      mobile: "",
+      sex_statues: "",
+      birthdayTime: ""
     };
   },
   components: {
     commonTitle
   },
+  computed: {
+    ...mapState(["userInfoState"])
+  },
   methods: {
+    ...mapActions(['getUserInfo']),
+    _initeData() {
+      this.name = this.userInfoState.name;
+      this.ageY = this.userInfoState.age;
+      this.mobile = this.userInfoState.mobile;
+      this.sex_statues =
+        this.userInfoState.sex == 0 ? "" : this.userInfoState.sex;
+      this.birthdayTime = this.$options.filters.dateFormat(
+        new Date(this.userInfoState.birthday),
+        "yyyy-MM-dd"
+      );
+    },
     jumpTo(params) {
       switch (params) {
         case "personPhone":
           this.$router.push({ name: "bindPhonePage" });
           break;
+        case "cancel":
+        this.$router.push({ name: "personPage" });
       }
     },
     changeStatue(index) {
@@ -81,15 +96,42 @@ export default {
       }
       this.sex_statues = index;
     },
-    getData(){
-      let params = {}
-      userInfo(params).then(res => {
-      console.log(res)
+    saveData() {
+      //校验
+      if (
+        this.name == "" ||
+        this.birthdayTime == "" ||
+        this.sex_statues == ""
+      ) {
+        alert("请完善个人信息", 1500);
+        return;
+      }
+      let timetmp = Date.parse(new Date(this.birthdayTime));
+      let params = {
+        name: this.name,
+        birthday: timetmp,
+        sex: this.sex_statues,
+        city: this.userInfoState.city
+      };
+      // console.log(timetmp);
+      updateUserInfo(params).then(res=>{
+        if(res.code==1000){
+          alert('保存成功');
+          this.getUserInfo();
+        }else{
+          alert('更新失败'+res.code)
+        }
+        console.log(res)
       });
     }
   },
-  created(){
- this.getData();
+  watch: {
+    userInfoState() {
+      this._initeData();
+    }
+  },
+  mounted() {
+    this._initeData();
   }
 };
 </script>
@@ -178,7 +220,6 @@ footer {
   position: relative;
   width: 96px;
 }
-
 .radio-group label::after {
   position: absolute;
   top: 0;
@@ -192,15 +233,16 @@ footer {
   border-radius: 50%;
   background: #fff;
 }
-
 .radio-group input {
   visibility: hidden;
 }
-
 .radio-group input:checked + label::after {
   border: none;
   background-image: url("../../assets/images/xuanze@2x.png");
   background-size: 40px 40px;
+}
+.date-input {
+  // @include newsButton(60px,220px);
 }
 </style>
 

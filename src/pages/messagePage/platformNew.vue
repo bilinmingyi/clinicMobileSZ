@@ -4,13 +4,8 @@
     <div class="platform">
       <div class="platform-title">{{platformTitle}}</div>
       <p>平台消息</p>
-      <p>2018-03-24 00:00</p>
-      <div class="platform-content">
-        据悉，梅奥亚洲医疗服务中心将为中国及亚洲患者提供协助，对于中国患者来说，今后不必远赴美国即可享受到梅奥的医疗服务。
-        梅奥诊作为非营利性的综合医院在国际医疗界享有很高的声誉，被誉为医学领域的“最高法院”，已经有150多年的历史。
-        2015年梅奥诊所被美国新闻周刊评为“年度最佳医院”，其9个医疗专科在全美排名第一。梅奥也是美国多位历任总统及名人首选医院。
-        美国政界、商界的不少人士会专程到这里来治病。中国不少名人也曾于梅奥诊所就诊。
-      </div>
+      <p>{{detailData.create_time |dateFormat('yyyy-MM-dd')}}</p>
+      <div class="platform-content" v-html="detailData.content"></div>
       <div class="full-screen-hr mt188"></div>
       <p class="platform-font">你把我读完了</p>
     </div>
@@ -19,15 +14,12 @@
         <span>最新评论</span>
         <span class="comment-add" @click="goAddComment">添加评论</span>
       </div>
-      <div class="comment-content">
-        <p class="comment-name">啊伯伯亮</p>
+      <div class="comment-content" v-for="(item,index) in commentList">
+        <p class="comment-name">{{item.user_name}}</p>
         <p class="comment-detail">
-          据悉，梅奥亚洲医疗服务中心将为中国及亚洲患者提供协助，对于中国患者来说，今后不必远赴美国即可享受到梅奥的医疗服务。
-          梅奥诊作为非营利性的综合医院在国际医疗界享有很高的声誉，被誉为医学领域的“最高法院”，已经有150多年的历史。
-          2015年梅奥诊所被美国新闻周刊评为“年度最佳医院”，其9个医疗专科在全美排名第一。梅奥也是美国多位历任总统及名人首选医院。
-          美国政界、商界的不少人士会专程到这里来治病。中国不少名人也曾于梅奥诊所就诊。
+       {{item.content}}
         </p>
-        <p class="comment-time">2018-2018-03-24 19:00</p>
+        <p class="comment-time">{{item.create_time|dateFormat}}</p>
       </div>
       <div class="no-comment">
         <span class="left"></span>没有更多评论
@@ -37,19 +29,52 @@
   </div>
 </template>
 <script>
+import { getArticleDetail, getCommentList } from "@/fetch/api";
 import commonHeader from "@/components/common/commonHeader";
 export default {
-  props: ["platformTitle"],
+  props: ["platformTitle", "allData"],
   data() {
-    return {};
+    return {
+      detailData: {},
+      commentList:[]
+    };
   },
-  methods:{
-    goAddComment(){
-      this.$router.push({name:'addCommentPage'})
+  methods: {
+    goAddComment() {
+      this.$router.push({ name: "addCommentPage" });
+    },
+    _initData() {
+      //获取动态的详情内容
+      getArticleDetail(this.allData.id).then(res => {
+        if (res.code == 1000) {
+          this.detailData = res.data;
+        } else {
+          console.log(res);
+        }
+      });
+      //获取评论的内容
+      let params = {
+        content_id: this.allData.id,
+        content_type: 1
+      };
+      console.log(this.allData)
+      console.log(params)
+      getCommentList(params).then(res => {
+        if(res.code===1000){
+          this.commentList = res.data;
+          console.log( this.commentList)
+        }else{
+        console.log(res);
+        }
+
+      });
     }
   },
   components: {
     commonHeader
+  },
+  created() {
+    this._initData();
   }
 };
 </script>
@@ -58,6 +83,8 @@ export default {
   background: $bgwhite2;
   height: 100%;
   padding: 60px 30px;
+  width: 750px;
+  // overflow: hidden;
   p {
     color: $simpleGray;
     font-size: 30px;
@@ -68,9 +95,18 @@ export default {
     font-weight: 600;
   }
   &-content {
+    width: 100%;
     padding-top: 20px;
     @extend %normalTitle;
+    div,
+    p,
+    img {
+      // box-sizing: border-box;
+      max-width: 100% !important;
+      height: auto !important;
+    }
   }
+
   &-font {
     font-size: 32px;
     text-align: center;

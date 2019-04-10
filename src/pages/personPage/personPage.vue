@@ -3,18 +3,17 @@
     <common-header :isShowLeft="false" :titleName="'个人中心'"></common-header>
     <div class="person" @click="goPersonInfo">
       <div class="person-content">
-        <img src="@/assets/images/nan@2x.png" alt class="person-logo">
+        <img :src="userInfoState.avatar" alt class="person-logo">
         <div class="person-mid ml30">
           <p>
-            <span class="person-mid-title">demo</span>
-            <span class="person-mid-year">18岁</span>
+            <span class="person-mid-title">{{userInfoState.name}}</span>
+            <span class="person-mid-year">{{userInfoState.age}}岁</span>
           </p>
           <p class="person-mid-subtitle">
-            账号ID:
-            <span class="pl24">2</span>
+            手机号码
+            <span class="pl24">{{userInfoState.mobile}}</span>
           </p>
         </div>
-
         <div class="person-right">
           <img src="@/assets/images/xiayibu@2x.png" alt>
         </div>
@@ -24,21 +23,27 @@
   </div>
 </template>
 <script>
+import { userInfo } from "@/fetch/api";
+import { mapState } from "vuex";
 import commonHeader from "@/components/common/commonHeader";
 import commonBottom from "@/components/common/commonBottom";
 export default {
   data() {
     return {
-      navtiveIndex: 3
+      navtiveIndex: 3,
+      userData: {}
     };
   },
   components: {
     commonHeader,
     commonBottom
   },
-  methods:{
-    goPersonInfo(){
-      this.$router.push({name:'personInfoPage'})
+  computed: {
+    ...mapState(["userInfoState"])
+  },
+  methods: {
+    goPersonInfo() {
+      this.$router.push({name: "personInfoPage"});
     }
   }
 };
@@ -54,6 +59,9 @@ export default {
     @extend %aglinItem;
     padding-left: 30px;
     padding-right: 56px;
+    img {
+      border-radius: 100px;
+    }
   }
   &-logo {
     @extend %mediumIcon;

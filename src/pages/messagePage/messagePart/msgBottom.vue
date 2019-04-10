@@ -2,12 +2,7 @@
   <div>
     <section class="msg-bottom">
       <p class="msg-title">平台动态</p>
-      <div
-        class="news pl30"
-        @click="goPlatform('畅销感冒药')"
-        v-for="(item,index) in platformList"
-        :key="index"
-      >
+      <div class="news pl30" v-for="(item,index) in platformList" :key="index" @click="goPlatform(item)">
         <img :src="item.img_url?item.img_url:normalPic" alt>
         <div class="news-mid">
           <p>{{item.title}}</p>
@@ -48,10 +43,10 @@ export default {
     }
   },
   methods: {
-    goPlatform(title) {
+    goPlatform(item) {
       this.$router.push({
         name: "platformNewPage",
-        params: { platformTitle: title }
+        params: { platformTitle: item.title,allData:item }
       });
     },
     getPlatformData() {

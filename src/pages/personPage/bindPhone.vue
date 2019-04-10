@@ -8,16 +8,16 @@
         <div class="phoneBlock">
           <div class="NumberBlock">
             <input type="text" placeholder="请输入手机号码" v-model="tel">
-            <button @click="sendCode()" v-bind:disabled="checkSubmitFlg">
+            <button  v-bind:disabled="checkSubmitFlg">
               <span v-if="sendMsgDisabled">{{time+'秒后获取'}}</span>
-              <span v-if="!sendMsgDisabled">获取验证码</span>
+              <span v-if="!sendMsgDisabled" @click="sendCode()">获取验证码</span>
             </button>
           </div>
           <div class="verificationCodeBlock">
             <input type="text" placeholder="请输入短信验证码" v-model="code">
           </div>
           <footer>
-            <div>确定</div>
+            <div @click="save">确定</div>
           </footer>
         </div>
       </div>
@@ -26,7 +26,8 @@
   </div>
 </template>
 <script>
-import { getMessageCode } from "@/fetch/api";
+import { getMessageCode, updateMoblie } from "@/fetch/api";
+import {mapActions} from "vuex"
 export default {
   data() {
     return {
@@ -48,47 +49,34 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['getUserInfo']),
     //获取验证码
     sendCode() {
+      console.log(11)
       let self = this;
       if (self.tel == "") {
-        modal("手机号不能为空！", 1500);
+        alert("手机号不能为空！", 1500);
         return false;
       }
       var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
       if (!reg.test(self.tel)) {
-        modal("请输入正确的手机号", 1500);
+        alert("请输入正确的手机号", 1500);
         return false;
       }
       self.checkSubmitFlg = true;
-      getMessageCode({'mobile':self.tel}).then(res=>{
-        console.log(res)
-      })
-      //TODO
-      // self.$http
-      //   .post("${'/sms/chkCode/mobileBind'.url()}", {
-      //     mobile: self.tel
-      //   })
-      //   .then(
-      //     function(res) {
-      //       var _data = res.data;
-      //       if (_data.code == 1000) {
-      //         if ((self.sendMsgDisabled = true)) {
-      //           let interval = window.setInterval(function() {
-      //             if (self.time-- <= 0) {
-      //               self.time = 60;
-      //               self.sendMsgDisabled = false;
-      //               self.checkSubmitFlg = false;
-      //               window.clearInterval(interval);
-      //             }
-      //           }, 1000);
-      //         }
-      //       }
-      //     },
-      //     function(err) {
-      //       modal("数据异常" + _data.code, 1500);
-      //     }
-      //   );
+      if ((self.sendMsgDisabled = true)) {
+        let interval = window.setInterval(function() {
+          if (self.time-- <= 0) {
+            self.time = 60;
+            self.sendMsgDisabled = false;
+            self.checkSubmitFlg = false;
+            window.clearInterval(interval);
+          }
+        }, 1000);
+      }
+      getMessageCode({ mobile: self.tel }).then(res => {
+        console.log(res);
+      });
     },
     save() {
       let self = this;
@@ -106,30 +94,45 @@ export default {
         modal("验证码不能为为空", 1500);
         return false;
       }
-      //TODO
-      self.$http
-        .post("${'/user/mobile/update'.url()}", {
-          mobile: self.tel,
-          code: self.code
-        })
-        .then(
-          function(res) {
-            var _data = res.data;
-            if (_data.code == 1000) {
-              modal("保存成功", 1500);
-              this.$router.push({name:'personPage'})
-              // window.location.href =
-              //   "${'/weixin/mobilePage?SCOPE_backUri=/weixin/centerPage'.url()}";
-            } else if (_data.code == 300002) {
-              modal("手机号已占用", 1500);
-            } else {
-              modal("系统错误：" + _data.code, 1500);
-            }
-          },
-          function(err) {
-            modal("数据异常" + _data.code, 1500);
-          }
-        );
+      let params = {
+        mobile: self.tel,
+        code: self.code
+      };
+      updateMoblie(params).then(res => {
+        if (res.code == 1000) {
+          alert("保存成功");
+          //更新vuex数据
+          this.getUserInfo();
+        } else if (res.code == 300002) {
+          alert("手机号已占用");
+        } else {
+          alert("系统错误");
+        }
+      });
+      // //TODO
+      // self.$http
+      //   .post("${'/user/mobile/update'.url()}", {
+      //     mobile: self.tel,
+      //     code: self.code
+      //   })
+      //   .then(
+      //     function(res) {
+      //       var _data = res.data;
+      //       if (_data.code == 1000) {
+      //         modal("保存成功", 1500);
+      //         this.$router.push({name:'personPage'})
+      //         // window.location.href =
+      //         //   "${'/weixin/mobilePage?SCOPE_backUri=/weixin/centerPage'.url()}";
+      //       } else if (_data.code == 300002) {
+      //         modal("手机号已占用", 1500);
+      //       } else {
+      //         modal("系统错误：" + _data.code, 1500);
+      //       }
+      //     },
+      //     function(err) {
+      //       modal("数据异常" + _data.code, 1500);
+      //     }
+      //   );
     }
   }
 };
