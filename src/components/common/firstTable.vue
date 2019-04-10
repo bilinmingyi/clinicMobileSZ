@@ -1,4 +1,4 @@
- <!-- 
+ <!--
   type:第一种类型表格 左标题（浅色） 右内容（白色）
   desc:需要传入一个数组 firstTableList
      有两个属性 title和value
@@ -43,7 +43,6 @@ export default {
   border-bottom: 0px;
   &-list {
     display: flex;
-    @include commonBorder(bottom, $greenColor);
     height: 88px;
     line-height: 88px;
     width: 100%;
@@ -51,12 +50,14 @@ export default {
   &-title {
     width: 180px;
     text-align: center;
+        @include commonBorder(bottom, $greenColor);
     @include commonBorder(right, $greenColor);
     font-size: 30px;
     background: rgba(235, 248, 249, 1);
     color: $backColor;
   }
   &-content {
+        @include commonBorder(bottom, $greenColor);
     flex: 1;
     text-align: center;
     font-size: 30px;
