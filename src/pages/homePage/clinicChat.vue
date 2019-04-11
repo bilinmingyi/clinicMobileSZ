@@ -1,86 +1,105 @@
 <template>
-  <div class="clinic-chat" >
-    <common-header :titleName="patientName" @leftToggle="leftToggle"></common-header>
-    
+  <div class="clinic-chat">
+    <common-header :titleName="queryData.username"></common-header>
+
     <div class="chat-content" @click="hideFuc" @touchstart="hideFuc">
       <div class="content-detail">
-        <div class="left-chat mb24">
-          <p class="chat-time mb24">02月11日 09:34</p>
-          <div class="chat-content">
-            <img src="@/assets/images/nan@2x.png" alt>
-            <div
-              class="reply-content ml16"
-            >医生，我想要咨询鼻炎之类的问题呢，最近不舒服医生，我想要咨询鼻炎之类的问题呢，最近不舒服医生，我想要咨询鼻炎之类的问题呢，最近不舒服</div>
-          </div>
-        </div>
-
-        <div class="right-chat mb24">
-          <p class="chat-time mb24">02月11日 09:34</p>
-          <div class="chat-content">
-            <div
-              class="reply-content"
-            >医生，我想要咨询鼻炎之类的问题呢，最近不舒服医生，我想要咨询鼻炎之类的问题呢，最近不舒服医生，我想要咨询鼻炎之类的问题呢，最近不舒服</div>
-            <img src="@/assets/images/nv@2x.png" alt class="ml20">
-          </div>
-        </div>
-        <div class="right-chat mb24">
-          <p class="chat-time mb24">02月11日 09:34</p>
-          <div class="chat-content">
-            <div class="reply-content">
-              <div class="recommond">
-                <img src="@/assets/images/nv@2x.png" alt>
-                <div class="recommond-content">
-                  <p class="recommond-title">
-                    王凯歌
-                    <span>医师</span>
-                  </p>
-                  <p class="recommond-subTitle">请点击进行预约</p>
-                </div>
-              </div>
-            </div>
-            <img src="@/assets/images/nv@2x.png" alt class="ml20">
-          </div>
-        </div>
-          <div class="left-chat mb24">
-          <p class="chat-time mb24">02月11日 09:34</p>
-          <div class="chat-content">
-            <img src="@/assets/images/nan@2x.png" alt>
-            <div
-              class="reply-content ml16"
-            >医生，我想要咨询鼻炎之类的问题呢，最近不舒服医生，我想要咨询鼻炎之类的问题呢，最近不舒服医生，我想要咨询鼻炎之类的问题呢，最近不舒服</div>
-          </div>
-        </div>
+        <component
+          v-for="(item,index) in allMsgList"
+          :key="index"
+          :is="RenderComponent(item.from)"
+          :chatDetail="item"
+        ></component>
       </div>
     </div>
     <div class="mb88"></div>
-    <chat-bottom :showFuc="isShowFuc" @addFunc="addFunc" @hideFunc="hideFuc"></chat-bottom>
+    <quick-reply v-show="isReply" @closeReply="closeReply"></quick-reply>
+    <chat-bottom
+      :showFuc="isShowFuc"
+      @addFunc="addFunc"
+      @hideFunc="hideFuc"
+      @sendMessage="sendMessage"
+      @showReply="showReply"
+    ></chat-bottom>
   </div>
 </template>
 
 <script>
+import { chatMsgList, msgSend } from "@/fetch/api";
 import commonHeader from "@/components/common/commonHeader";
 import chatBottom from "./clinicChatPart/chatBottom";
+import clinicMessage from "./clinicChatPart/clinicMessage";
+import patientMessage from "./clinicChatPart/patientMessage";
+import quickReply from "./clinicChatPart/quickReply";
 export default {
-  props: ["patientName"],
   data() {
     return {
-      isShowFuc:false
+      isShowFuc: false,
+      queryData: {},
+      last_msgid: "",
+      allMsgList: [],
+      isReply: false
     };
   },
   components: {
     commonHeader,
-    chatBottom
+    chatBottom,
+    clinicMessage,
+    patientMessage,
+    quickReply
   },
   methods: {
-    leftToggle() {
-      this.$router.go(-1);
-    },
-    hideFuc(){
+    hideFuc() {
       this.isShowFuc = false;
+      this.isReply = false;
     },
-    addFunc(){
+    addFunc() {
       this.isShowFuc = !this.isShowFuc;
+    },
+    RenderComponent(from) {
+      // return patientMessage;
+      /* 1 患者 2 诊所 */
+      return from == 1 ? patientMessage : clinicMessage;
+    },
+    sendMessage(val) {
+      let params = {
+        to_userid: this.queryData.userId,
+        from_username: "诊所",
+        from_userimg: "",
+        session_type: this.queryData.session_type,
+        msgdata: { msg_type: "text", text: val }
+      };
+      msgSend(params).then(res => {
+        console.log(res);
+      });
+    },
+    showReply() {
+      this.isReply = true;
+    },
+    closeReply() {
+      this.isReply = false;
+    },
+    getChatMsg() {
+      let params = {
+        direction: "down",
+        session_type: this.queryData.session_type,
+        count: 50,
+        last_msgid: this.last_msgid,
+        to_userid: this.queryData.userId
+      };
+      chatMsgList(params).then(res => {
+        if (res.code == 1000) {
+          this.allMsgList = res.data.msg_list;
+          console.log(this.allMsgList);
+        } else {
+          console.log(res);
+        }
+      });
     }
+  },
+  created() {
+    this.queryData = this.$route.query;
+    this.getChatMsg();
   }
 };
 </script>
@@ -92,69 +111,7 @@ export default {
     overflow: auto;
     .content-detail {
       padding: 32px 24px;
-      p {
-        text-align: center;
-        font-size: 26px;
-        font-weight: 400;
-        color: $simpleGray;
-      }
-      .chat-content {
-        .reply-content {
-          background: $bgwhite2;
-          border: 1px solid $simpleGray;
-          max-width: 480px;
-          height: auto;
-          border-radius: 16px;
-          padding: 22px 30px;
-          @extend %normalTitle;
-        }
-        display: flex;
-        img {
-          @extend %minICon;
-        }
-        .recommond {
-          @extend %aglinItem;
-          img {
-            @extend %mediumIcon;
-          }
-          &-content {
-            padding-left: 16px;
-            p {
-              text-align: left;
-            }
-          }
-          &-title {
-            @extend %normalTitle;
-            font-weight: 600;
-            span {
-              width: 72px;
-              height: 40px;
-              background: rgba(237, 171, 21, 1);
-              line-height: 40px;
-              text-align: center;
-              margin-left: 16px;
-              color: $bgwhite2;
-              font-size: 20px;
-              font-weight: 400;
-              display: inline-block;
-            }
-          }
-          &-subTitle {
-            padding-top: 6px;
-            font-size: 28px;
-            color: $simpleGray;
-          }
-        }
-      }
-    }
-    .right-chat {
-      .chat-content {
-        justify-content: flex-end;
-        display: flex;
-      }
     }
   }
 }
 </style>
-
-

@@ -78,7 +78,7 @@ const routes = [{
                 component: () => patientInfo()
             },
             {
-                path: 'clinicChat/:patientName',
+                path: 'clinicChat',
                 name: 'clinicChatPage',
                 component: () => clinicChat(),
                 props: true
@@ -98,7 +98,7 @@ const routes = [{
                 name: 'messagePage',
                 component: () => messagePage()
             }, {
-                path: 'platformNew/:platformTitle',
+                path: 'platformNew/:platformTitle/:id',
                 name: 'platformNewPage',
                 component: () => platformNew(),
                 props: true

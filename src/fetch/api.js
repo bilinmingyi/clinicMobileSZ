@@ -19,11 +19,19 @@ function fetch(url, params) {
     })
 }
 /* 数据获取 */
+/* 聊天室 */
+const chatSessionList = params => fetch('/chat/session/list', params);
+const chatMsgList = params => fetch('/chat/msg/list', params);
+const msgSend = params => fetch('/chat/msg/send', params);
+const msgWithdraw = params => fetch('/chat/msg/withdraw', params);
+const msgRecent = params => fetch('/chat/msg/recent', params);
+
 
 /* 消息模块 */
 const getPlatformList = params => fetch('/article/list', params);
 const getArticleDetail = params => fetch('/article/detail?id=' + params);
 const getCommentList = params => fetch('/contentComment/list', params);
+
 
 /* 个人模块 */
 const userInfo = params => fetch('/user/info', params);
@@ -37,6 +45,11 @@ const registerDoctor = params => fetch('/statistic/appoint/appointStatList', par
 const registerStream = params => fetch('/statistic/appoint/appointStreamList', params);
 export {
     fetch,
+    chatSessionList,
+    chatMsgList,
+    msgSend,
+    msgWithdraw,
+    msgRecent,
     getPlatformList,
     getArticleDetail,
     getCommentList,

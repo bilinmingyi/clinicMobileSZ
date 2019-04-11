@@ -10,6 +10,7 @@ $greenColor:#08BAC6;
 $yellowColor:#EDAB15;
 $blueColor:#5096E0;
 $gray2:#6c6c6c;
+$gray3:#8c8c8c;
 $backColor:#333333;
 
 /* 继承公共类*/
@@ -69,7 +70,7 @@ $backColor:#333333;
 @mixin psFixed($fixSeat, $fixHeight:88px) {
     position: fixed;
     left: 0;
-    z-index: 999;
+    z-index: 99;
     width: 100%;
     min-height: $fixHeight;
     @if $fixSeat==top {

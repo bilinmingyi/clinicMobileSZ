@@ -32,7 +32,7 @@
 import { getArticleDetail, getCommentList } from "@/fetch/api";
 import commonHeader from "@/components/common/commonHeader";
 export default {
-  props: ["platformTitle", "allData"],
+  props: ["platformTitle", "id"],
   data() {
     return {
       detailData: {},
@@ -45,7 +45,7 @@ export default {
     },
     _initData() {
       //获取动态的详情内容
-      getArticleDetail(this.allData.id).then(res => {
+      getArticleDetail(this.id).then(res => {
         if (res.code == 1000) {
           this.detailData = res.data;
         } else {
@@ -54,10 +54,9 @@ export default {
       });
       //获取评论的内容
       let params = {
-        content_id: this.allData.id,
+        content_id: this.id,
         content_type: 1
       };
-      console.log(this.allData)
       console.log(params)
       getCommentList(params).then(res => {
         if(res.code===1000){

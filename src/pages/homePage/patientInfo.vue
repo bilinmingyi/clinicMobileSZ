@@ -1,53 +1,20 @@
 <template>
   <div class="patient-info">
-    <common-header :titleName="'患者信息'" ></common-header>
+    <common-header :titleName="'患者信息'"></common-header>
     <input-search></input-search>
     <section class="patient-bar">
       <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==0}]" @click="changeIndex(0)">最新消息</div>
       <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==1}]" @click="changeIndex(1)">患者列表</div>
     </section>
     <div v-show="navtiveIndex==0">
-      <div class="patient-infolist" @click="goClinicChat('王凯歌')">
+      <div class="patient-infolist" v-for="(item,index) in chatList" @click="goClinicChat(item)">
         <div class="infolist-item">
-          <img src="@/assets/images/nan@2x.png" alt>
+          <img :src="item.avatar==''?getNormalHead(item.sex):item.avatar" alt @error="error(item,$event)">
           <div class="item-mid ml24">
-            <p class="item-name">王凯歌/男/26</p>
-            <p class="item-content">这是消息这是消息这是消息这这是消息这是消息这是消息这这是…这是消息这是消息这是消息这这是…这是消息这是消息这是消息这这是…</p>
-            <span class="item-time">上午12:45</span>
-            <span class="info-nums">2</span>
-          </div>
-        </div>
-      </div>
-      <div class="patient-infolist" @click="goClinicChat('王凯歌')">
-        <div class="infolist-item">
-          <img src="@/assets/images/nv@2x.png" alt>
-          <div class="item-mid ml24">
-            <p class="item-name">王凯歌/男/26</p>
-            <p class="item-content">这是消息这是消息这是消息这这是消息这是消息这是消息这这是…这是消息这是消息这是消息这这是…这是消息这是消息这是消息这这是…</p>
-            <span class="item-time">上午12:45</span>
-            <span class="info-nums">2</span>
-          </div>
-        </div>
-      </div>
-      <div class="patient-infolist">
-        <div class="infolist-item">
-          <img src="@/assets/images/bm.png" alt>
-          <div class="item-mid ml24">
-            <p class="item-name">王凯歌/男/26</p>
-            <p class="item-content">这是消息这是消息这是消息这这是消息这是消息这是消息这这是…这是消息这是消息这是消息这这是…这是消息这是消息这是消息这这是…</p>
-            <span class="item-time">上午12:45</span>
-            <span class="info-nums">2</span>
-          </div>
-        </div>
-      </div>
-      <div class="patient-infolist">
-        <div class="infolist-item">
-          <img src="@/assets/images/nan@2x.png" alt>
-          <div class="item-mid ml24">
-            <p class="item-name">王凯歌/男/26</p>
-            <p class="item-content">这是消息这是消息这是消息这这是消息这是消息这是消息这这是…这是消息这是消息这是消息这这是…这是消息这是消息这是消息这这是…</p>
-            <span class="item-time">上午12:45</span>
-            <span class="info-nums">2</span>
+            <p class="item-name">{{item.username}}/{{item.sex|parseSex}}/{{item.age}}岁</p>
+            <p class="item-content" v-if="item.recent_msg">{{msgDataType(item.recent_msg.msgdata)}}</p>
+            <span class="item-time" v-if="item.recent_msg">{{item.recent_msg.msgts|dateFormat('yyyy-MM-dd hh:mm')|detailDate}}</span>
+            <span class="info-nums" v-show="item.unread!=0">{{item.unread}}</span>
           </div>
         </div>
       </div>
@@ -65,28 +32,91 @@
   </div>
 </template>
 <script>
+import { chatSessionList } from "@/fetch/api";
 import commonHeader from "@/components/common/commonHeader";
 import inputSearch from "@/components/common/inputSearch";
 export default {
   data() {
     return {
-      navtiveIndex: 0
+      navtiveIndex: 0,
+      chatList: {}, // 聊天列表
+      maleImg: require("@/assets/images/nan@2x.png"),
+      femaleImg: require("@/assets/images/nv@2x.png"),
+      classifiedImg: require("@/assets/images/bm.png")
     };
   },
   methods: {
+    //图片加载错误的时候
+    error(item,e){
+      console.log(e)
+      e.target.src = this.getNormalHead(item.sex); //默认图
+    },
     leftToggle() {
       this.$router.go(-1);
     },
     changeIndex(index) {
       this.navtiveIndex = index;
     },
-    goClinicChat(name){
-      this.$router.push({name:'clinicChatPage',params:{patientName:name}})
+    goClinicChat(item) {
+      this.$router.push({
+        path: "clinicChat",
+        query: {
+          username:item.username,
+          session_id:item.session_id,
+          session_type:item.session_type,
+          userId:item.userId
+        }
+      });
+    },
+    //获取最新消息的患者列表
+    getChatSessionList() {
+      chatSessionList({}).then(res => {
+        if (res.code == 1000) {
+          this.chatList = res.data.session_list;
+          console.log(this.chatList);
+        } else {
+          console.log(res);
+        }
+      });
+    },
+    // 头像的默认图
+    getNormalHead(sex) {
+      let index = Number(sex);
+      switch (sex) {
+        case 0:
+          return this.classifiedImg;
+          break;
+        case 1:
+          return this.maleImg;
+          break;
+        case 2:
+          return this.femaleImg;
+          break;
+      }
+    },
+    msgDataType(params) {
+      switch (params.msg_type) {
+        case "text":
+          return params.text;
+          break;
+        case "image":
+          return "您收到一张图片信息";
+          break;
+        case "link":
+          return "您收到一条连接信息";
+          break;
+        case "withdraw_msg":
+          return "对方撤回了一条信息";
+          break;
+      }
     }
   },
   components: {
     commonHeader,
     inputSearch
+  },
+  created() {
+    this.getChatSessionList();
   }
 };
 </script>
@@ -107,22 +137,23 @@ export default {
   .nt-bar {
     color: #08bac6;
     background: $bgWhite;
-     @include commonBorder(bottom,#08bac6,4px);
+    @include commonBorder(bottom, #08bac6, 4px);
   }
 }
 .patient-infolist {
   width: 100%;
   height: 160px;
   background: $bgwhite2;
-   @include commonBorder();
+  @include commonBorder();
   @extend %aglinItem;
   .infolist-item {
     position: relative;
-  @extend %aglinItem;
+    @extend %aglinItem;
     width: 100%;
     padding: 0 30px;
     img {
-     @extend %mediumIcon;
+      @extend %mediumIcon;
+      border-radius: 100px;
     }
     .item-name {
       color: $grayColor;
@@ -130,11 +161,12 @@ export default {
       font-weight: 600;
     }
     .item-content {
-      @include textEllipsis(40px,448px);
+      color: $gray3;
+      @include textEllipsis(40px, 448px);
       margin-top: 8px;
-    
     }
     .item-time {
+      color: $gray3;
       position: absolute;
       right: 30px;
       top: 14px;

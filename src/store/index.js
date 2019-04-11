@@ -4,11 +4,9 @@ import Vuex from 'vuex'
 import actions from '@/store/actions.js'
 import getters from '@/store/getters.js'
 import mutations from '@/store/mutations.js'
-
+import state from "@/store/state.js"
 Vue.use(Vuex);
-const state = {
-    userInfoState: {}
-};
+
 if (module.hot) {
     // 使 action 和 mutation 成为可热重载模块
     module.hot.accept(['./mutations'], () => {

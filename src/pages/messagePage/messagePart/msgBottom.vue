@@ -46,7 +46,7 @@ export default {
     goPlatform(item) {
       this.$router.push({
         name: "platformNewPage",
-        params: { platformTitle: item.title,allData:item }
+        params: { platformTitle: item.title,id:item.id }
       });
     },
     getPlatformData() {

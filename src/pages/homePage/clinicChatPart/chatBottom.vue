@@ -1,10 +1,13 @@
 <template>
   <div class="chat-bottom">
     <div class="reply">
-      <input class="serach-input" type="text" @focus="hideFunc">
-      <div class="ml24">
-        <img src="@/assets/images/tianjia@2x.png" alt @click="addFunc">
+      <div @click="showReply"><span class="leftIcon iconfont">&#xe612;</span></div>
+      <input class="serach-input" type="text" @focus="hideFunc"  v-model="sendContent">
+      <div class="ml24 pr16">
+        <img src="@/assets/images/tianjia@2x.png" alt @click="addFunc" :class="{'translateImg':showFuc}" v-show="showIcon">
+  <div class="send " v-show="!showIcon" @click="sendMessage">发送</div>
       </div>
+    
     </div>
     <div class="function" v-show="showFuc">
       <div class="function-content mr64">
@@ -31,7 +34,13 @@ export default {
   props: ["showFuc"],
   data() {
     return {
+      sendContent:''
     };
+  },
+  computed:{
+    showIcon(){
+      return this.sendContent=='';
+    }
   },
   methods: {
     addFunc() {
@@ -40,8 +49,15 @@ export default {
     hideFunc() {
       this.$emit('hideFunc')
     },
+    showReply(){
+      this.$emit('showReply')
+    },
     goDocRecommond(){
           this.$router.push({name:'docRecommondPage'})
+    },
+    sendMessage(){
+      this.$emit('sendMessage',this.sendContent);
+      this.sendContent='';
     }
   }
 };
@@ -51,10 +67,10 @@ export default {
   @include psFixed(112px);
   background: $bgwhite2;
   .reply {
-    padding: 16px 32px;
+    padding: 16px 0 16px 16px;
     @extend %aglinItem;
     input {
-      width: 590px;
+      width: 540px;
       height: 80px;
       @extend %normalTitle;
       background: rgba(249, 249, 249, 1);
@@ -62,8 +78,11 @@ export default {
       border: 1px solid rgba(151, 151, 151, 1);
     }
     img {
-      width: 64px;
-      height: 64px;
+      width: 68px;
+      height: 68px;
+    }
+    .translateImg{
+      transform: rotate(45deg);
     }
   }
   .function {
@@ -86,5 +105,16 @@ export default {
     }
   }
 }
+.send{
+  @include deepButton(68px,68px);
+  border-radius: 16px;
+  font-size: 24px;
+}
+.leftIcon{
+  font-size: 64px;
+  color: $gray3;
+  padding-right: 20px;
+}
+
 </style>
 
