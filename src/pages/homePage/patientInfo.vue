@@ -7,7 +7,7 @@
       <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==1}]" @click="changeIndex(1)">患者列表</div>
     </section>
     <div v-show="navtiveIndex==0">
-      <div class="patient-infolist" v-for="(item,index) in chatList" @click="goClinicChat(item)">
+      <div class="patient-infolist" v-for="(item,index) in chatList" @click="goClinicChat(item)" :key="index">
         <div class="infolist-item">
           <img :src="item.avatar==''?getNormalHead(item.sex):item.avatar" alt @error="error(item,$event)">
           <div class="item-mid ml24">
@@ -20,7 +20,7 @@
       </div>
     </div>
     <div v-show="navtiveIndex==1">
-      <div class="patient-infolist">
+      <div class="patient-infolist" @click="goClinicChat('111')">
         <div class="infolist-item">
           <img src="@/assets/images/nan@2x.png" alt>
           <div class="item-mid ml24">

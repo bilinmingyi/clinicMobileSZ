@@ -29,7 +29,7 @@
           <p>撤回了一条消息</p>
         </div>
         <!-- <div
-              class="reply-content" 
+              class="reply-content"
         >医生，我想要咨询鼻炎之类的问题呢，最近不舒服医<a href="www.baidu.com">打开</a></div>-->
         <img src="@/assets/images/nv@2x.png" alt class="ml20">
       </div>
@@ -63,7 +63,7 @@ p {
     @extend %normalTitle;
   }
   a {
-    color: #08bac6;
+    color: $deepBlue;
     text-decoration: underline;
     padding-left: 20px;
     font-weight: 600;

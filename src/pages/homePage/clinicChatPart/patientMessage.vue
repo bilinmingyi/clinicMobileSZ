@@ -26,7 +26,7 @@
           </div>
         </div>
         <!-- <div
-              class="reply-content ml16" 
+              class="reply-content ml16"
         >医生，我想要咨询鼻炎之类的问题呢，最近不舒服医<a href="www.baidu.com">打开</a></div>-->
         <div class="cancel ml16" v-show="chatDetail.msgdata.msg_type=='withdraw_msg'">
           <p>对方撤回了一条消息</p>
@@ -61,7 +61,7 @@ p {
     @extend %normalTitle;
   }
   a {
-    color: #08bac6;
+    color: $deepBlue;
     text-decoration: underline;
     padding-left: 20px;
     font-weight: 600;

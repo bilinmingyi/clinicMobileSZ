@@ -1,7 +1,6 @@
 <template>
   <div class="clinic-chat">
     <common-header :titleName="queryData.username"></common-header>
-
     <div class="chat-content" @click="hideFuc" @touchstart="hideFuc">
       <div class="content-detail">
         <component

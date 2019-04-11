@@ -2,10 +2,28 @@
   <div class="reply">
     <div class="reply-title">
       <img src="@/assets/images/gb@2x.png" alt @click="closeReply">
-      <p>设置</p>
+      <p @click="jumpReplySetter">设置</p>
     </div>
     <div class="reply-content">您好，有什么需要帮忙的</div>
     <div class="reply-content">请问有什么可以帮助你</div>
+        <div class="reply-content">您好，有什么需要帮忙的</div>
+    <div class="reply-content">请问有什么可以帮助你</div>
+        <div class="reply-content">您好，有什么需要帮忙的</div>
+    <div class="reply-content">请问有什么可以帮助你</div>
+        <div class="reply-content">您好，有什么需要帮忙的</div>
+    <div class="reply-content">请问有什么可以帮助你</div>
+
+        <div class="reply-content">您好，有什么需要帮忙的</div>
+    <div class="reply-content">请问有什么可以帮助你</div>
+        <div class="reply-content">您好，有什么需要帮忙的</div>
+    <div class="reply-content">请问有什么可以帮助你</div>
+        <div class="reply-content">您好，有什么需要帮忙的</div>
+    <div class="reply-content">请问有什么可以帮助你</div>
+        <div class="reply-content">您好，有什么需要帮忙的</div>
+    <div class="reply-content">请问有什么可以帮助你</div>
+        <div class="reply-content">您好，有什么需要帮忙的您好，有什么需要帮忙的您好，有什么需要帮忙的您好，有什么需要帮忙的您好，有什么需要帮忙的您好，有什么需要帮忙的您好，有什么需要帮忙的</div>
+    <div class="reply-content">请问有什么可以帮助你</div>
+
   </div>
 </template>
 <script>
@@ -16,6 +34,9 @@ export default {
   methods:{
     closeReply(){
       this.$emit('closeReply')
+    },
+    jumpReplySetter(){
+      this.$router.push({name:'replaySettlePage'})
     }
   }
 };
@@ -24,12 +45,15 @@ export default {
 .reply {
   @include psFixed(bottom, 640px);
   background: $bgwhite2;
+  max-height:640px;
   overflow: auto;
-  z-index: 999;
-
+  z-index: 998;
   &-title {
     height: 96px;
     width: 100%;
+    position:fixed;
+    z-index:999;
+    background:$bgwhite2;
     display: flex;
     justify-content: space-between;
     padding: 32px;
@@ -48,7 +72,7 @@ export default {
     margin-left: 32px;
     @include commonBorder();
     @extend %aglinItem;
-    height: 96px;
+    min-height: 96px;
     width: 100%;
     @extend %normalTitle;
   }
