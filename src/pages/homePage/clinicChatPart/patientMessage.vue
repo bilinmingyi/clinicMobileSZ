@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="left-chat mb50">
-      <p class="chat-time mb24">{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
+      <p class="chat-time mb24" v-show="chatDetail.showTime">{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
       <div class="chat-content">
-        <img src="@/assets/images/nan@2x.png" alt>
+        <img :src="imgNormalToggle(patientImg)" alt @error="error(userInfoState,$event)">
         <div
           class="reply-content ml16"
           v-show="chatDetail.msgdata.msg_type=='text'"
-        >{{chatDetail.msgdata.text}}</div>
+        ><span>{{chatDetail.msgdata.text}}</span></div>
         <div class="reply-content ml16" v-show="chatDetail.msgdata.msg_type=='link'">
           <div class="recommond">
             <img src="@/assets/images/nv@2x.png" alt>
@@ -22,7 +22,7 @@
         </div>
         <div class="reply-content ml16" v-show="chatDetail.msgdata.msg_type=='image'">
           <div class="imgMessage">
-            <img src="@/assets/images/nv@2x.png" alt>
+            <img :src="chatDetail.msgdata.img_url" alt>
           </div>
         </div>
         <!-- <div
@@ -36,8 +36,10 @@
   </div>
 </template>
 <script>
+import imgMixins from "@/assets/js/imgMixins";
 export default {
-  props: ["chatDetail"],
+  mixins:[imgMixins],
+  props: ["chatDetail",'patientImg'],
   data() {
     return {};
   }
@@ -69,11 +71,12 @@ p {
   display: flex;
   img {
     @extend %minICon;
+    border-radius: 100px;
   }
   .imgMessage {
     img {
-      width: auto;
-      height: auto;
+      width: 100%;
+      height: 100%;
     }
   }
   .recommond {

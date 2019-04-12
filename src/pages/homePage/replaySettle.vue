@@ -6,7 +6,7 @@
      <div class="settle-button" @click="quickReply">添加快捷回复</div>
     </div>
     <section class="settle-content">
-<div class="detail-content" v-for="(item,index) in defaultReply" :key="index"><span>{{item.replyName}}</span><img src="@/assets/images/sc@2x.png" alt @click="delReply(item)"></div>
+<p class="detail-content" v-for="(item,index) in defaultReply" :key="index"><span>{{item.replyName}}</span><img src="@/assets/images/sc@2x.png" alt @click="delReply(item)"></p>
     </section>
     </div>
 </template>
@@ -32,7 +32,6 @@ export default {
       this.comment = '';
     },
     delReply(item){
-      alert(11)
       this.deleteReply(item)
     }
   },
@@ -76,17 +75,19 @@ export default {
 }
 .settle-content{
   margin-top:492px;
-  overflow:auto;
    background:$bgwhite2;
-
 }
 .detail-content{
     margin-left:32px;
-    padding-right:64px;
+    margin-right: 32px;
+    padding-right:32px;
     @include commonBorder();
     @extend %aglinItem;
     min-height: 96px;
-    width: 100%;
+    span{
+      width: 500px;
+      display: block;
+    }
     @extend %normalTitle;
      display:flex;
      justify-content: space-between;

@@ -3,7 +3,8 @@
     <common-header :isShowLeft="false" :titleName="'个人中心'"></common-header>
     <div class="person" @click="goPersonInfo">
       <div class="person-content">
-        <img :src="userInfoState.avatar" alt class="person-logo">
+        <img :src="imgNormalToggle(userInfoState.avatar)" alt class="person-logo" @error="error(userInfoState,$event)">
+    
         <div class="person-mid ml30">
           <p>
             <span class="person-mid-title">{{userInfoState.name}}</span>
@@ -23,11 +24,14 @@
   </div>
 </template>
 <script>
+//添加公共的混入 里面有图片的默认图和错误处理
+import imgMixins from "@/assets/js/imgMixins";
 import { userInfo } from "@/fetch/api";
 import { mapState } from "vuex";
 import commonHeader from "@/components/common/commonHeader";
 import commonBottom from "@/components/common/commonBottom";
 export default {
+      mixins:[imgMixins],
   data() {
     return {
       navtiveIndex: 3,

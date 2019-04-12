@@ -4,39 +4,35 @@
       <img src="@/assets/images/gb@2x.png" alt @click="closeReply">
       <p @click="jumpReplySetter">设置</p>
     </div>
-    <div class="reply-content">您好，有什么需要帮忙的</div>
-    <div class="reply-content">请问有什么可以帮助你</div>
-        <div class="reply-content">您好，有什么需要帮忙的</div>
-    <div class="reply-content">请问有什么可以帮助你</div>
-        <div class="reply-content">您好，有什么需要帮忙的</div>
-    <div class="reply-content">请问有什么可以帮助你</div>
-        <div class="reply-content">您好，有什么需要帮忙的</div>
-    <div class="reply-content">请问有什么可以帮助你</div>
-
-        <div class="reply-content">您好，有什么需要帮忙的</div>
-    <div class="reply-content">请问有什么可以帮助你</div>
-        <div class="reply-content">您好，有什么需要帮忙的</div>
-    <div class="reply-content">请问有什么可以帮助你</div>
-        <div class="reply-content">您好，有什么需要帮忙的</div>
-    <div class="reply-content">请问有什么可以帮助你</div>
-        <div class="reply-content">您好，有什么需要帮忙的</div>
-    <div class="reply-content">请问有什么可以帮助你</div>
-        <div class="reply-content">您好，有什么需要帮忙的您好，有什么需要帮忙的您好，有什么需要帮忙的您好，有什么需要帮忙的您好，有什么需要帮忙的您好，有什么需要帮忙的您好，有什么需要帮忙的</div>
-    <div class="reply-content">请问有什么可以帮助你</div>
-
+    <div class="mt96"></div>
+    <p
+      class="reply-content"
+      v-for="(item,index) in defaultReply"
+      :key="index"
+      @click="quickReplyMsg(item.replyName)"
+    >
+      <span>{{item.replyName}}</span>
+    </p>
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 export default {
   data() {
     return {};
   },
-  methods:{
-    closeReply(){
-      this.$emit('closeReply')
+  computed: {
+    ...mapState(["defaultReply"])
+  },
+  methods: {
+    closeReply() {
+      this.$emit("closeReply");
     },
-    jumpReplySetter(){
-      this.$router.push({name:'replaySettlePage'})
+    quickReplyMsg(val) {
+      this.$emit("quickReplyMsg",val);
+    },
+    jumpReplySetter() {
+      this.$router.push({ name: "replaySettlePage" });
     }
   }
 };
@@ -45,20 +41,21 @@ export default {
 .reply {
   @include psFixed(bottom, 640px);
   background: $bgwhite2;
-  max-height:640px;
+  max-height: 640px;
   overflow: auto;
   z-index: 998;
   &-title {
     height: 96px;
     width: 100%;
-    position:fixed;
-    z-index:999;
-    background:$bgwhite2;
+    position: fixed;
+    z-index: 999;
+    background: $bgwhite2;
     display: flex;
     justify-content: space-between;
     padding: 32px;
     @extend %aglinItem;
     @include commonBorder();
+
     img {
       width: 76px;
       height: 76px;
@@ -69,12 +66,27 @@ export default {
     }
   }
   &-content {
+    // margin-top:96px;
+    // overflow: auto;
+    // margin-right: 50px;
+    span {
+      width: 100%;
+      display: block;
+    }
+    display: flex;
+    word-wrap: break-word;
     margin-left: 32px;
+    margin-right: 32px;
     @include commonBorder();
     @extend %aglinItem;
+    // display: block;
     min-height: 96px;
-    width: 100%;
+    // line-height: 96px;
+    // width: 100%;
     @extend %normalTitle;
+  }
+  .mt96 {
+    margin-top: 96px;
   }
 }
 </style>

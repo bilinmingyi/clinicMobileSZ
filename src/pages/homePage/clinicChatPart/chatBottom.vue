@@ -14,10 +14,10 @@
         <img src="@/assets/images/zhaopian@2x.png" alt>
         <p>照片</p>
       </div>
-      <div class="function-content mr64">
+      <!-- <div class="function-content mr64">
         <img src="@/assets/images/huifu@2x.png" alt>
         <p>快捷回复</p>
-      </div>
+      </div> -->
       <div class="function-content mr64" >
         <img src="@/assets/images/liangjie@2x.png" alt @click="goDocRecommond">
         <p>预约链接</p>

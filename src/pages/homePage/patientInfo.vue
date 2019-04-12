@@ -9,7 +9,7 @@
     <div v-show="navtiveIndex==0">
       <div class="patient-infolist" v-for="(item,index) in chatList" @click="goClinicChat(item)" :key="index">
         <div class="infolist-item">
-          <img :src="item.avatar==''?getNormalHead(item.sex):item.avatar" alt @error="error(item,$event)">
+          <img :src="imgNormalToggle(item.avatar)" alt @error="error(item,$event)">
           <div class="item-mid ml24">
             <p class="item-name">{{item.username}}/{{item.sex|parseSex}}/{{item.age}}岁</p>
             <p class="item-content" v-if="item.recent_msg">{{msgDataType(item.recent_msg.msgdata)}}</p>
@@ -35,22 +35,17 @@
 import { chatSessionList } from "@/fetch/api";
 import commonHeader from "@/components/common/commonHeader";
 import inputSearch from "@/components/common/inputSearch";
+//添加公共的混入 里面有图片的默认图和错误处理
+import imgMixins from "@/assets/js/imgMixins";
 export default {
+  mixins:[imgMixins],
   data() {
     return {
       navtiveIndex: 0,
-      chatList: {}, // 聊天列表
-      maleImg: require("@/assets/images/nan@2x.png"),
-      femaleImg: require("@/assets/images/nv@2x.png"),
-      classifiedImg: require("@/assets/images/bm.png")
+      chatList: {} // 聊天列表
     };
   },
   methods: {
-    //图片加载错误的时候
-    error(item,e){
-      console.log(e)
-      e.target.src = this.getNormalHead(item.sex); //默认图
-    },
     leftToggle() {
       this.$router.go(-1);
     },
@@ -64,7 +59,8 @@ export default {
           username:item.username,
           session_id:item.session_id,
           session_type:item.session_type,
-          userId:item.userId
+          userId:item.userId,
+          avatar:item.avatar
         }
       });
     },
@@ -73,26 +69,11 @@ export default {
       chatSessionList({}).then(res => {
         if (res.code == 1000) {
           this.chatList = res.data.session_list;
-          console.log(this.chatList);
+          // console.log(this.chatList);
         } else {
           console.log(res);
         }
       });
-    },
-    // 头像的默认图
-    getNormalHead(sex) {
-      let index = Number(sex);
-      switch (sex) {
-        case 0:
-          return this.classifiedImg;
-          break;
-        case 1:
-          return this.maleImg;
-          break;
-        case 2:
-          return this.femaleImg;
-          break;
-      }
     },
     msgDataType(params) {
       switch (params.msg_type) {

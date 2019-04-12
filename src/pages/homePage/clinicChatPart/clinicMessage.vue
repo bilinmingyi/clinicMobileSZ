@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="right-chat mb24">
-      <p class="chat-time mb24">02月11日 09:34</p>
+      <p class="chat-time mb24" v-show="chatDetail.showTime">{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
       <div class="chat-content">
         <!-- messagetype  text-->
         <div
           class="reply-content"
           v-show="chatDetail.msgdata.msg_type=='text'"
-        >{{chatDetail.msgdata.text}}</div>
-        <div class="reply-content" v-show="chatDetail.msgdata.msg_type=='link'">
+        ><span>{{chatDetail.msgdata.text}}</span></div>
+        <div class="reply-content" v-show="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='link'">
           <div class="recommond">
             <img src="@/assets/images/nv@2x.png" alt>
             <div class="recommond-content">
@@ -20,27 +20,45 @@
             </div>
           </div>
         </div>
-        <div class="reply-content" v-show="chatDetail.msgdata.msg_type=='image'">
+        <div
+          class="reply-content"
+          v-show="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='image'"
+        >
           <div class="imgMessage">
             <img src="@/assets/images/nv@2x.png" alt>
           </div>
         </div>
-        <div class="cancel" v-show="chatDetail.msgdata.msg_type=='withdraw_msg'">
+        <div
+          class="cancel"
+          v-show="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='withdraw_msg'"
+        >
           <p>撤回了一条消息</p>
         </div>
         <!-- <div
               class="reply-content"
         >医生，我想要咨询鼻炎之类的问题呢，最近不舒服医<a href="www.baidu.com">打开</a></div>-->
-        <img src="@/assets/images/nv@2x.png" alt class="ml20">
+        <img
+          :src="imgNormalToggle(userInfoState.avatar)"
+          alt
+          class="ml20"
+          @error="error(userInfoState,$event)"
+        >
       </div>
     </div>
   </div>
 </template>
 <script>
+//添加公共的混入 里面有图片的默认图和错误处理
+import imgMixins from "@/assets/js/imgMixins";
+import { mapState } from "vuex";
 export default {
+  mixins: [imgMixins],
   props: ["chatDetail"],
   data() {
     return {};
+  },
+  computed: {
+    ...mapState(["userInfoState"])
   },
   methods: {}
 };
@@ -70,6 +88,7 @@ p {
   }
   display: flex;
   img {
+    border-radius: 100px;
     @extend %minICon;
   }
   .recommond {
@@ -108,8 +127,8 @@ p {
 }
 .imgMessage {
   img {
-    width: auto;
-    height: auto;
+    width: 100%;
+    height: 100%;
   }
 }
 .right-chat {
