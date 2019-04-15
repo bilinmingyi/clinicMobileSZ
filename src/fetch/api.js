@@ -25,7 +25,7 @@ const chatMsgList = params => fetch('/chat/msg/list', params);
 const msgSend = params => fetch('/chat/msg/send', params);
 const msgWithdraw = params => fetch('/chat/msg/withdraw', params);
 const msgRecent = params => fetch('/chat/msg/recent', params);
-
+const patientList = params => fetch('/chat/user/list', params);
 
 /* 消息模块 */
 const getPlatformList = params => fetch('/article/list', params);
@@ -50,6 +50,7 @@ export {
     msgSend,
     msgWithdraw,
     msgRecent,
+    patientList,
     getPlatformList,
     getArticleDetail,
     getCommentList,

@@ -1,13 +1,20 @@
 <template>
   <div>
     <div class="right-chat mb24">
-      <p class="chat-time mb24" v-show="chatDetail.showTime">{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
-      <div class="chat-content">
+      <p
+        class="chat-time mb24"
+        v-show="chatDetail.showTime"
+      >{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
+      <div
+        class="chat-content"
+        @touchstart="gtouchstart()"
+        @touchmove="gtouchmove()"
+        @touchend="gtouchend()"
+      >
         <!-- messagetype  text-->
-        <div
-          class="reply-content"
-          v-show="chatDetail.msgdata.msg_type=='text'"
-        ><span>{{chatDetail.msgdata.text}}</span></div>
+        <div class="reply-content" v-show="chatDetail.msgdata.msg_type=='text'">
+          <span>{{chatDetail.msgdata.text}}</span>
+        </div>
         <div class="reply-content" v-show="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='link'">
           <div class="recommond">
             <img src="@/assets/images/nv@2x.png" alt>
@@ -25,14 +32,14 @@
           v-show="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='image'"
         >
           <div class="imgMessage">
-            <img src="@/assets/images/nv@2x.png" alt>
+            <img :src="chatDetail.msgdata.img_url" alt>
           </div>
         </div>
         <div
           class="cancel"
           v-show="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='withdraw_msg'"
         >
-          <p>撤回了一条消息</p>
+          <p>你撤回了一条消息</p>
         </div>
         <!-- <div
               class="reply-content"
@@ -55,12 +62,42 @@ export default {
   mixins: [imgMixins],
   props: ["chatDetail"],
   data() {
-    return {};
+    return {
+      timeOutEvent: ""
+    };
   },
   computed: {
     ...mapState(["userInfoState"])
   },
-  methods: {}
+  methods: {
+    //开始按
+    gtouchstart() {
+      if (this.chatDetail.msgdata.msg_type == "withdraw_msg") {
+        return;
+        //撤销消息不能撤回
+      }
+      this.timeOutEvent = setTimeout(() => {
+        this.$Message.confirm("确认撤销消息么？", () => {
+          this.$emit("cancelMessage", this.chatDetail);
+        });
+      }, 1000); //这里设置定时器，定义长按1000毫秒触发长按事件，时间可以自己改
+      return false;
+    },
+    //手释放，如果在500毫秒内就释放，则取消长按事件，此时可以执行onclick应该执行的事件
+    gtouchend() {
+      clearTimeout(this.timeOutEvent);
+      //清除定时器
+      return false;
+    },
+    //如果手指有移动，则取消所有事件，此时说明用户只是要移动而不是长按
+    gtouchmove() {
+      clearTimeout(this.timeOutEvent); //清除定时器
+      this.timeOutEvent = 0;
+    }
+  },
+  created() {
+    // this.$Message.infor('网络出错！');
+  }
 };
 </script>
 <style lang="scss" scoped>

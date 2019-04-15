@@ -32,7 +32,7 @@
   </div>
 </template>
 <script>
-import { chatSessionList } from "@/fetch/api";
+import { chatSessionList,patientList } from "@/fetch/api";
 import commonHeader from "@/components/common/commonHeader";
 import inputSearch from "@/components/common/inputSearch";
 //添加公共的混入 里面有图片的默认图和错误处理
@@ -74,6 +74,14 @@ export default {
           console.log(res);
         }
       });
+      let params={
+        query:'',
+        page:'',
+        page_size:""
+      }
+      patientList({}).then(res=>{
+        console.log(res)
+      })
     },
     msgDataType(params) {
       switch (params.msg_type) {
@@ -81,13 +89,13 @@ export default {
           return params.text;
           break;
         case "image":
-          return "您收到一张图片信息";
+          return "一张图片信息";
           break;
         case "link":
-          return "您收到一条连接信息";
+          return "一条连接信息";
           break;
         case "withdraw_msg":
-          return "对方撤回了一条信息";
+          return "撤回了一条信息";
           break;
       }
     }

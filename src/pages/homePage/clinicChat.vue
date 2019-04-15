@@ -1,17 +1,18 @@
 <template>
-  <div>
+  <div ref="allWrapper">
     <common-header :titleName="queryData.username"></common-header>
     <div class="clinic-chat">
-      <div class="wrapper" ref="wrapper" >
+      <div class="wrapper" ref="wrapper">
         <div class="chat-content content" @click="hideFuc" @touchstart="hideFuc">
           <p v-show="isShowLoad" class="loadData">正在加载数据...</p>
           <div class="content-detail">
             <component
               v-for="(item,index) in allMsgList"
-              :key="index"
+              :key="item.msgid"
               :is="RenderComponent(item.from)"
               :chatDetail="item"
               :patientImg="queryData.avatar"
+              @cancelMessage = "cancelMessage"
             ></component>
           </div>
         </div>
@@ -30,7 +31,7 @@
 </template>
 <script>
 import BScroll from "better-scroll";
-import { chatMsgList, msgSend } from "@/fetch/api";
+import { chatMsgList, msgSend,msgWithdraw } from "@/fetch/api";
 import { mapState } from "vuex";
 import commonHeader from "@/components/common/commonHeader";
 import chatBottom from "./clinicChatPart/chatBottom";
@@ -46,7 +47,8 @@ export default {
       allMsgList: [],
       isReply: false,
       dataInterval: "",
-      isShowLoad: false
+      isShowLoad: false,
+      isContinue: true
     };
   },
   components: {
@@ -76,6 +78,7 @@ export default {
       /* 1 诊所 2 患者 */
       return from == 1 ? clinicMessage : patientMessage;
     },
+    //发送信息的时候请求数据
     sendMessage(val) {
       let index = this.allMsgList.length - 1;
       let params = {
@@ -111,8 +114,32 @@ export default {
         } else {
           console.log(res);
         }
-        window.scrollTo(0, this.$refs.chatContainer.scrollHeight + 100); //滑动到底部
+        setTimeout(() => {
+          this.scroll.scrollTo(0, this.scroll.maxScrollY, 1000);
+        }, 0);
       });
+    },
+    //撤销消息
+    cancelMessage(val){
+        console.log(val)
+        let params = {
+          session_type:val.session_type,
+          session_id:val.session_id,
+          msg_id:val.msgid
+        }
+        msgWithdraw(params).then(res=>{
+          if(res.code===1000){
+          this.allMsgList.filter((item)=>{
+            item.msgid !==val.msgid
+          })
+          }else{
+            this.$Message.infor('网络太差，撤销失败');
+            console.log(res)
+          }
+          setTimeout(() => {
+          this.scroll.scrollTo(0, this.scroll.maxScrollY, 1000);
+        }, 0);
+        })
     },
     showReply() {
       this.isReply = true;
@@ -120,6 +147,7 @@ export default {
     closeReply() {
       this.isReply = false;
     },
+    //是否显示时间
     computedTime(start_time, end_time) {
       let temp1 = new Date(start_time);
       let temp2 = new Date(end_time);
@@ -139,11 +167,51 @@ export default {
         return false;
       }
     },
+    //一定时间请求数据
+    setIntervalData() {
+      let index = this.allMsgList.length - 1;
+      let params = {
+        direction: "down",
+        session_type: this.queryData.session_type,
+        count: 10,
+        last_msgid: this.allMsgList[index].msgid,
+        to_userid: this.queryData.userId
+      };
+      console.log(params);
+      chatMsgList(params).then(res => {
+        // console.log(res);
+        if (res.code === 1000) {
+          res.data.msg_list.forEach((item, index) => {
+            if (index == 0) {
+              return;
+            } else {
+              this.allMsgList.push(item);
+            }
+          });
+          this.allMsgList.forEach((item, index) => {
+            if (index == 0) {
+              this.$set(item, "showTime", true);
+            } else if (
+              index != 0 &&
+              this.computedTime(this.allMsgList[index - 1].msgts, item.msgts)
+            ) {
+              this.$set(item, "showTime", true);
+            } else {
+              this.$set(item, "showTime", false);
+            }
+          });
+          this.isReply = false;
+        } else {
+          console.log(res);
+        }
+      });
+    },
+    //初始化数据
     getChatMsg() {
       let params = {
         direction: "down",
         session_type: this.queryData.session_type,
-        count: 20,
+        count: 10,
         last_msgid: this.last_msgid,
         to_userid: this.queryData.userId
       };
@@ -162,7 +230,55 @@ export default {
               this.$set(item, "showTime", false);
             }
           });
-          console.log(this.allMsgList);
+          this.last_msgid = this.allMsgList[0].msgid;
+        } else {
+          console.log(res);
+        }
+        setTimeout(() => {
+          this.scroll.scrollTo(0, this.scroll.maxScrollY, 1000);
+        }, 0);
+      });
+    },
+    //向上加载的时候的操作数据
+    getUpLoadData() {
+      this.isContinue = false;
+      this.isShowLoad = true;
+      let params = {
+        direction: "up",
+        session_type: this.queryData.session_type,
+        count: 10,
+        last_msgid: this.last_msgid,
+        to_userid: this.queryData.userId
+      };
+      chatMsgList(params).then(res => {
+        this.isShowLoad = false;
+        if (res.code == 1000) {
+          console.log(res.data.msg_list.length)
+          console.log(res)
+          let newObject = [];
+          res.data.msg_list.forEach((item, index) => {
+            //第一个数据不要
+            if (index == res.data.msg_list.length - 1) {
+              return;
+            } else {
+              newObject.push(item);
+            }
+          });
+          this.allMsgList.unshift(...newObject);
+          this.allMsgList.forEach((item, index) => {
+            if (index == 0) {
+              this.$set(item, "showTime", true);
+            } else if (
+              index != 0 &&
+              this.computedTime(this.allMsgList[index - 1].msgts, item.msgts)
+            ) {
+              this.$set(item, "showTime", true);
+            } else {
+              this.$set(item, "showTime", false);
+            }
+          });
+          this.last_msgid = this.allMsgList[0].msgid;
+          this.isContinue = res.data.msg_list.length == 10 ? true : false;
         } else {
           console.log(res);
         }
@@ -170,32 +286,29 @@ export default {
     }
   },
   mounted() {
-    this.scroll = new BScroll(this.$refs.wrapper);
-    console.log(   this.scroll )
-    setTimeout(()=>{
-  console.log(   this.scroll )
-    },2000)
-    this.scroll.on('touchEnd', (pos) => {
-            //上拉加载 总高度>下拉的高度+10 触发加载更多
-            if(this.scroll.maxScrollY>pos.y+10){
-                console.log("加载更多")
-                this.isShowLoad = true
-                //使用refresh 方法 来更新scroll  解决无法滚动的问题
-                this.scroll.refresh()
-            }else{
-               this.isShowLoad = false
-            }
-            console.log(this.scroll.maxScrollY+"总距离----下拉的距离"+pos.y)
-        })
-    // this.dataInter = setInterval(() => {
-    //   console.log("i love yy");
-    // }, 2000);
+    let options = {
+      pullDownRefresh: {
+        threshold: 50, // 当下拉到超过顶部 50px 时，触发 pullingDown 事件
+        stop: 20, // 刷新数据的过程中，回弹停留在距离顶部还有 20px 的位置
+        bounce: true
+      }
+    };
+    //上拉加载数据
+    this.scroll = new BScroll(this.$refs.wrapper, options);
+    this.scroll.on("pullingDown", () => {
+      this.getUpLoadData();
+      this.scroll.finishPullDown();
+      // 刷新数据的过程中，回弹停留在距离顶部还有20px的位置
+    });
+    this.getChatMsg();
+    this.dataInterval = setInterval(() => {
+      this.setIntervalData();
+    }, 3000);
   },
   created() {
     this.queryData = this.$route.query;
-    this.getChatMsg();
-  },
-  watch: {}
+  
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -205,19 +318,15 @@ export default {
   overflow: hidden;
   .chat-content {
     width: 100%;
-    // height: 100%;
+    height: 100%;
     overflow: auto;
     .content-detail {
       padding: 32px 24px;
     }
   }
 }
-.wrapper{
+.wrapper {
   max-height: calc(100vh - 200px);
-//  position: a;
-// bottom: 200px;
-// top: 200px;
-// overflow: hidden;
 }
 .loadData {
   margin-top: 20px;

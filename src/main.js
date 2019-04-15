@@ -6,6 +6,7 @@ import router from './router'
 import filters from './assets/js/filters'
 import components from './assets/js/components'
 import store from './store/index'
+import message from './assets/js/message'
 import "./assets/css/reset.css";
 //配置Vue脚手架移动适配--rem
 import 'lib-flexible/flexible';
@@ -15,8 +16,9 @@ Object.keys(filters).forEach(key => {
 })
 
 Object.keys(components).forEach(key => {
-        Vue.component(key, components[key])
-    })
+    Vue.component(key, components[key])
+})
+Vue.prototype.$Message = message
     // console.log(window.location)
 Vue.config.productionTip = false
     // (function (doc,win){
