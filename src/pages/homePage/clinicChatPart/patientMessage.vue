@@ -3,7 +3,7 @@
     <div class="left-chat mb50">
       <p class="chat-time mb24" v-show="chatDetail.showTime">{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
       <div class="chat-content">
-        <img :src="imgNormalToggle(patientImg)" alt @error="error(userInfoState,$event)">
+        <img :src="imgNormalToggle(patientImg,userInfoState)" alt @error="error(userInfoState,$event)">
         <div
           class="reply-content ml16"
           v-show="chatDetail.msgdata.msg_type=='text'"

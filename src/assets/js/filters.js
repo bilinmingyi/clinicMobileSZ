@@ -8,6 +8,9 @@ const soltTime = function(val) {
         let timeSolt = ["上午", "下午", "晚上"];
         return timeSolt[(val - 1)]
     }
+const doctorTypes = function(val){
+  return clinicDict.professionalType.codeToName(val);
+}
     /**
      * @desc: Date format
      * @param {Date | Number} date
@@ -92,11 +95,13 @@ const detailDate = function(date) {
         return date.substring(0, 16);
     }
 }
+/* */
 
 
 export default {
     dateFormat,
     parseSex,
     soltTime,
-    detailDate
+    detailDate,
+    doctorTypes
 }

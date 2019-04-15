@@ -66,6 +66,7 @@ export default {
           }
           this.isLoad=true;
         } else {
+           this.$Message.infor('网络出错！')
            this.isLoad=true;
           console.log(res);
         }

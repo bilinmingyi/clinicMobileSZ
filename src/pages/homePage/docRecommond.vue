@@ -28,25 +28,45 @@
         <div class="doc-button ml64 ">推荐</div>
       </div>
     </div>
+    <!-- <div :class="['doctor-job',color_list[itemData.title-1]]"></div> -->
   </div>
 </template>
 
 <script>
 import commonHeader from "@/components/common/commonHeader";
 import inputSearch from "@/components/common/inputSearch";
+import {doctorList} from "@/fetch/api"
 export default {
   data() {
     return {
-      docJob:1
+      docJob:1,
+      color_list:['color-4DBC89', 'color-EDAB15', 'color-08BAC6', 'color-29BBFF']
     };
   },
   components: {
     commonHeader,
     inputSearch
+  },
+  methods:{
+    getData(){
+       let today=new Date(this.selectDate);
+        let todayStr=today.getFullYear().toString()+((today.getMonth()+1)>9?(today.getMonth()+1):"0"+(today.getMonth()+1)).toString()+(today.getDate()>9?today.getDate():"0"+today.getDate()).toString();
+        let params = {
+           "appointDate":todayStr
+        }
+        console.log(11)
+      doctorList(params).then(res=>{
+        console.log(res)
+      })
+    }
+  },
+  created(){
+    this.getData();
   }
 };
 </script>
 <style lang="scss" scoped>
+
 .doc-content {
   width: 100%;
   height: 160px;
@@ -94,6 +114,22 @@ export default {
     }
   }
 }
+
+  .color-29BBFF {
+    background: #29BBFF;
+  }
+
+  .color-4DBC89 {
+    background: #4DBC89;
+  }
+
+  .color-08BAC6 {
+    background: #08BAC6;
+  }
+
+  .color-EDAB15 {
+    background: #EDAB15;
+  }
 </style>
 
 

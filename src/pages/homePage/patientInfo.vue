@@ -9,7 +9,7 @@
     <div v-show="navtiveIndex==0">
       <div class="patient-infolist" v-for="(item,index) in chatList" @click="goClinicChat(item)" :key="index">
         <div class="infolist-item">
-          <img :src="imgNormalToggle(item.avatar)" alt @error="error(item,$event)">
+          <img :src="imgNormalToggle(item.avatar,item)" alt @error="error(item,$event)">
           <div class="item-mid ml24">
             <p class="item-name">{{item.username}}/{{item.sex|parseSex}}/{{item.age}}岁</p>
             <p class="item-content" v-if="item.recent_msg">{{msgDataType(item.recent_msg.msgdata)}}</p>
@@ -28,6 +28,7 @@
           </div>
         </div>
       </div>
+      <load-more  v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
     </div>
   </div>
 </template>
@@ -35,6 +36,7 @@
 import { chatSessionList,patientList } from "@/fetch/api";
 import commonHeader from "@/components/common/commonHeader";
 import inputSearch from "@/components/common/inputSearch";
+import loadMore from "@/components/common/loadMore";
 //添加公共的混入 里面有图片的默认图和错误处理
 import imgMixins from "@/assets/js/imgMixins";
 export default {
@@ -42,7 +44,9 @@ export default {
   data() {
     return {
       navtiveIndex: 0,
-      chatList: {} // 聊天列表
+      chatList: {}, // 聊天列表
+      isLoad:false, // 加载是否完成
+      isShowLoad:true  //是否有更多加载
     };
   },
   methods: {
@@ -71,6 +75,7 @@ export default {
           this.chatList = res.data.session_list;
           // console.log(this.chatList);
         } else {
+           this.$Message.infor('网络出错！')
           console.log(res);
         }
       });
@@ -102,7 +107,8 @@ export default {
   },
   components: {
     commonHeader,
-    inputSearch
+    inputSearch,
+    loadMore
   },
   created() {
     this.getChatSessionList();

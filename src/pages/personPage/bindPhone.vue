@@ -55,12 +55,12 @@ export default {
       console.log(11)
       let self = this;
       if (self.tel == "") {
-        alert("手机号不能为空！", 1500);
+        this.$Message.infor("手机号不能为空！");
         return false;
       }
       var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
       if (!reg.test(self.tel)) {
-        alert("请输入正确的手机号", 1500);
+        this.$Message.infor("请输入正确的手机号");
         return false;
       }
       self.checkSubmitFlg = true;
@@ -82,16 +82,16 @@ export default {
       let self = this;
       //校正
       if (self.tel == "") {
-        modal("手机号不能为空", 1500);
+        this.$Message.infor("手机号不能为空");
         return false;
       }
       var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
       if (!reg.test(self.tel)) {
-        modal("请输入正确的手机号", 1500);
+        this.$Message.infor("请输入正确的手机号");
         return false;
       }
       if (self.code == "") {
-        modal("验证码不能为为空", 1500);
+        this.$Message.infor("验证码不能为为空");
         return false;
       }
       let params = {
@@ -100,39 +100,15 @@ export default {
       };
       updateMoblie(params).then(res => {
         if (res.code == 1000) {
-          alert("保存成功");
+           this.$Message.infor('保存成功！');
           //更新vuex数据
           this.getUserInfo();
         } else if (res.code == 300002) {
-          alert("手机号已占用");
+            this.$Message.infor('手机号已占用');
         } else {
-          alert("系统错误");
+          this.$Message.infor('系统错误');
         }
       });
-      // //TODO
-      // self.$http
-      //   .post("${'/user/mobile/update'.url()}", {
-      //     mobile: self.tel,
-      //     code: self.code
-      //   })
-      //   .then(
-      //     function(res) {
-      //       var _data = res.data;
-      //       if (_data.code == 1000) {
-      //         modal("保存成功", 1500);
-      //         this.$router.push({name:'personPage'})
-      //         // window.location.href =
-      //         //   "${'/weixin/mobilePage?SCOPE_backUri=/weixin/centerPage'.url()}";
-      //       } else if (_data.code == 300002) {
-      //         modal("手机号已占用", 1500);
-      //       } else {
-      //         modal("系统错误：" + _data.code, 1500);
-      //       }
-      //     },
-      //     function(err) {
-      //       modal("数据异常" + _data.code, 1500);
-      //     }
-      //   );
     }
   }
 };

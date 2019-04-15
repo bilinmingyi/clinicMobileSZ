@@ -17,7 +17,7 @@ try {
     if (localStorage.defaultKey) {
         defaultKey = localStorage.defaultKey
     }
-    console.log(localStorage.defaultReply)
+    // console.log(localStorage.defaultReply)
 } catch (e) {
     // localStorage.defaultReply = defaultReply
 }

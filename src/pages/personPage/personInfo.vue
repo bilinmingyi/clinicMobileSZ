@@ -103,7 +103,7 @@ export default {
         this.birthdayTime == "" ||
         this.sex_statues == ""
       ) {
-        alert("请完善个人信息", 1500);
+        this.$Message.infor("请完善个人信息");
         return;
       }
       let timetmp = Date.parse(new Date(this.birthdayTime));
@@ -116,10 +116,10 @@ export default {
       // console.log(timetmp);
       updateUserInfo(params).then(res=>{
         if(res.code==1000){
-          alert('保存成功');
+          this.$Message.infor('保存成功');
           this.getUserInfo();
         }else{
-          alert('更新失败'+res.code)
+          this.$Message.infor('更新失败'+res.code)
         }
         console.log(res)
       });

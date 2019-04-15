@@ -15,7 +15,7 @@ export default {
         // 头像的默认图
         getNormalHead(sex) {
             let index = Number(sex);
-            switch (sex) {
+            switch (index) {
                 case 0:
                     return this.classifiedImg;
                     break;
@@ -28,8 +28,8 @@ export default {
             }
         },
         //如果有图片传入 就用传入的图片 否则用默认图
-        imgNormalToggle(url) {
-            return url == '' ? getNormalHead(item.sex) : url;
+        imgNormalToggle(url,item) {
+            return url == '' ? this.getNormalHead(item.sex) : url;
         }
     }
 }

@@ -49,6 +49,7 @@ export default {
         if (res.code == 1000) {
           this.detailData = res.data;
         } else {
+           this.$Message.infor('网络出错！')
           console.log(res);
         }
       });
@@ -63,6 +64,7 @@ export default {
           this.commentList = res.data;
           console.log( this.commentList)
         }else{
+           this.$Message.infor('网络出错！')
         console.log(res);
         }
 

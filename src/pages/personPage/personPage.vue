@@ -3,8 +3,8 @@
     <common-header :isShowLeft="false" :titleName="'个人中心'"></common-header>
     <div class="person" @click="goPersonInfo">
       <div class="person-content">
-        <img :src="imgNormalToggle(userInfoState.avatar)" alt class="person-logo" @error="error(userInfoState,$event)">
-    
+        <img :src="imgNormalToggle(userInfoState.avatar,userInfoState)" alt class="person-logo" @error="error(userInfoState,$event)">
+
         <div class="person-mid ml30">
           <p>
             <span class="person-mid-title">{{userInfoState.name}}</span>
