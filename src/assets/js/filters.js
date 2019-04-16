@@ -11,6 +11,9 @@ const soltTime = function(val) {
 const doctorTypes = function(val){
   return clinicDict.professionalType.codeToName(val);
 }
+const appointStatus =  function(val){
+  return clinicDict.appointStatus.codeToName(val);
+}
     /**
      * @desc: Date format
      * @param {Date | Number} date
@@ -103,5 +106,6 @@ export default {
     parseSex,
     soltTime,
     detailDate,
-    doctorTypes
+    doctorTypes,
+    appointStatus
 }

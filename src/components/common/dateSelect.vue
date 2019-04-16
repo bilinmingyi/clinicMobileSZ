@@ -33,7 +33,9 @@ export default {
       }
       this.formatTime(index);
       this.chooseNative = index;
-      let timeParams = { startTime: this.startTime, endTime: this.endTime };
+      let startTimeStr=(new Date(this.startTime)).setHours(0, 0, 0, 0);
+      let endTimeStr = (new Date(this.endTime)).setHours(23, 59, 59, 59);
+      let timeParams = { startTime: startTimeStr, endTime: endTimeStr};
       console.log(timeParams);
       switch (index) {
         case 1:
@@ -51,7 +53,9 @@ export default {
       }
     },
     queryData() {
-      let timeParams = { startTime: this.startTime, endTime: this.endTime };
+     let startTimeStr=(new Date(this.startTime)).setHours(0, 0, 0, 0);
+      let endTimeStr = (new Date(this.endTime)).setHours(23, 59, 59, 59);
+      let timeParams = { startTime: startTimeStr, endTime: endTimeStr};
       console.log(timeParams);
       this.$emit("selectQuery", timeParams);
     },
@@ -93,6 +97,7 @@ export default {
   },
   mounted() {
     this.formatTime(1);
+    this.changeNative(1)
   }
 };
 </script>
