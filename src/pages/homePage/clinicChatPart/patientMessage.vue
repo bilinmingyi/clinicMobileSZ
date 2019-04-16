@@ -53,7 +53,7 @@ export default {
   },
   created(){
     if(this.chatDetail.msgdata.msg_type=='link'){
-        this.imgDetail=JSON.parse(this.chatDetail.msgdata.link_desc);
+          this.imgDetail=this.chatDetail.msgdata.link_desc ?JSON.parse(this.chatDetail.msgdata.link_desc):{};
     }
     
   }

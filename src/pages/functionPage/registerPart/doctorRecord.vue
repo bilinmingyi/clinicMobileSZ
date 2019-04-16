@@ -1,6 +1,12 @@
 <template>
   <div>
-    <date-select></date-select>
+    <date-select
+      @selectToday="selectToday"
+      @selectYesterday="selectYesterday"
+      @selectThisMonth="selectThisMonth"
+      @selectLastMonth="selectLastMonth"
+      @selectQuery="selectQuery"
+    ></date-select>
     <div class="doctor">
       <first-table :firstTableList="firstTableList">
         <template slot="left">￥</template>
@@ -9,14 +15,14 @@
       <second-table :titleArray="titleArray" :contentArray="contentArray">
         <template slot="value" slot-scope="tableValue">
           {{tableValue.value}}
-           <!-- {{tableValue.objectKey}} -->
+          <!-- {{tableValue.objectKey}} -->
         </template>
       </second-table>
     </div>
   </div>
 </template>
 <script>
-import { registerDoctor } from "@/fetch/api";
+import { registerDoctor, registerStream } from "@/fetch/api";
 import dateSelect from "@/components/common/dateSelect";
 import firstTable from "@/components/common/firstTable";
 import secondTable from "@/components/common/secondTable";
@@ -30,43 +36,22 @@ export default {
           location: "right"
         },
         {
-          title: "预约缴费",
+          title: "应收金额",
           value: "0",
-          location: "left"
-        },
-        {
-          title: "挂号缴费",
-          value: "500",
           location: "left"
         }
       ],
-      titleArray: ["挂号医生", "挂号次数", "预约缴费", "挂号缴费"],
-      contentArray: [
-        {
-          doctor: "lbl",
-          num: "1",
-          money1: "100",
-          money2: "100"
-        },
-        {
-          doctor: "lbl2",
-          num: "2",
-          money1: "200",
-          money2: "200"
-        },
-        {
-          doctor: "lbl3",
-          num: "3",
-          money1: "300",
-          money2: "300"
-        },
-        {
-          doctor: "lbl4",
-          num: "4",
-          money1: "400",
-          money2: "400"
-        }
-      ]
+      titleArray: ["挂号医生", "挂号次数", "应收金额"],
+      contentArray: [],
+      page: "1", //页数
+      pageSize: "10", //一页展示的条数
+      recordParams: {
+        create_start_time: "",
+        create_end_time: "",
+        statusArr: ["DONE", "TREAT_WAITING"],
+        page: 1,
+        page_size: 10
+      }
     };
   },
   components: {
@@ -75,14 +60,83 @@ export default {
     secondTable
   },
   methods: {
-    getRegisterDoctor(){
-      let params={
-        
-      }
+    getRegisterDoctor() {
+      let params = {};
+    },
+    selectToday(val) {
+      console.log(val);
+      this.recordParams.create_start_time = new Date().getTime();
+      this.recordParams.create_end_time = new Date().getTime();
+      this.contentArray = [];
+      registerDoctor(this.recordParams).then(res => {
+        console.log(res.data);
+        if (res.code === 1000) {
+          console.log(this.firstTableList);
+          this.$set(
+            this.firstTableList[0],
+            "value",
+            res.data.totalAmt.totalCount || 0
+          );
+          this.$set(
+            this.firstTableList[1],
+            "value",
+            res.data.totalAmt.amount_receivable || 0
+          );
+          res.data.doctorAmtList.forEach(item => {
+            let object = {};
+            object.doctor = item.doctor_name;
+            object.num = item.total_count;
+            object.money1 = item.amount_receivable;
+            this.contentArray.push(object);
+          });
+          //  this.$set( this.firstTableList[1], "value",  res.data.totalAmt.amount_receivable||0);
+        } else {
+          this.$Message.infor(res.msg);
+        }
+      });
+    },
+    getData(val) {
+      this.recordParams.create_start_time = new Date(val.startTime).getTime();
+      this.recordParams.create_end_time = new Date(val.endTime).getTime();
+      this.contentArray = [];
+      console.log(this.recordParams)
+      registerDoctor(this.recordParams).then(res => {
+        if (res.code === 1000) {
+          this.$set(this.firstTableList[0], "value", res.data.totalCount);
+          this.$set(
+            this.firstTableList[1],
+            "value",
+            res.data.totalAmt.amount_receivable
+          );
+          res.data.doctorAmtList.forEach(item => {
+            let object = {};
+            object.doctor = item.doctor_name;
+            object.num = item.total_count;
+            object.money1 = item.amount_receivable;
+            this.contentArray.push(object);
+          });
+        } else {
+          this.$Message.infor(res.msg);
+        }
+        console.log(res);
+      });
+    },
+    selectYesterday(val) {
+      console.log(val)
+      this.getData(val);
+    },
+    selectThisMonth(val) {
+      this.getData(val);
+    },
+    selectLastMonth(val) {
+      this.getData(val);
+    },
+    selectQuery(val) {
+      this.getData(val);
     }
   },
-  created(){
-
+  created() {
+    this.selectToday();
   }
 };
 </script>

@@ -34,7 +34,7 @@ export default {
       this.formatTime(index);
       this.chooseNative = index;
       let timeParams = { startTime: this.startTime, endTime: this.endTime };
-      console.log(timeParams);
+      // console.log(timeParams);
       switch (index) {
         case 1:
           this.$emit("selectToday", timeParams);
@@ -52,7 +52,11 @@ export default {
     },
     queryData() {
       let timeParams = { startTime: this.startTime, endTime: this.endTime };
-      console.log(timeParams);
+      if(this.startTime>this.endTime){
+        this.$Message.infor("开始时间不能大于结束时间");
+        return;
+      }
+      // console.log(timeParams);
       this.$emit("selectQuery", timeParams);
     },
     /**

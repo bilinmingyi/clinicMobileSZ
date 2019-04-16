@@ -9,7 +9,7 @@
   <div class="first" v-show="firstTableList.length>0">
     <div class="first-list" v-for="(item,index) in firstTableList" :key="index">
       <span class="first-title">{{item.title}}</span>
-      <span class="first-content"><slot name="left" v-if="item.location=='left'" ></slot>{{item.value}}<span class="pl5"><slot name="right" v-if="item.location=='right'" ></slot></span></span>
+      <span class="first-content"><slot name="left" v-if="item.location=='left'" ></slot>{{item.value||0}}<span class="pl5"><slot name="right" v-if="item.location=='right'" ></slot></span></span>
     </div>
   </div>
 </div>

@@ -49,8 +49,7 @@ export default {
       allMsgList: [],
       isReply: false,
       dataInterval: "",
-      isShowLoad: false,
-      isContinue: true
+      isShowLoad: false
     };
   },
   components: {
@@ -82,7 +81,7 @@ export default {
     RenderComponent(from) {
       // render MessageComponent
       /* 1 诊所 2 患者 */
-      return from == 1 ? clinicMessage : patientMessage;
+      return from === 1 ? clinicMessage : patientMessage;
     },
     goDocRecommond() {
       let index = this.allMsgList.length - 1;
@@ -137,7 +136,7 @@ export default {
           });
           this.isReply = false;
         } else {
-          console.log(res);
+          this.$Message.infor(res.msg);
         }
         setTimeout(() => {
           this.scroll.scrollTo(0, this.scroll.maxScrollY, 1000);
@@ -162,8 +161,7 @@ export default {
           this.scroll.scrollTo(0, this.scroll.maxScrollY, 1000);
         }, 0);
         } else {
-          this.$Message.infor("网络太差，撤销失败");
-          console.log(res);
+          this.$Message.infor(res.msg);
         }
        
       });
@@ -213,8 +211,7 @@ export default {
         let secondArray = [];
         if (res.code === 1000) {
           res.data.msg_list.forEach((item, index) => {
-            if (index == 0 && this.allMsgList.length != 0) {
-              return;
+            if (index == 0 && this.allMsgList.length !== 0) {
             } else {
               this.allMsgList.push(item);
             }
@@ -227,7 +224,7 @@ export default {
           if (withArray.length > 0) {
              let filterArray = JSON.parse(JSON.stringify(this.allMsgList));
           withArray.forEach(item => {
-           filterArray.splice(filterArray.findIndex(v => v.msgid == item.msgid), 1)
+           filterArray.splice(filterArray.findIndex(v => v.msgid === item.msgid), 1)
           })
             this.allMsgList = filterArray;
           }
@@ -247,7 +244,7 @@ export default {
           });
           this.isReply = false;
         } else {
-          console.log(res);
+           this.$Message.infor(res.msg);
         }
       });
     },
@@ -279,7 +276,7 @@ export default {
           this.last_msgid =
             this.allMsgList.length > 0 ? this.allMsgList[0].msgid : null;
         } else {
-          this.$Message.infor("网络出错！");
+           this.$Message.infor(res.msg);
         }
         setTimeout(() => {
           this.scroll.scrollTo(0, this.scroll.maxScrollY, 1000);
@@ -288,7 +285,6 @@ export default {
     },
     //向上加载的时候的操作数据
     getUpLoadData() {
-      this.isContinue = false;
       this.isShowLoad = true;
       let params = {
         direction: "up",
@@ -323,12 +319,11 @@ export default {
             }
           });
           this.last_msgid = this.allMsgList[0].msgid;
-          this.isContinue = res.data.msg_list.length == 10 ? true : false;
           if (res.data.msg_list.length != 10) {
             this.scroll.closePullDown();
           }
         } else {
-          console.log(res);
+          this.$Message.infor(res.msg);
         }
       });
     }
