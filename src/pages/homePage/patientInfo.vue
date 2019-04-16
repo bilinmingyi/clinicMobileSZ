@@ -1,52 +1,70 @@
 <template>
   <div class="patient-info">
     <common-header :titleName="'患者信息'"></common-header>
+    <div class="fixtop">
     <input-search></input-search>
     <section class="patient-bar">
       <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==0}]" @click="changeIndex(0)">最新消息</div>
       <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==1}]" @click="changeIndex(1)">患者列表</div>
     </section>
-    <div v-show="navtiveIndex==0">
-      <div class="patient-infolist" v-for="(item,index) in chatList" @click="goClinicChat(item)" :key="index">
+   </div>
+   <div class="pt150">
+  <div v-show="navtiveIndex==0">
+      <div
+        class="patient-infolist"
+        v-for="(item,index) in chatList"
+        @click="goClinicChat(item,1)"
+        :key="index"
+      >
         <div class="infolist-item">
           <img :src="imgNormalToggle(item.avatar,item)" alt @error="error(item,$event)">
           <div class="item-mid ml24">
             <p class="item-name">{{item.username}}/{{item.sex|parseSex}}/{{item.age}}岁</p>
             <p class="item-content" v-if="item.recent_msg">{{msgDataType(item.recent_msg.msgdata)}}</p>
-            <span class="item-time" v-if="item.recent_msg">{{item.recent_msg.msgts|dateFormat('yyyy-MM-dd hh:mm')|detailDate}}</span>
+            <span
+              class="item-time"
+              v-if="item.recent_msg"
+            >{{item.recent_msg.msgts|dateFormat('yyyy-MM-dd hh:mm')|detailDate}}</span>
             <span class="info-nums" v-show="item.unread!=0">{{item.unread}}</span>
           </div>
         </div>
       </div>
     </div>
     <div v-show="navtiveIndex==1">
-      <div class="patient-infolist" @click="goClinicChat('111')">
+      <div
+        class="patient-infolist"
+        @click="goClinicChat(item,2)"
+        v-for="(item,index) in patientList"
+      >
         <div class="infolist-item">
-          <img src="@/assets/images/nan@2x.png" alt>
+          <img :src="imgNormalToggle(item.avatar,item)" alt>
           <div class="item-mid ml24">
-            <p class="item-name">王凯歌/男/26</p>
+            <p class="item-name">{{item.name}}/{{item.sex|parseSex}}/{{item.age}}</p>
           </div>
         </div>
       </div>
-      <load-more  v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
+      <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
     </div>
+   </div>
+  
   </div>
 </template>
 <script>
-import { chatSessionList,patientList } from "@/fetch/api";
+import { chatSessionList, patientList } from "@/fetch/api";
 import commonHeader from "@/components/common/commonHeader";
 import inputSearch from "@/components/common/inputSearch";
 import loadMore from "@/components/common/loadMore";
 //添加公共的混入 里面有图片的默认图和错误处理
 import imgMixins from "@/assets/js/imgMixins";
 export default {
-  mixins:[imgMixins],
+  mixins: [imgMixins],
   data() {
     return {
       navtiveIndex: 0,
       chatList: {}, // 聊天列表
-      isLoad:false, // 加载是否完成
-      isShowLoad:true  //是否有更多加载
+      isLoad: false, // 加载是否完成
+      isShowLoad: true, //是否有更多加载
+      patientList: []
     };
   },
   methods: {
@@ -56,17 +74,30 @@ export default {
     changeIndex(index) {
       this.navtiveIndex = index;
     },
-    goClinicChat(item) {
-      this.$router.push({
-        path: "clinicChat",
-        query: {
-          username:item.username,
-          session_id:item.session_id,
-          session_type:item.session_type,
-          userId:item.userId,
-          avatar:item.avatar
-        }
-      });
+    goClinicChat(item, index) {
+      if (index == 1) {
+        this.$router.push({
+          path: "clinicChat",
+          query: {
+            username: item.username,
+            session_id: item.session_id,
+            session_type: "CLINIC_PATIENT",
+            userId: item.userId,
+            avatar: item.avatar
+          }
+        });
+      } else {
+        this.$router.push({
+          path: "clinicChat",
+          query: {
+            username: item.name,
+            session_id: "",
+            session_type: "CLINIC_PATIENT",
+            userId: item.id,
+            avatar: item.avatar
+          }
+        });
+      }
     },
     //获取最新消息的患者列表
     getChatSessionList() {
@@ -75,19 +106,26 @@ export default {
           this.chatList = res.data.session_list;
           // console.log(this.chatList);
         } else {
-           this.$Message.infor('网络出错！')
+          this.$Message.infor("网络出错！");
           console.log(res);
         }
       });
-      let params={
-        query:'',
-        page:'',
-        page_size:""
-      }
-      patientList({}).then(res=>{
-        console.log(res)
-      })
+      let params = {
+        query: "",
+        page: "1",
+        page_size: "1"
+      };
+      patientList({}).then(res => {
+        if (res.code === 1000) {
+          this.patientList = res.data;
+        } else {
+          this.$Message.infor("网络出错！");
+        }
+
+        console.log(res.data);
+      });
     },
+    loadMore() {},
     msgDataType(params) {
       switch (params.msg_type) {
         case "text":
@@ -116,7 +154,17 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.pt150{
+  padding-top: 184px;
+}
+.fixtop{
+  position: fixed;
+  width: 100%;
+  background: #F5F5F5;
+  z-index: 999;
+}
 .patient-bar {
+  // @include psFixed(112px);
   width: 100%;
   height: 96px;
   @extend %aglinItem;

@@ -53,7 +53,7 @@ export default {
       this.$emit('showReply')
     },
     goDocRecommond(){
-          this.$router.push({name:'docRecommondPage'})
+      this.$emit('goDocRecommond');
     },
     sendMessage(){
       this.$emit('sendMessage',this.sendContent);
@@ -70,6 +70,7 @@ export default {
     padding: 16px 0 16px 16px;
     @extend %aglinItem;
     input {
+       padding:20px;
       width: 540px;
       height: 80px;
       @extend %normalTitle;

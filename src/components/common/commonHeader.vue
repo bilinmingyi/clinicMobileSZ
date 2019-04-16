@@ -27,7 +27,6 @@ export default {
   },
   methods:{
     leftToggle(){
-      
       this.$emit('leftToggle')
        this.$router.go(-1);
     }
@@ -38,6 +37,7 @@ export default {
 .common-header {
  @include psFixed(top);
  line-height: 88px;
+ background: #f5f5f5;
   .header-content {
     position: relative;
     width: 100%;

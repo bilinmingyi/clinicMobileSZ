@@ -15,13 +15,13 @@
         <div class="reply-content" v-show="chatDetail.msgdata.msg_type=='text'">
           <span>{{chatDetail.msgdata.text}}</span>
         </div>
-        <div class="reply-content" v-show="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='link'">
+        <div class="reply-content" v-show="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='link'" >
           <div class="recommond">
-            <img src="@/assets/images/nv@2x.png" alt>
+            <img :src="imgNormalToggle(imgDetail.avatar,imgDetail)" alt @error="error(imgDetail,$event)">
             <div class="recommond-content">
               <p class="recommond-title">
-                王凯歌
-                <span>医师</span>
+                {{imgDetail.name}}
+                <span :class="color_list[imgDetail.title-1]">{{imgDetail.title|doctorTypes}}</span>
               </p>
               <p class="recommond-subTitle">请点击进行预约</p>
             </div>
@@ -63,7 +63,14 @@ export default {
   props: ["chatDetail"],
   data() {
     return {
-      timeOutEvent: ""
+         color_list: [
+        "color-4DBC89",
+        "color-EDAB15",
+        "color-08BAC6",
+        "color-29BBFF"
+      ],
+      timeOutEvent: "",
+      imgDetail:''
     };
   },
   computed: {
@@ -77,6 +84,7 @@ export default {
         //撤销消息不能撤回
       }
       this.timeOutEvent = setTimeout(() => {
+        console.log(11)
         this.$Message.confirm("确认撤销消息么？", () => {
           this.$emit("cancelMessage", this.chatDetail);
         });
@@ -93,9 +101,15 @@ export default {
     gtouchmove() {
       clearTimeout(this.timeOutEvent); //清除定时器
       this.timeOutEvent = 0;
+    },
+    goRouter(){
+      alert(111)
     }
   },
   created() {
+      if(this.chatDetail.msgdata.msg_type=='link'){
+        this.imgDetail=JSON.parse(this.chatDetail.msgdata.link_desc);
+    }
     // this.$Message.infor('网络出错！');
   }
 };
@@ -114,6 +128,7 @@ p {
     max-width: 480px;
     height: auto;
     border-radius: 16px;
+
     padding: 22px 30px;
     @extend %normalTitle;
   }
@@ -143,9 +158,10 @@ p {
       @extend %normalTitle;
       font-weight: 600;
       span {
-        width: 72px;
+        min-width: 72px;
+        padding:0 8px;
         height: 40px;
-        background: rgba(237, 171, 21, 1);
+        border-radius: 8px;
         line-height: 40px;
         text-align: center;
         margin-left: 16px;
@@ -178,6 +194,21 @@ p {
   color: $gray3;
   font-size: 28px;
   @extend %aglinItem;
+}
+.color-29BBFF {
+  background: #29bbff;
+}
+
+.color-4DBC89 {
+  background: #4dbc89;
+}
+
+.color-08BAC6 {
+  background: #08bac6;
+}
+
+.color-EDAB15 {
+  background: #edab15;
 }
 </style>
 

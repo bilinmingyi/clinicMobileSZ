@@ -3,18 +3,18 @@
     <div class="left-chat mb50">
       <p class="chat-time mb24" v-show="chatDetail.showTime">{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
       <div class="chat-content">
-        <img :src="imgNormalToggle(patientImg,userInfoState)" alt @error="error(userInfoState,$event)">
+        <img :src="imgNormalToggle(patientImg,chatDetail)" alt @error="error(chatDetail,$event)">
         <div
           class="reply-content ml16"
           v-show="chatDetail.msgdata.msg_type=='text'"
         ><span>{{chatDetail.msgdata.text}}</span></div>
         <div class="reply-content ml16" v-show="chatDetail.msgdata.msg_type=='link'">
           <div class="recommond">
-            <img src="@/assets/images/nv@2x.png" alt>
+            <img :src="imgNormalToggle(imgDetail.avatar,imgDetail)" alt @error="error(imgDetail,$event)">
             <div class="recommond-content">
               <p class="recommond-title">
-                王凯歌
-                <span>医师</span>
+                 {{imgDetail.name}}
+                <span :class="color_list[imgDetail.title-1]">{{imgDetail.title|doctorTypes}}</span>
               </p>
               <p class="recommond-subTitle">请点击进行预约</p>
             </div>
@@ -41,7 +41,21 @@ export default {
   mixins:[imgMixins],
   props: ["chatDetail",'patientImg'],
   data() {
-    return {};
+    return {
+         color_list: [
+        "color-4DBC89",
+        "color-EDAB15",
+        "color-08BAC6",
+        "color-29BBFF"
+      ],
+      imgDetail:''
+    };
+  },
+  created(){
+    if(this.chatDetail.msgdata.msg_type=='link'){
+        this.imgDetail=JSON.parse(this.chatDetail.msgdata.link_desc);
+    }
+    
   }
 };
 </script>
@@ -94,9 +108,10 @@ p {
       @extend %normalTitle;
       font-weight: 600;
       span {
-        width: 72px;
+        min-width: 72px;
         height: 40px;
-        background: rgba(237, 171, 21, 1);
+        padding:0 8px;
+        border-radius: 8px;
         line-height: 40px;
         text-align: center;
         margin-left: 16px;
@@ -123,6 +138,21 @@ p {
   color: $gray3;
   font-size: 28px;
   @extend %aglinItem;
+}
+.color-29BBFF {
+  background: #29bbff;
+}
+
+.color-4DBC89 {
+  background: #4dbc89;
+}
+
+.color-08BAC6 {
+  background: #08bac6;
+}
+
+.color-EDAB15 {
+  background: #edab15;
 }
 </style>
 
