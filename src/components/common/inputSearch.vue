@@ -31,7 +31,6 @@ export default {
  @extend %aglinItem;
   padding: 0 30px;
   .input-box {
-    
    flex:1;
     height: 64px;
     position: relative;
