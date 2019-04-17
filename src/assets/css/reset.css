@@ -989,3 +989,15 @@ a:focus {
 .yun-table tr:nth-last-child(1) td:nth-last-child(1) {
     border-bottom-right-radius: 4px;
 }
+
+.pt96 {
+    padding-top: 96px;
+}
+
+.bold {
+    font-weight: 600;
+}
+
+.pt200 {
+    padding-top: 200px;
+}

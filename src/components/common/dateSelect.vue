@@ -33,8 +33,10 @@ export default {
       }
       this.formatTime(index);
       this.chooseNative = index;
-      let timeParams = { startTime: this.startTime, endTime: this.endTime };
-      // console.log(timeParams);
+      let startTimeStr=(new Date(this.startTime)).setHours(0, 0, 0, 0);
+      let endTimeStr = (new Date(this.endTime)).setHours(23, 59, 59, 59);
+      let timeParams = { startTime: startTimeStr, endTime: endTimeStr};
+      console.log(timeParams);
       switch (index) {
         case 1:
           this.$emit("selectToday", timeParams);
@@ -51,12 +53,12 @@ export default {
       }
     },
     queryData() {
-      let timeParams = { startTime: this.startTime, endTime: this.endTime };
-      if(this.startTime>this.endTime){
-        this.$Message.infor("开始时间不能大于结束时间");
-        return;
+     let startTimeStr=(new Date(this.startTime)).setHours(0, 0, 0, 0);
+      let endTimeStr = (new Date(this.endTime)).setHours(23, 59, 59, 59);
+      let timeParams = { startTime: startTimeStr, endTime: endTimeStr};
+             if(this.startTime>this.endTime){
+          this.$Message.infor("开始时间不能大于结束时间");
       }
-      // console.log(timeParams);
       this.$emit("selectQuery", timeParams);
     },
     /**
@@ -96,7 +98,8 @@ export default {
     }
   },
   mounted() {
-    this.formatTime(1);
+    this.formatTime(1)
+    // this.changeNative(1)
   }
 };
 </script>
@@ -105,6 +108,7 @@ export default {
   background: $bgwhite2;
   width: 100%;
   height: 200px;
+  position:fixed;
   @include commonBorder();
   padding: 20px 30px;
   &-top {

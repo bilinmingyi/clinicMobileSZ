@@ -2,75 +2,23 @@
 <template>
   <div>
     <div class="medical-list">
-      <section class="medical-list-wrap">
-        <div class="medical-list-title">1.bobo亮</div>
+      <section class="medical-list-wrap" v-for="(item,index) in medicalList">
+        <div class="medical-list-title">{{index+1}}.{{item.doctor_name}}</div>
         <div class="medical-list-content">
           <div class="medical-list-item">
-            <p>应收金额：￥120.0000000</p>
-            <p>接诊次数：￥2.00</p>
+            <p class="bold">应收金额：￥{{item.amount_receivable}}</p>
+            <p class="bold">接诊次数：{{item.total_count}}次</p>
           </div>
           <div class="medical-list-item">
-            <p>饮片金额：￥120：00</p>
-            <p>颗粒次数：￥2.00</p>
+            <p>中药金额：￥{{item.herbal_price}}</p>
+            <p>成药金额：￥{{item.western_price}}</p>
           </div>
-          <div class="medical-list-mid">
+          <!-- <div class="medical-list-mid">
             <p>中成西药金额：￥120：00000000</p>
-          </div>
+          </div> -->
           <div class="medical-list-item">
-            <p>产品金额：￥120：00</p>
-            <p>诊疗次数：￥2.00</p>
-          </div>
-          <div class="medical-list-item">
-            <p>材料金额：￥120：00</p>
-            <p>附加服务：￥2.00</p>
-          </div>
-        </div>
-      </section>
-      <section class="medical-list-wrap">
-        <div class="medical-list-title">1.bobo亮</div>
-        <div class="medical-list-content">
-          <div class="medical-list-item">
-            <p>应收金额：￥120.0000000</p>
-            <p>接诊次数：￥2.00</p>
-          </div>
-          <div class="medical-list-item">
-            <p>饮片金额：￥120：00</p>
-            <p>颗粒次数：￥2.00</p>
-          </div>
-          <div class="medical-list-mid">
-            <p>中成西药金额：￥120：00000000</p>
-          </div>
-          <div class="medical-list-item">
-            <p>产品金额：￥120：00</p>
-            <p>诊疗次数：￥2.00</p>
-          </div>
-          <div class="medical-list-item">
-            <p>材料金额：￥120：00</p>
-            <p>附加服务：￥2.00</p>
-          </div>
-        </div>
-      </section>
-      <section class="medical-list-wrap">
-        <div class="medical-list-title">1.bobo亮</div>
-        <div class="medical-list-content">
-          <div class="medical-list-item">
-            <p>应收金额：￥120.0000000</p>
-            <p>接诊次数：￥2.00</p>
-          </div>
-          <div class="medical-list-item">
-            <p>饮片金额：￥120：00</p>
-            <p>颗粒次数：￥2.00</p>
-          </div>
-          <div class="medical-list-mid">
-            <p>中成西药金额：￥120：00000000</p>
-          </div>
-          <div class="medical-list-item">
-            <p>产品金额：￥120：00</p>
-            <p>诊疗次数：￥2.00</p>
-          </div>
-          <div class="medical-list-item">
-            <p>材料金额：￥120：00</p>
-            <p>附加服务：￥2.00</p>
+            <p>产品金额：￥{{item.product_price}}</p>
+            <p>治疗金额：￥{{item.therapy_price}}</p>
           </div>
         </div>
       </section>
@@ -79,6 +27,7 @@
 </template>
 <script>
 export default {
+  props:['medicalList'],
   data() {
     return {};
   }

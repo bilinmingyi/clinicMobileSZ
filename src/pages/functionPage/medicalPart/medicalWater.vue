@@ -1,56 +1,78 @@
 <template>
   <div>
-    <date-select></date-select>
+     <date-select
+      @selectToday="selectToday"
+      @selectYesterday="selectYesterday"
+      @selectThisMonth="selectThisMonth"
+      @selectLastMonth="selectLastMonth"
+      @selectQuery="selectQuery"
+    ></date-select>
     <section class="water">
-      <div class="water-content">
+      <div class="water-content" v-for="(item,index) in payStreamData">
         <div>
-          <span>2019-03-13 15:16:48</span>
-          <span>demo</span>
+          <span>{{item.create_time| dateFormat}}</span>
+          <span>{{item.doctor_name}}</span>
         </div>
         <div>
-          <span>A5: 13728089836</span>
-          <span class="success">完成</span>
-        </div>
-        <p>
-          <span>应收金额：￥0.2</span>
-          <span>优惠金额：￥0</span>
-          <span>欠费金额：￥0</span>
-        </p>
-      </div>
-      <div class="water-content">
-        <div>
-          <span>2019-03-13 15:16:48</span>
-          <span>demo</span>
-        </div>
-        <div>
-          <span>A5: 13728089836</span>
-          <span class="success">完成</span>
+          <span>{{item.patient_name}}: {{item.patient_mobile}}</span>
+          <span class="success">{{item.status|appointStatus}}</span>
         </div>
         <p>
-          <span>应收金额：￥0.222222</span>
-          <span>优惠金额：￥0.2222222</span>
-          <span>欠费金额：￥2222220</span>
+          <span>应收金额：￥{{item.amount_receivable}}</span>
+          <span>优惠金额：￥{{item.discount}}</span>
+          <span>欠费金额：￥{{item.amount_arrears}}</span>
         </p>
       </div>
+
+            <without-data v-show="hasData&&isLoad"></without-data>
+      <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
     </section>
   </div>
 </template>
 <script>
-import dateSelect from "@/components/common/dateSelect";
+import functionMixins from "@/assets/js/functionMixins"
+import { medicalWater } from "@/fetch/api";
 export default {
+    mixins: [functionMixins],
   data() {
-    return {};
+    return {
+    };
   },
-  components: {
-    dateSelect
+  methods:{
+       getWater(val) {
+            let params = {
+                dispense_start_time: val.startTime,
+                dispense_end_time: val.endTime,
+                page: this.page,
+                page_size: this.pageSize
+            };
+            console.log(params);
+            medicalWater(params).then(res => {
+                console.log(res);
+                if (res.code === 1000) {
+                    res.data.treatStreamList.forEach(item => {
+                        this.payStreamData.push(item);
+                    });
+                    console.log(this.payStreamData);
+                } else {
+                    this.$Message.infor(res.msg);
+                }
+                console.log(res.data.length);
+                if (res.data.treatStreamList.length != 10) {
+                    this.isShowLoad = false; //表示没有更多数据了
+                }
+                this.isLoad = true;
+            });
+        },
   }
 };
 </script>
 <style lang="scss" scoped>
 .water {
-  margin-top: 20px;
+   padding-top: 180px;
+  // margin-top: 20px;
   overflow: auto;
-  max-height: 1000px;
+  // max-height: 1000px;
   width: 100%;
   &-content {
     background: $bgwhite2;

@@ -2,58 +2,69 @@
   <div class="select">
     <section class="select-top">
       <p class="select-title">库存过滤：</p>
-      <div :class="{'nt-button':chooseNative==0}" @click="changeNative(0)">全部库存</div>
-      <div :class="{'nt-button':chooseNative==1}" @click="changeNative(1)">警告库存</div>
-      <div :class="{'nt-button':chooseNative==2}" @click="changeNative(2)">有库存</div>
+      <div :class="{'nt-button':chooseNative==1}" @click="changeNative(1)">全部库存</div>
+      <div :class="{'nt-button':chooseNative==2}" @click="changeNative(2)">警告库存</div>
+      <div :class="{'nt-button':chooseNative==3}" @click="changeNative(3)">有库存</div>
     </section>
   </div>
 </template>
 <script>
-
 export default {
   data() {
     return {
-      startTime:'2019-04-01',
-      endTime:'2019-05-01',
-      chooseNative:0
+      chooseNative: 1
     };
   },
-  methods:{
-    changeNative(index){
-      if(this.chooseNative==index){
-        return
+  methods: {
+    changeNative(index) {
+      if (this.chooseNative == index) {
+        return;
       }
       this.chooseNative = index;
+      switch (index) {
+        case 1:
+          this.$emit("allStock",'');
+          break;
+        case 2:
+          this.$emit("warnStock",1);
+          break;
+        case 3:
+          this.$emit("hasStock",2);
+          break;
+      }
     }
+  },
+  mounted(){
+    this.changeNative(1);
   }
 };
 </script>
 <style lang="scss" scoped>
-.select{
+.select {
   background: $bgwhite2;
   width: 100%;
   height: 140px;
   @include commonBorder();
-  padding:40px 30px;
-  &-top{
+  padding: 40px 30px;
+  &-top {
     display: flex;
     align-items: center;
-    div{
+    div {
       flex: 1;
-      @include simpleButton(50px,140px);
-      color:$gray2;
-      font-size:26px;
+      @include simpleButton(50px, 140px);
+      color: $gray2;
+      font-size: 26px;
       font-weight: 400;
       margin-right: 40px;
-      &:nth-last-child(1){
+      &:nth-last-child(1) {
         margin-right: 0;
       }
     }
-    .nt-button{
-      @include deepButton(50px,140px)
+    .nt-button {
+      @include deepButton(50px, 140px);
     }
   }
-  &-title{
+  &-title {
     font-size: 30px;
     color: $backColor;
   }

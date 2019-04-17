@@ -8,36 +8,19 @@
       <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==3}]" @click="changeIndex(3)">产品</div>
     </section>
     <keep-alive>
-      <component :is="displayDoctorList" :firstTableList="firstTableList"></component>
+      <component :is="displayDoctorList" ></component>
     </keep-alive>
   </div>
 </template>
 <script>
-import orderInquiry from "./commonBoundPart/orderInquiry";
-import chineseMedical from "./commonBoundPart/chineseMedical";
-import westMedical from "./commonBoundPart/westMedical";
-import product from "./commonBoundPart/product";
+import orderInquiry from "./enterBoundPart/orderInquiry";
+import chineseMedical from "./enterBoundPart/chineseMedical";
+import westMedical from "./enterBoundPart/westMedical";
+import product from "./enterBoundPart/product";
 export default {
   data() {
     return {
-      navtiveIndex: 0,
-        firstTableList: [
-        {
-          title: "采购次数",
-          value: "4",
-          location: "right"
-        },
-        {
-          title: "进货价总额",
-          value: "230",
-          location: "left"
-        },
-        {
-          title: "零售价总额",
-          value: "500.21",
-          location: "left"
-        }
-      ]
+      navtiveIndex: 0
     };
   },
   components: {
@@ -80,6 +63,7 @@ export default {
   width: 100%;
   height: 96px;
   z-index: 999;
+  position: fixed;
   @extend %aglinItem;
   color: $simpleGray;
   font-size: 32px;

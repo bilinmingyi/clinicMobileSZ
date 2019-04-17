@@ -1,28 +1,62 @@
 <template>
-  <div >
-      <stock-filter ></stock-filter>
-      <input-search :buttonName="'查询'" :placeholder="'药品名称/拼音简码'"></input-search>
-      <stock-list class="stock"></stock-list>
+  <div>
+    <div class="psF">
+      <stock-filter @allStock="allStock" @warnStock="warnStock" @hasStock="hasStock"></stock-filter>
+      <input-search :buttonName="'查询'" :placeholder="'药品名称/拼音简码'" @query="inquery"></input-search>
+    </div>
+    <div class="pt200"></div>
+    <stock-list class="stock" :stockList="payStreamData"></stock-list>
+    <without-data v-show="hasData&&isLoad"></without-data>
+    <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
   </div>
 </template>
 <script>
-import stockFilter from "./stockFilter"
-import inputSearch from "@/components/common/inputSearch"
-import stockList from "./stockList"
+
+import stockMixins from "./stockMixins"
+import { stockHerbalList } from "@/fetch/api";
 export default {
-  data(){
-    return{}
-  },
-  components:{
-    stockFilter,
-    inputSearch,
-    stockList
+  mixins: [stockMixins],
+  methods: {
+    getData(val, query = "") {
+      let params = {
+        medicine_name: query,
+        page: this.page,
+        page_size: this.pageSize,
+        warn_stock: val
+      };
+      stockHerbalList(params).then(res => {
+        console.log(res);
+        if (res.code === 1000) {
+          res.data.forEach(item => {
+            this.payStreamData.push(item);
+          });
+          console.log(this.payStreamData);
+        } else {
+          this.$Message.infor(res.msg);
+        }
+        console.log(res.data.length);
+        if (res.data.length != 10) {
+          this.isShowLoad = false; //表示没有更多数据了
+        }
+        this.isLoad = true;
+      });
+    }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
-.stock{
-  max-height: 950px;
+// .pt200{
+//   margin-top: 200px;
+// }
+.psF {
+  padding-top: 96px;
+  z-index: 99;
+  position: fixed;
+  width: 100%;
+  background: #f5f5f5;
+}
+.stock {
+  padding-top: 120px;
   overflow: auto;
 }
 </style>

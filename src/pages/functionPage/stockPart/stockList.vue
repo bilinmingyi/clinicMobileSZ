@@ -2,116 +2,20 @@
 <template>
   <div>
     <div class="medical-list">
-      <section class="medical-list-wrap">
-        <div class="medical-list-title">1.甘草</div>
+      <section class="medical-list-wrap" v-for="(item,index) in stockList">
+        <div class="medical-list-title">{{index+1}}.{{item.name}}</div>
         <div class="medical-list-content">
           <div class="medical-list-mid">
-            <p>库存数量：<span >985</span>克</p>
+            <p>库存数量：<span >{{item.stock}}</span>{{item.unit_stock}}</p>
           </div>
            <div class="medical-list-mid">
-            <p>规格：1克/克</p>
+            <p>规格：{{item.spec}}</p>
           </div>
            <div class="medical-list-mid">
-            <p>中药类型：饮片</p>
+            <p>中药类型：{{item.category|parseHerbalCategory}}</p>
           </div>
            <div class="medical-list-mid">
-            <p>零售价：￥2</p>
-          </div>
-         
-         
-        </div>
-      </section>
-
-     <section class="medical-list-wrap">
-        <div class="medical-list-title">1.甘草</div>
-        <div class="medical-list-content">
-          <div class="medical-list-mid">
-            <p>库存数量：<span >985</span>克</p>
-          </div>
-           <div class="medical-list-mid">
-            <p>规格：1克/克</p>
-          </div>
-           <div class="medical-list-mid">
-            <p>中药类型：饮片</p>
-          </div>
-           <div class="medical-list-mid">
-            <p>零售价：￥2</p>
-          </div>
-         
-         
-        </div>
-      </section>
-        <section class="medical-list-wrap">
-        <div class="medical-list-title">1.甘草</div>
-        <div class="medical-list-content">
-          <div class="medical-list-mid">
-            <p>库存数量：<span >985</span>克</p>
-          </div>
-           <div class="medical-list-mid">
-            <p>规格：1克/克</p>
-          </div>
-           <div class="medical-list-mid">
-            <p>中药类型：饮片</p>
-          </div>
-           <div class="medical-list-mid">
-            <p>零售价：￥2</p>
-          </div>
-         
-         
-        </div>
-      </section>
-        <section class="medical-list-wrap">
-        <div class="medical-list-title">1.甘草</div>
-        <div class="medical-list-content">
-          <div class="medical-list-mid">
-            <p>库存数量：<span >985</span>克</p>
-          </div>
-           <div class="medical-list-mid">
-            <p>规格：1克/克</p>
-          </div>
-           <div class="medical-list-mid">
-            <p>中药类型：饮片</p>
-          </div>
-           <div class="medical-list-mid">
-            <p>零售价：￥2</p>
-          </div>
-         
-         
-        </div>
-      </section>
-        <section class="medical-list-wrap">
-        <div class="medical-list-title">1.甘草</div>
-        <div class="medical-list-content">
-          <div class="medical-list-mid">
-            <p>库存数量：<span >985</span>克</p>
-          </div>
-           <div class="medical-list-mid">
-            <p>规格：1克/克</p>
-          </div>
-           <div class="medical-list-mid">
-            <p>中药类型：饮片</p>
-          </div>
-           <div class="medical-list-mid">
-            <p>零售价：￥2</p>
-          </div>
-         
-         
-        </div>
-      </section>
-        <section class="medical-list-wrap">
-        <div class="medical-list-title">1.甘草</div>
-        <div class="medical-list-content">
-          <div class="medical-list-mid">
-            <p>库存数量：<span >985</span>克</p>
-          </div>
-           <div class="medical-list-mid">
-            <p>规格：1克/克</p>
-          </div>
-           <div class="medical-list-mid">
-            <p>中药类型：饮片</p>
-          </div>
-           <div class="medical-list-mid">
-            <p>零售价：￥2</p>
+            <p>零售价：￥{{item.sale_price}}</p>
           </div>
          
          
@@ -122,6 +26,7 @@
 </template>
 <script>
 export default {
+  props:['stockList'],
   data() {
     return {};
   }
@@ -131,7 +36,6 @@ export default {
 .medical-list {
   background: $bgwhite2;
   height: 100%;
-  margin-bottom:50px;
   &-wrap {
     padding: 30px;
     @include commonBorder();

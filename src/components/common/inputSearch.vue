@@ -2,9 +2,9 @@
   <div class="common-input">
     <div class="input-box">
       <img @click.stop="searchName()" src="@/assets/images/sousuo@2x.png">
-      <input class="serach-input " type="text" :placeholder="placeholder">
+      <input class="serach-input " type="text" :placeholder="placeholder" v-model="inputText">
     </div>
-    <div class="search-button ml26">{{buttonName}}</div>
+    <div class="search-button ml26" @click="query">{{buttonName}}</div>
   </div>
 </template>
 <script>
@@ -20,7 +20,15 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      inputText:''
+    };
+  },
+  methods:{
+    query(){
+      var self=this;
+      self.$emit("query", this.inputText);
+    }
   }
 };
 </script>

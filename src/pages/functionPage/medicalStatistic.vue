@@ -5,6 +5,7 @@
       <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==0}]" @click="changeIndex(0)">医生接诊统计</div>
       <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==1}]" @click="changeIndex(1)">接诊流水查询</div>
     </section>
+    <div class="pt96"></div>
     <keep-alive>
       <component :is="displayDoctorList"></component>
     </keep-alive>
@@ -45,6 +46,7 @@ export default {
   width: 100%;
   height: 96px;
   z-index: 999;
+  position: fixed;
   @extend %aglinItem;
   color: $simpleGray;
   font-size: 32px;

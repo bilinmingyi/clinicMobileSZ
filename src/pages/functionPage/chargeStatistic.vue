@@ -45,6 +45,7 @@ export default {
   width: 100%;
   height: 96px;
   z-index: 999;
+  position: fixed;
   @extend %aglinItem;
   color: $simpleGray;
   font-size: 32px;

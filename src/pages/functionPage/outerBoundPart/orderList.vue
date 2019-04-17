@@ -1,30 +1,17 @@
 <template>
   <div>
     <section class="water">
-      <div class="water-content">
+      <div class="water-content" v-for="(item,index) in orderList">
         <div>
-          <span>2019-03-13 15:16:48</span>
-          <span class="success">中药</span>
+          <span>  {{item.createTime|dateFormat}}</span>
+          <span class="success">{{item.recipeType|medType}}</span>
         </div>
         <div>
-          <span>供应商: 岭南制药</span>
+          <span>出库类型: {{item.providerName}}</span>
         </div>
         <div>
-          <span>lbl</span>
-          <span>采购金额：￥0.2</span>
-        </div>
-      </div>
-    <div class="water-content">
-        <div>
-          <span>2019-03-13 15:16:48</span>
-          <span class="success">收费</span>
-        </div>
-        <div>
-          <span>供应商: 岭南制药</span>
-        </div>
-        <div>
-          <span>ljl</span>
-          <span>采购金额：￥0.2</span>
+          <span>{{item.creator}}</span>
+          <span>￥{{item.costPrice}}</span>
         </div>
       </div>
     </section>
@@ -32,6 +19,7 @@
 </template>
 <script>
 export default {
+  props:['orderList'],
   data() {
     return {};
   },
@@ -42,8 +30,6 @@ export default {
 <style lang="scss" scoped>
 .water {
   margin-top: 20px;
-  overflow: auto;
-  max-height: 1000px;
   width: 100%;
   &-content {
     background: $bgwhite2;

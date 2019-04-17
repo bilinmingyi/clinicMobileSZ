@@ -24,7 +24,7 @@
          
             </td>
           </tr>
-          <tr>
+          <tr  v-show="hasData">
             <td colspan="4" style=" color: #7c7c7c;"><slot name="noData">没有相关记录</slot></td>
           </tr>
         </table>
@@ -42,10 +42,16 @@ export default {
     contentArray:{
       type:Array,
       default:()=>[]
+    },
+    hasData:{
+      type:Boolean,
+      default:true
     }
   },
   data() {
-    return {};
+    return {
+      
+    };
   }
 };
 </script>

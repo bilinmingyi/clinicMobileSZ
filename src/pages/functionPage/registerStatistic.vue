@@ -4,8 +4,8 @@
     <section class="register-bar">
       <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==0}]" @click="changeIndex(0)">医生挂号统计</div>
       <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==1}]" @click="changeIndex(1)">挂号流水查询</div>
-   
     </section>
+    <div class="pt96"></div>
     <keep-alive>
       <component :is="displayDoctorList"></component>
     </keep-alive>
@@ -40,11 +40,15 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.pt96{
+  padding-top: 96px;
+}
 .register-bar {
   background: $bgwhite2;
   width: 100%;
   height: 96px;
   z-index: 999;
+  position: fixed;
   @extend %aglinItem;
   color: $simpleGray;
   font-size: 32px;

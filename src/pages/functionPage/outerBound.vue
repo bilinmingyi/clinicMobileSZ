@@ -13,10 +13,10 @@
   </div>
 </template>
 <script>
-import orderInquiry from "./commonBoundPart/orderInquiry";
-import chineseMedical from "./commonBoundPart/chineseMedical";
-import westMedical from "./commonBoundPart/westMedical";
-import product from "./commonBoundPart/product";
+import orderInquiry from "./outerBoundPart/orderInquiry";
+import chineseMedical from "./outerBoundPart/chineseMedical";
+import westMedical from "./outerBoundPart/westMedical";
+import product from "./outerBoundPart/product";
 export default {
   data() {
     return {
@@ -80,6 +80,7 @@ export default {
   width: 100%;
   height: 96px;
   z-index: 999;
+  position: fixed;
   @extend %aglinItem;
   color: $simpleGray;
   font-size: 32px;

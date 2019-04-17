@@ -7,26 +7,35 @@
       @selectLastMonth="selectLastMonth"
       @selectQuery="selectQuery"
     ></date-select>
+    <div class="pt200"></div>
     <div class="doctor">
       <first-table :firstTableList="firstTableList">
         <template slot="left">￥</template>
         <template slot="right" class="pl5">次</template>
       </first-table>
-      <second-table :titleArray="titleArray" :contentArray="contentArray">
+      <second-table
+        :titleArray="titleArray"
+        :contentArray="payStreamData"
+        :hasData="hasData&&isLoad"
+      >
         <template slot="value" slot-scope="tableValue">
           {{tableValue.value}}
           <!-- {{tableValue.objectKey}} -->
         </template>
+        <!-- <template  slot="noData" v-show="hasData" ></template> -->
       </second-table>
+      <!-- <div class="no-platform" v-show="hasData&&isLoad">没有更多数据了...</div> -->
+      <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
     </div>
   </div>
 </template>
 <script>
 import { registerDoctor, registerStream } from "@/fetch/api";
-import dateSelect from "@/components/common/dateSelect";
 import firstTable from "@/components/common/firstTable";
 import secondTable from "@/components/common/secondTable";
+import functionMixins from "@/assets/js/functionMixins"
 export default {
+  mixins: [functionMixins],
   data() {
     return {
       firstTableList: [
@@ -42,9 +51,6 @@ export default {
         }
       ],
       titleArray: ["挂号医生", "挂号次数", "应收金额"],
-      contentArray: [],
-      page: "1", //页数
-      pageSize: "10", //一页展示的条数
       recordParams: {
         create_start_time: "",
         create_end_time: "",
@@ -55,51 +61,16 @@ export default {
     };
   },
   components: {
-    dateSelect,
     firstTable,
     secondTable
   },
+
   methods: {
-    getRegisterDoctor() {
-      let params = {};
-    },
-    selectToday(val) {
-      console.log(val);
-      this.recordParams.create_start_time = new Date().getTime();
-      this.recordParams.create_end_time = new Date().getTime();
-      this.contentArray = [];
-      registerDoctor(this.recordParams).then(res => {
-        console.log(res.data);
-        if (res.code === 1000) {
-          console.log(this.firstTableList);
-          this.$set(
-            this.firstTableList[0],
-            "value",
-            res.data.totalAmt.totalCount || 0
-          );
-          this.$set(
-            this.firstTableList[1],
-            "value",
-            res.data.totalAmt.amount_receivable || 0
-          );
-          res.data.doctorAmtList.forEach(item => {
-            let object = {};
-            object.doctor = item.doctor_name;
-            object.num = item.total_count;
-            object.money1 = item.amount_receivable;
-            this.contentArray.push(object);
-          });
-          //  this.$set( this.firstTableList[1], "value",  res.data.totalAmt.amount_receivable||0);
-        } else {
-          this.$Message.infor(res.msg);
-        }
-      });
-    },
-    getData(val) {
-      this.recordParams.create_start_time = new Date(val.startTime).getTime();
-      this.recordParams.create_end_time = new Date(val.endTime).getTime();
-      this.contentArray = [];
-      console.log(this.recordParams)
+    getWater(val) {
+      this.recordParams.page = this.page;
+      this.recordParams.page_size = this.pageSize;
+      this.recordParams.create_start_time = val.startTime;
+      this.recordParams.create_end_time = val.endTime;
       registerDoctor(this.recordParams).then(res => {
         if (res.code === 1000) {
           this.$set(this.firstTableList[0], "value", res.data.totalCount);
@@ -113,34 +84,24 @@ export default {
             object.doctor = item.doctor_name;
             object.num = item.total_count;
             object.money1 = item.amount_receivable;
-            this.contentArray.push(object);
+            this.payStreamData.push(object);
           });
+          this.isLoad = true;
+          if (res.data.doctorAmtList.length !== 10) {
+            this.isShowLoad = false; //不显示加载更多
+          }
         } else {
           this.$Message.infor(res.msg);
         }
-        console.log(res);
       });
-    },
-    selectYesterday(val) {
-      console.log(val)
-      this.getData(val);
-    },
-    selectThisMonth(val) {
-      this.getData(val);
-    },
-    selectLastMonth(val) {
-      this.getData(val);
-    },
-    selectQuery(val) {
-      this.getData(val);
     }
-  },
-  created() {
-    this.selectToday();
   }
 };
 </script>
 <style lang="scss" scoped>
+.pt200{
+  padding-top: 200px;
+}
 .doctor {
   background: $bgwhite2;
   max-height: 1000px;

@@ -44,6 +44,17 @@ const updateMoblie = params => fetch('/user/mobile/update', params);
 //挂号统计
 const registerDoctor = params => fetch('/statistic/appoint/appointStatList', params);
 const registerStream = params => fetch('/statistic/appoint/appointStreamList', params);
+const medicalDoctor = params => fetch('/statistic/treat/treatStatList', params);
+const medicalWater = params => fetch('/statistic/treat/treatStreamList', params);
+const registerCharge = params => fetch('/statistic/paystream/payStreamStatList', params);
+const enterOreder = params => fetch('/statistic/stock/inStatList', params);
+const enterType = params => fetch('/statistic/stock/medicineInStatList', params);
+const outerOrder = params => fetch('/statistic/stock/outStatList', params);
+const outerType = params => fetch('/statistic/stock/medicineOutStatList', params);
+const stockHerbalList = params => fetch('/stockmng/medicine/herbalList', params);
+const stockWesternList = params => fetch('/stockmng/medicine/westernList', params);
+const stockproductList = params => fetch('/stockmng/medicine/productList', params);
+
 export {
     fetch,
     chatSessionList,
@@ -61,5 +72,15 @@ export {
     getMessageCode,
     updateMoblie,
     registerDoctor,
-    registerStream
+    registerStream,
+    medicalDoctor,
+    medicalWater,
+    registerCharge,
+    enterType,
+    enterOreder,
+    outerOrder,
+    outerType,
+    stockHerbalList,
+    stockWesternList,
+    stockproductList
 }
