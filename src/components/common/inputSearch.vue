@@ -2,7 +2,7 @@
   <div class="common-input">
     <div class="input-box">
       <img @click.stop="searchName()" src="@/assets/images/sousuo@2x.png">
-      <input class="serach-input " type="text" :placeholder="placeholder" v-model="inputText">
+      <input class="serach-input " type="text" :placeholder="placeholder" v-model="inputText" @input="focusIuq">
     </div>
     <div class="search-button ml26" @click="query">{{buttonName}}</div>
   </div>
@@ -28,6 +28,10 @@ export default {
     query(){
       var self=this;
       self.$emit("query", this.inputText);
+    },
+    focusIuq(){
+        var self=this;
+      self.$emit("onInput", this.inputText);
     }
   }
 };

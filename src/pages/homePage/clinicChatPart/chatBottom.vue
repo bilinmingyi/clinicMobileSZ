@@ -2,7 +2,7 @@
   <div class="chat-bottom">
     <div class="reply">
       <div @click="showReply"><span class="leftIcon iconfont">&#xe612;</span></div>
-      <input class="serach-input" type="text" @focus="hideFunc"  v-model="sendContent">
+      <input class="serach-input" type="text" @focus="hideFunc"  v-model="sendContent" >
       <div class="ml24 pr16">
         <img src="@/assets/images/tianjia@2x.png" alt @click="addFunc" :class="{'translateImg':showFuc}" v-show="showIcon">
   <div class="send " v-show="!showIcon" @click="sendMessage">发送</div>
@@ -63,6 +63,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+input {
+  -webkit-user-select:text !important;
+  -webkit-appearance:none; /*去除input默认样式*/
+  }
 .chat-bottom {
   @include psFixed(112px);
   background: $bgwhite2;

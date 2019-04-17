@@ -27,9 +27,23 @@ try {
 
 
 const state = {
+    clinic: {
+        id: '',
+        name: '',
+        customerPhone: '',
+        provinceName: '',
+        provinceCode: '',
+        cityName: '',
+        cityCode: '',
+        countyName: '',
+        countyCode: '',
+        address: '',
+        logo: ''
+    },
     userInfoState: {}, //客户信息
     chatSessionList: [], //session的聊天室数据
     defaultReply,
-    defaultKey
+    defaultKey,
+
 }
 export default state;

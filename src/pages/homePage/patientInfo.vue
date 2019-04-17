@@ -2,51 +2,54 @@
   <div class="patient-info">
     <common-header :titleName="'患者信息'"></common-header>
     <div class="fixtop">
-    <input-search></input-search>
-    <section class="patient-bar">
-      <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==0}]" @click="changeIndex(0)">最新消息</div>
-      <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==1}]" @click="changeIndex(1)">患者列表</div>
-    </section>
-   </div>
-   <div class="pt150">
-  <div v-show="navtiveIndex==0">
-      <div
-        class="patient-infolist"
-        v-for="(item,index) in chatList"
-        @click="goClinicChat(item,1)"
-        :key="index"
-      >
-        <div class="infolist-item">
-          <img :src="imgNormalToggle(item.avatar,item)" alt @error="error(item,$event)">
-          <div class="item-mid ml24">
-            <p class="item-name">{{item.username}}/{{item.sex|parseSex}}/{{item.age}}岁</p>
-            <p class="item-content" v-if="item.recent_msg">{{msgDataType(item.recent_msg.msgdata)}}</p>
-            <span
-              class="item-time"
-              v-if="item.recent_msg"
-            >{{item.recent_msg.msgts|dateFormat('yyyy-MM-dd hh:mm')|detailDate}}</span>
-            <span class="info-nums" v-show="item.unread!=0">{{item.unread}}</span>
+      <input-search @query="inquery" ></input-search>
+      <section class="patient-bar">
+        <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==0}]" @click="changeIndex(0)">最新消息</div>
+        <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==1}]" @click="changeIndex(1)">患者列表</div>
+      </section>
+    </div>
+    <div class="pt150">
+      <div v-show="navtiveIndex==0">
+        <div
+          class="patient-infolist"
+          v-for="(item,index) in chatList"
+          @click="goClinicChat(item,1)"
+          :key="index"
+        >
+          <div class="infolist-item">
+            <img :src="imgNormalToggle(item.avatar,item)" alt @error="error(item,$event)">
+            <div class="item-mid ml24">
+              <p class="item-name">{{item.username}}/{{item.sex|parseSex}}/{{item.age}}岁</p>
+              <p
+                class="item-content"
+                v-if="item.recent_msg"
+              >{{msgDataType(item.recent_msg.msgdata)}}</p>
+              <span
+                class="item-time"
+                v-if="item.recent_msg"
+              >{{item.recent_msg.msgts|dateFormat('yyyy-MM-dd hh:mm')|detailDate}}</span>
+              <span class="info-nums" v-show="item.unread!=0">{{item.unread}}</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div v-show="navtiveIndex==1">
-      <div
-        class="patient-infolist"
-        @click="goClinicChat(item,2)"
-        v-for="(item,index) in patientList"
-      >
-        <div class="infolist-item">
-          <img :src="imgNormalToggle(item.avatar,item)" alt>
-          <div class="item-mid ml24">
-            <p class="item-name">{{item.name}}/{{item.sex|parseSex}}/{{item.age}}</p>
+      <div v-show="navtiveIndex==1">
+        <div
+          class="patient-infolist"
+          @click="goClinicChat(item,2)"
+          v-for="(item,index) in patientList"
+        >
+          <div class="infolist-item">
+            <img :src="imgNormalToggle(item.avatar,item)" alt>
+            <div class="item-mid ml24">
+              <p class="item-name">{{item.name}}/{{item.sex|parseSex}}/{{item.age}}</p>
+            </div>
           </div>
         </div>
+            <without-data v-show="hasData&&isLoad"></without-data>
+        <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
       </div>
-      <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
     </div>
-   </div>
-  
   </div>
 </template>
 <script>
@@ -54,6 +57,7 @@ import { chatSessionList, patientList } from "@/fetch/api";
 import commonHeader from "@/components/common/commonHeader";
 import inputSearch from "@/components/common/inputSearch";
 import loadMore from "@/components/common/loadMore";
+import withoutData from "@/components/common//withoutData";
 //添加公共的混入 里面有图片的默认图和错误处理
 import imgMixins from "@/assets/js/imgMixins";
 export default {
@@ -64,9 +68,18 @@ export default {
       chatList: {}, // 聊天列表
       isLoad: false, // 加载是否完成
       isShowLoad: true, //是否有更多加载
-      patientList: []
+      patientList: [],
+      page: 1,
+      pageSize: 10,
+      copyVal: "",
+      timeout:null
     };
   },
+      computed: {
+        hasData() {
+            return this.patientList.length === 0;
+        }
+    },
   methods: {
     leftToggle() {
       this.$router.go(-1);
@@ -104,28 +117,52 @@ export default {
       chatSessionList({}).then(res => {
         if (res.code == 1000) {
           this.chatList = res.data.session_list;
-          // console.log(this.chatList);
         } else {
           this.$Message.infor("网络出错！");
           console.log(res);
         }
       });
+      this.getPatientList("");
+    },
+    getPatientList(val) {
       let params = {
-        query: "",
-        page: "1",
-        page_size: "1"
+        query: val,
+        page: this.page,
+        page_size: this.pageSize
       };
-      patientList({}).then(res => {
+      patientList(params).then(res => {
         if (res.code === 1000) {
-          this.patientList = res.data;
+          res.data.forEach(item => {
+             this.patientList.push(item)
+          });
         } else {
-          this.$Message.infor("网络出错！");
+          this.$Message.infor(res.msg);
         }
-
+          console.log(res.data.length)
+        if (res.data.length !==2) {
+          this.isShowLoad = false;
+        }
+        //  this.$Message.infor("网络出错！");
+        this.isLoad = true;
         console.log(res.data);
       });
     },
-    loadMore() {},
+    inquery(val) {
+      let self = this;
+      self.copyVal = val;
+      this.navtiveIndex = 1;
+      this.isLoad = false; // 加载是否完成
+      this.isShowLoad = true; //是否有更多加载
+      this.patientList = [];
+      this.page = 1;
+      this.pageSize = 10;
+      this.getPatientList(val);
+    },
+    loadMore() {
+      let self = this;
+      this.page++;
+      this.getPatientList(self.copyVal);
+    },
     msgDataType(params) {
       switch (params.msg_type) {
         case "text":
@@ -146,7 +183,8 @@ export default {
   components: {
     commonHeader,
     inputSearch,
-    loadMore
+    loadMore,
+    withoutData
   },
   created() {
     this.getChatSessionList();
@@ -154,13 +192,13 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.pt150{
+.pt150 {
   padding-top: 184px;
 }
-.fixtop{
+.fixtop {
   position: fixed;
   width: 100%;
-  background: #F5F5F5;
+  background: #f5f5f5;
   z-index: 999;
 }
 .patient-bar {
@@ -218,7 +256,9 @@ export default {
       position: absolute;
       right: 30px;
       bottom: 10px;
-      @extend %searchIcon;
+      // @extend %searchIcon;
+      min-width: 40px;
+      min-height: 40px;
       background: $redColor;
       border-radius: 20px;
       text-align: center;

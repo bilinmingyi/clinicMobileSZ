@@ -1,26 +1,22 @@
 <template>
   <div>
     <div class="left-chat mb50">
-      <p class="chat-time mb24" v-show="chatDetail.showTime">{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
+      <p class="chat-time mb24" v-if="chatDetail.showTime">{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
       <div class="chat-content">
         <img :src="imgNormalToggle(patientImg,chatDetail)" alt @error="error(chatDetail,$event)">
         <div
           class="reply-content ml16"
-          v-show="chatDetail.msgdata.msg_type=='text'"
+          v-if="chatDetail.msgdata.msg_type=='text'"
         ><span>{{chatDetail.msgdata.text}}</span></div>
-        <div class="reply-content ml16" v-show="chatDetail.msgdata.msg_type=='link'">
-          <div class="recommond">
-            <img :src="imgNormalToggle(imgDetail.avatar,imgDetail)" alt @error="error(imgDetail,$event)">
-            <div class="recommond-content">
-              <p class="recommond-title">
-                 {{imgDetail.name}}
-                <span :class="color_list[imgDetail.title-1]">{{imgDetail.title|doctorTypes}}</span>
-              </p>
-              <p class="recommond-subTitle">请点击进行预约</p>
+          <div class="reply-content ml16" v-if="chatDetail.msgdata && chatDetail.msgdata.msg_type=='link'">
+          <div class="recommond" v-if="chatDetail.msgdata.link_type == 'treatment_order_Submission'">
+            <div class="recommond-content" @touchstart="goRoute(chatDetail.msgdata.link_url)">
+              <p class="recommond-subTitle">已提交预约订单，点击查看</p>
             </div>
           </div>
         </div>
-        <div class="reply-content ml16" v-show="chatDetail.msgdata.msg_type=='image'">
+        <div
+        <div class="reply-content ml16" v-if="chatDetail.msgdata.msg_type=='image'">
           <div class="imgMessage">
             <img :src="chatDetail.msgdata.img_url" alt>
           </div>
@@ -28,7 +24,7 @@
         <!-- <div
               class="reply-content ml16"
         >医生，我想要咨询鼻炎之类的问题呢，最近不舒服医<a href="www.baidu.com">打开</a></div>-->
-        <div class="cancel ml16" v-show="chatDetail.msgdata.msg_type=='withdraw_msg'">
+        <div class="cancel ml16" v-if="chatDetail.msgdata.msg_type=='withdraw_msg'">
           <p>对方撤回了一条消息</p>
         </div>
       </div>
@@ -50,6 +46,13 @@ export default {
       ],
       imgDetail:''
     };
+  },
+  methods:{
+        // 路由跳转
+    goRoute (url) {
+      // console.log(this.imgDetail)
+      this.$router.push({name:'patientOrderPage',params:{orderSeqno:this.imgDetail.orderSeqno}})
+    }
   },
   created(){
     if(this.chatDetail.msgdata.msg_type=='link'){

@@ -3,7 +3,7 @@
     <div class="right-chat mb24">
       <p
         class="chat-time mb24"
-        v-show="chatDetail.showTime"
+        v-if="chatDetail.showTime"
       >{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
       <div
         class="chat-content"
@@ -12,10 +12,10 @@
         @touchend="gtouchend()"
       >
         <!-- messagetype  text-->
-        <div class="reply-content" v-show="chatDetail.msgdata.msg_type=='text'">
+        <div class="reply-content" v-if="chatDetail.msgdata.msg_type=='text'">
           <span>{{chatDetail.msgdata.text}}</span>
         </div>
-        <div class="reply-content" v-show="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='link'" >
+        <div class="reply-content" v-if="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='link'" >
           <div class="recommond">
             <img :src="imgNormalToggle(imgDetail.avatar,imgDetail)" alt @error="error(imgDetail,$event)">
             <div class="recommond-content">
@@ -29,7 +29,7 @@
         </div>
         <div
           class="reply-content"
-          v-show="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='image'"
+          v-if="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='image'"
         >
           <div class="imgMessage">
             <img :src="chatDetail.msgdata.img_url" alt>
@@ -37,7 +37,7 @@
         </div>
         <div
           class="cancel"
-          v-show="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='withdraw_msg'"
+          v-if="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='withdraw_msg'"
         >
           <p>你撤回了一条消息</p>
         </div>
@@ -101,9 +101,6 @@ export default {
     gtouchmove() {
       clearTimeout(this.timeOutEvent); //清除定时器
       this.timeOutEvent = 0;
-    },
-    goRouter(){
-      alert(111)
     }
   },
   created() {

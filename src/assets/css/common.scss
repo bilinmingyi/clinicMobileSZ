@@ -13,6 +13,8 @@ $gray2:#6c6c6c;
 $gray3:#8c8c8c;
 $backColor:#333333;
 $deepBlue:#08BAC6;
+$lineColor:#d9d9d9;
+$depthTextColor: #3F3F3F;
 
 /* 继承公共类*/
 
@@ -41,6 +43,14 @@ $deepBlue:#08BAC6;
     @extend %columnFlex;
     align-items: center;
     justify-content: center;
+}
+
+%lineHr {
+    width: 100%;
+    margin: 0;
+    border: 1px solid $lineColor;
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
 }
 
 %normalTitle {
@@ -147,8 +157,8 @@ $deepBlue:#08BAC6;
     border-#{$borerSeat}: $px solid $color;
 }
 
-  .no-platform {
+.no-platform {
     @include textLineHeight(80px);
     text-align: center;
     @extend %normalTitle;
-  }
+}

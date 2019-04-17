@@ -8,7 +8,7 @@
       <p class="black-title pb16">深圳淳道门诊部</p>
       <p class="gray-font">服务剩余时间：30天</p>
     </div>
-    <div class="top-right">服务详情</div>
+    <!-- <div class="top-right">服务详情</div> -->
   </div>
   <hr class="full-screen-hr"></hr>
   <div class="home-mid">
@@ -19,7 +19,7 @@
     <div class=" flex-mid-center flex-one" @click="goPatientInfo">
       <div class="fix-img">
       <img :src="patientLogo" alt="" >
-      <span class="fix-icon" v-show="haveInfo==2">5</span>
+      <span class="fix-icon" v-show="haveInfo==2">{{unReadNum}}</span>
       </div>
       <span class="subtitle">患者信息</span>
     </div>
@@ -29,12 +29,14 @@
 </template>
 
 <script>
+import {unRead} from "@/fetch/api"
 export default {
   data() {
     return {
       haveInfo:2,
       imglogo1:require('@/assets/images/ly.png'),
-      imglogo2:require('@/assets/images/ly2.png')
+      imglogo2:require('@/assets/images/ly2.png'),
+      unReadNum:''
     };
   },
   computed:{
@@ -46,6 +48,19 @@ export default {
     goPatientInfo(){
       this.$router.push({name:'patientInfoPage'})
     }
+  },
+  mounted(){
+    let params={
+      session_type:'CLINIC_PATIENT'
+    }
+    unRead(params).then(res=>{
+      if(res.code===1000){
+          let self= this;
+        self.unReadNum = res.data.unread_count
+      }else{
+        this.$Message.infor(res.msg);
+      }
+    })
   }
 };
 </script>
@@ -94,12 +109,16 @@ export default {
         position: absolute;
         top: 5px;
         right: 5px;
-        @extend %searchIcon;
-        text-align:center;
+        // @extend %searchIcon;
+        text-align: center;
+        min-width: 44px;
+        min-height:44px;
+        @extend %aglinItem;
+        justify-content: center;
         content: "";
         -webkit-transform: translate(50%, -50%);
         transform: translate(50%, -50%);
-        border: 3px solid #fff;
+        // border: 3px solid #fff;
         border-radius: 100px;
         color:$bgwhite2;
         background: $redColor;

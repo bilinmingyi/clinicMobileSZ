@@ -20,13 +20,16 @@ function fetch(url, params) {
 }
 /* 数据获取 */
 /* 聊天室 */
+const getClinc = params => fetch('/clinic/info', params);
 const chatSessionList = params => fetch('/chat/session/list', params);
 const chatMsgList = params => fetch('/chat/msg/list', params);
+const unRead = params => fetch('/chat/msg/unread', params);
 const msgSend = params => fetch('/chat/msg/send', params);
 const msgWithdraw = params => fetch('/chat/msg/withdraw', params);
 const msgRecent = params => fetch('/chat/msg/recent', params);
 const patientList = params => fetch('/chat/user/list', params);
 const doctorList = params => fetch('clinicmng/user/list ', params);
+const orderDetail = params => fetch('/treatmng/appoint/detail', params);
 
 /* 消息模块 */
 const getPlatformList = params => fetch('/article/list', params);
@@ -57,6 +60,7 @@ const stockproductList = params => fetch('/stockmng/medicine/productList', param
 
 export {
     fetch,
+    getClinc,
     chatSessionList,
     chatMsgList,
     msgSend,
@@ -64,6 +68,7 @@ export {
     msgRecent,
     patientList,
     doctorList,
+    orderDetail,
     getPlatformList,
     getArticleDetail,
     getCommentList,
@@ -82,5 +87,6 @@ export {
     outerType,
     stockHerbalList,
     stockWesternList,
-    stockproductList
+    stockproductList,
+    unRead
 }

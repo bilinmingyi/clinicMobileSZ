@@ -56,51 +56,53 @@ const parseWesternCategory = function(val) {
  * S：毫秒
  */
 const dateFormat = function(date, fmt) {
-    if (!Date.prototype.Format) {
-        Object.defineProperty(Date.prototype, "Format", {
-            enumerable: false,
-            configurable: false,
-            writable: false,
-            value: function(fmt) {
-                var f = fmt != null ? fmt : "yyyy-MM-dd hh:mm:ss";
-                var o = {
-                    "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
-                    "M+": this.getMonth() + 1, // 月份
-                    "d+": this.getDate(), // 日
-                    "h+": this.getHours(), // 时
-                    "m+": this.getMinutes(), // 分
-                    "s+": this.getSeconds(), // 秒
-                    S: this.getMilliseconds() //毫秒
-                };
-                if (/(y+)/.test(f)) {
-                    f = f.replace(
-                        RegExp.$1,
-                        (this.getFullYear() + "").substr(4 - RegExp.$1.length)
-                    );
-                }
-                for (var k in o) {
-                    if (new RegExp("(" + k + ")").test(f)) {
+        if (!Date.prototype.Format) {
+            Object.defineProperty(Date.prototype, 'Format', {
+                enumerable: false,
+                configurable: false,
+                writable: false,
+                value: function(fmt) {
+                    var f = fmt != null ? fmt : 'yyyy-MM-dd hh:mm:ss'
+                    var weekList = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+                    var o = {
+                        'q+': Math.floor((this.getMonth() + 3) / 3), // 季度
+                        'M+': this.getMonth() + 1, // 月份
+                        'd+': this.getDate(), // 日
+                        'h+': this.getHours(), // 时
+                        'm+': this.getMinutes(), // 分
+                        's+': this.getSeconds(), // 秒
+                        W: weekList[this.getDay()],
+                        S: this.getMilliseconds() // 毫秒
+                    }
+                    if (/(y+)/.test(f)) {
                         f = f.replace(
                             RegExp.$1,
-                            RegExp.$1.length == 1 ?
-                            o[k] :
-                            ("00" + o[k]).substr(("" + o[k]).length)
-                        );
+                            (this.getFullYear() + '').substr(4 - RegExp.$1.length)
+                        )
                     }
+                    for (var k in o) {
+                        if (new RegExp('(' + k + ')').test(f)) {
+                            f = f.replace(
+                                RegExp.$1,
+                                RegExp.$1.length === 1 ?
+                                o[k] :
+                                ('00' + o[k]).substr(('' + o[k]).length)
+                            )
+                        }
+                    }
+                    return f
                 }
-                return f;
-            }
-        });
+            })
+        }
+        let d = Date.prototype.isPrototypeOf(date) ? date : new Date(Number(date))
+        return d.Format(fmt)
     }
-    let d = Date.prototype.isPrototypeOf(date) ? date : new Date(date);
-    return d.getTime() === d.getTime() ? d.Format(fmt) : '';
-};
-/**
- * @desc 输出成上午 hh:mm:ss 下午 hh:mm:ss  昨天 hh:mm:ss  之后 MM-dd hh:mm
- * @param datefmt  yyyy-MM-dd hh:mm 类型 可以有-- 但是不能有其他符号
- * @example
- * {{item.recent_msg.msgts|dateFormat('yyyyMMdd hh:mm')|detailDate}}
- */
+    /**
+     * @desc 输出成上午 hh:mm:ss 下午 hh:mm:ss  昨天 hh:mm:ss  之后 MM-dd hh:mm
+     * @param datefmt  yyyy-MM-dd hh:mm 类型 可以有-- 但是不能有其他符号
+     * @example
+     * {{item.recent_msg.msgts|dateFormat('yyyyMMdd hh:mm')|detailDate}}
+     */
 const detailDate = function(date) {
         //获取今天的时间
         let today = new Date();

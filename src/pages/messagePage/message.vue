@@ -4,7 +4,7 @@
     <div class="msg-img">
       <img src="@/assets/images/banner-yun.png" alt>
     </div>
-    <div class="msg-mid">
+    <!-- <div class="msg-mid">
       <div class="msg-left ml30" @click="goMyNew">
         <div :class="[{'msg-left-img':newmsg==1}]">
           <img src="@/assets/images/xiaoxi@2x.png" alt>
@@ -14,7 +14,7 @@
       <div class="msg-right">
         <img src="@/assets/images/xiayibu@2x.png" alt>
       </div>
-    </div>
+    </div> -->
       <msg-bottom></msg-bottom>
     <commonBottom :navtiveIndex="navtiveIndex"></commonBottom>
   </div>
