@@ -9,7 +9,6 @@ export default {
     methods: {
         //图片加载错误的时候
         error(item, e) {
-            console.log(e)
             e.target.src = this.getNormalHead(item.sex); //默认图
         },
         // 头像的默认图
@@ -28,7 +27,7 @@ export default {
             }
         },
         //如果有图片传入 就用传入的图片 否则用默认图
-        imgNormalToggle(url,item) {
+        imgNormalToggle(url, item) {
             return url == '' ? this.getNormalHead(item.sex) : url;
         }
     }

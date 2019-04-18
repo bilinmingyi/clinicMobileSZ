@@ -2,10 +2,15 @@
   <div class="doctor">
     <common-header :titleName="'医生查询'"></common-header>
     <div class="input-search">
-  <input-search :placeholder="'医生姓名'" ></input-search>
+      <input-search :placeholder="'医生姓名'" @onInput="getSearchList"></input-search>
     </div>
     <div class="mt88"></div>
-    <div class="doc-content" @click="recommend(item)" v-for="(item,index) in allDoctor" :key="index">
+    <div
+      class="doc-content"
+      @click="recommend(item)"
+      v-for="(item,index) in allDoctor"
+      :key="index"
+    >
       <div class="doc">
         <img :src="imgNormalToggle(item.avatar,item)" alt @error="error(item,$event)">
         <div class="doc-detail">
@@ -13,38 +18,28 @@
             {{item.name}}
             <span :class="color_list[item.title-1]">{{item.title|doctorTypes}}</span>
           </p>
-          <p class="doc-subTitle">   {{item.hospital}}
-          <span v-if="item.hospital!='' && item.department!=''">/</span>
-          {{item.department}}</p>
+          <p class="doc-subTitle">
+            {{item.hospital}}
+            <span v-if="item.hospital!='' && item.department!=''">/</span>
+            {{item.department}}
+          </p>
         </div>
         <div class="doc-button ml64">推荐</div>
       </div>
     </div>
-    <!-- <div class="doc-content">
-      <div class="doc">
-        <img src="@/assets/images/bm.png" alt>
-        <div class="doc-detail">
-          <p class="doc-title">
-            王凯歌
-            <span :class="{'docColor':docJob==1}">主任</span>
-          </p>
-          <p class="doc-subTitle">中山大学附属医院/耳鼻喉科</p>
-        </div>
-        <div class="doc-button ml64">推荐</div>
-      </div>
-    </div> -->
-    <!-- <div :class="['doctor-job',color_list[itemData.title-1]]"></div> -->
+    <without-data v-show="hasData&&isLoad"></without-data>
   </div>
 </template>
 
 <script>
+import withoutData from "@/components/common//withoutData";
 import imgMixins from "@/assets/js/imgMixins";
 import commonHeader from "@/components/common/commonHeader";
 import inputSearch from "@/components/common/inputSearch";
 import { doctorList } from "@/fetch/api";
 import { msgSend } from "@/fetch/api";
 export default {
-   mixins:[imgMixins],
+  mixins: [imgMixins],
   data() {
     return {
       docJob: 1,
@@ -55,35 +50,67 @@ export default {
         "color-29BBFF"
       ],
       queryData: {},
-      allDoctor:[]
+      allDoctor: [],
+      copyAllDoctor:[],
+      isLoad:false
     };
   },
   components: {
     commonHeader,
-    inputSearch
+    inputSearch,
+    withoutData
+  },
+  computed:{
+    hasData(){
+      return this.allDoctor.length===0;
+    }
   },
   methods: {
     getData() {
       let params = { job_type: "1", page_size: "50" };
-      // console.log(params);
       doctorList(params).then(res => {
-        if(res.code===1000){
-          this.allDoctor = res.data
-        }else{
-           this.$Message.infor("网络出错！");
+        if (res.code === 1000) {
+          this.allDoctor = res.data;
+          this.copyAllDoctor = res.data;
+        } else {
+          this.$Message.infor("网络出错！");
         }
-        // console.log(res);
+        this.isLoad = true;
       });
     },
+    //模糊查询
+    getSearchList(val) {
+      let newList = [];
+      clearTimeout(newSearchList);
+      var newSearchList = setTimeout(() => {
+        if (!val) {
+          newList = this.copyAllDoctor;
+        } else {
+          this.copyAllDoctor.forEach(item => {
+            if (
+              item.name
+                .toLowerCase()
+                .indexOf(val.toLowerCase()) !== -1 
+            ) {
+              newList.push(item);
+            }
+          });
+        }
+        this.allDoctor = newList;
+      }, 500);
+    },
+    onInput() {
+      console.log(111);
+    },
     recommend(item) {
-      let oject={
-           avatar: item.avatar,
-            name: item.name,
-            job_type: item.job_type,
-            id: item.id,
-            sex:item.sex,
-            title:item.title
-      }
+      let oject = {
+        avatar: item.avatar,
+        name: item.name,
+        job_type: item.job_type,
+        id: item.id,
+        sex: item.sex,
+        title: item.title
+      };
       let params = {
         last_msgid: this.queryData.last_msgid,
         to_userid: this.queryData.to_userid,
@@ -97,7 +124,6 @@ export default {
           link_desc: JSON.stringify(oject)
         }
       };
-      // console.log(params);
       this.$Message.confirm(
         `推荐${item.name}医生给病人${this.queryData.username}？`,
         () => {
@@ -110,23 +136,21 @@ export default {
           });
         }
       );
-      // console.log(params)
     }
   },
   created() {
     this.getData();
     this.queryData = this.$route.query;
-    // console.log(this.queryData);
   }
 };
 </script>
 <style lang="scss" scoped>
-.input-search{
+.input-search {
   position: fixed;
   width: 100%;
   background: #f5f5f5;
 }
-.mt88{
+.mt88 {
   padding-top: 88px;
 }
 .doc-content {
@@ -155,7 +179,7 @@ export default {
       span {
         min-width: 80px;
         height: 50px;
-        padding:0 10px;
+        padding: 0 10px;
         border-radius: 8px;
         line-height: 50px;
         text-align: center;
@@ -171,11 +195,10 @@ export default {
       font-size: 28px;
       color: $simpleGray;
       width: 350px;
-      flex:1;
+      flex: 1;
     }
     &-button {
       @include newsButton(64px, 136px);
-      
     }
     .docColor {
       background: #4dbc89;

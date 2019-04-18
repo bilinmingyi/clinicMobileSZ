@@ -113,7 +113,6 @@ export default {
         sex: this.sex_statues,
         city: this.userInfoState.city
       };
-      // console.log(timetmp);
       updateUserInfo(params).then(res=>{
         if(res.code==1000){
           this.$Message.infor('保存成功');
@@ -121,7 +120,6 @@ export default {
         }else{
           this.$Message.infor('更新失败'+res.code)
         }
-        console.log(res)
       });
     }
   },

@@ -14,7 +14,6 @@ export default {
     getData() {
       getClinc()
         .then(res => {
-          // console.log(res)
           if (res.code === 1000) {
             this.set_clinic_info({
               id: res.data.id,
@@ -33,10 +32,6 @@ export default {
             this.$Message.infor(res.msg);
           }
         })
-        // .catch(error => {
-        //   console.log(error);
-        //   this.$Message.infor("网络出错！");
-        // });
     }
   },
   mounted() {

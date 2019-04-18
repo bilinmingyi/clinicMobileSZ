@@ -2,7 +2,7 @@
   <div class="patient-info">
     <common-header :titleName="'患者信息'"></common-header>
     <div class="fixtop">
-      <input-search @query="inquery" ></input-search>
+      <input-search @query="inquery" @inputBlur="inputBlur" ></input-search>
       <section class="patient-bar">
         <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==0}]" @click="changeIndex(0)">最新消息</div>
         <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==1}]" @click="changeIndex(1)">患者列表</div>
@@ -119,7 +119,6 @@ export default {
           this.chatList = res.data.session_list;
         } else {
           this.$Message.infor("网络出错！");
-          console.log(res);
         }
       });
       this.getPatientList("");
@@ -138,14 +137,17 @@ export default {
         } else {
           this.$Message.infor(res.msg);
         }
-          console.log(res.data.length)
         if (res.data.length !==2) {
           this.isShowLoad = false;
         }
         //  this.$Message.infor("网络出错！");
         this.isLoad = true;
-        console.log(res.data);
       });
+    },
+    inputBlur(val){
+      if(val==''){
+        this.inquery(val);
+      }
     },
     inquery(val) {
       let self = this;
@@ -164,6 +166,7 @@ export default {
       this.getPatientList(self.copyVal);
     },
     msgDataType(params) {
+      console.log(params.msg_type)
       switch (params.msg_type) {
         case "text":
           return params.text;

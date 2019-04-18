@@ -33,6 +33,9 @@ const pharmacyCategory = function(val) {
 const parseWesternCategory = function(val) {
     return clinicDict.westernCategory.codeToName(val);
 }
+const articleType = (val) => {
+    return clinicDict.articleType.codeToName(val);
+}
 
 
 
@@ -137,5 +140,6 @@ export default {
     medType,
     parseHerbalCategory,
     pharmacyCategory,
-    parseWesternCategory
+    parseWesternCategory,
+    articleType
 }

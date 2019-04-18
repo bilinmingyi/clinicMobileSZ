@@ -85,9 +85,7 @@ export default {
         page: this.page,
         page_size: this.pageSize
       };
-      console.log(params);
       medicalDoctor(params).then(res => {
-        console.log(res);
         if (res.code === 1000) {
           res.data.doctorAmtList.forEach(item => {
             this.payStreamData.push(item);
@@ -100,11 +98,9 @@ export default {
           this.firstTableList[5].value = res.data.totalAmt.western_price;
           this.firstTableList[6].value = res.data.totalAmt.product_price;
           this.firstTableList[7].value = res.data.totalAmt.therapy_price;
-          console.log(this.payStreamData);
         } else {
           this.$Message.infor(res.msg);
         }
-        console.log(res.data.length);
         if (res.data.doctorAmtList.length != 10) {
           this.isShowLoad = false; //表示没有更多数据了
         }

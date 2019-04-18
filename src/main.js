@@ -19,13 +19,9 @@ Object.keys(components).forEach(key => {
     Vue.component(key, components[key])
 })
 Vue.prototype.$Message = message
-    // console.log(window.location)
+
 Vue.config.productionTip = false
-    // (function (doc,win){
-    //   var docEl = doc.documentElememt,
-    //    resizeEvt = 'orientationchange'
-    // })
-    /* eslint-disable no-new */
+
 new Vue({
     el: '#app',
     router,

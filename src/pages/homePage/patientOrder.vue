@@ -93,7 +93,6 @@ export default {
       orderDetail({
         order_seqno: this.orderSeqno
       }).then(res => {
-        console.log(res)
         if (res.code === 1000) {
           this.orderInfo = res.data.order_info
           let time = this.orderInfo.appointDate
@@ -103,7 +102,6 @@ export default {
         }
         this.isLoad= true;
       }).catch(error => {
-        console.log(error)
         this.$Message.infor('网络出错！')
       })
     }

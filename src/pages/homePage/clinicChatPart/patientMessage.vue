@@ -3,22 +3,22 @@
     <div class="left-chat mb50">
       <p class="chat-time mb24" v-if="chatDetail.showTime">{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
       <div class="chat-content">
-        <img :src="imgNormalToggle(patientImg,chatDetail)" alt @error="error(chatDetail,$event)">
+        <img :src="imgNormalToggle(patientImg,chatDetail)" alt @error="error(chatDetail,$event)" class="iconImg">
         <div
           class="reply-content ml16"
           v-if="chatDetail.msgdata.msg_type=='text'"
         ><span>{{chatDetail.msgdata.text}}</span></div>
           <div class="reply-content ml16" v-if="chatDetail.msgdata && chatDetail.msgdata.msg_type=='link'">
           <div class="recommond" v-if="chatDetail.msgdata.link_type == 'treatment_order_Submission'">
-            <div class="recommond-content" @touchstart="goRoute(chatDetail.msgdata.link_url)">
+            <div class="recommond-content" @click="goRoute(chatDetail.msgdata.link_url)">
               <p class="recommond-subTitle">已提交预约订单，点击查看</p>
             </div>
           </div>
         </div>
         <div
         <div class="reply-content ml16" v-if="chatDetail.msgdata.msg_type=='image'">
-          <div class="imgMessage">
-            <img :src="chatDetail.msgdata.img_url" alt>
+          <div class="imgMessage" @click="showImg">
+            <img :src="chatDetail.msgdata.img_url" alt >
           </div>
         </div>
         <!-- <div
@@ -50,8 +50,14 @@ export default {
   methods:{
         // 路由跳转
     goRoute (url) {
-      // console.log(this.imgDetail)
       this.$router.push({name:'patientOrderPage',params:{orderSeqno:this.imgDetail.orderSeqno}})
+    },
+          // 调用微信接口展示图片
+    showImg () {
+      WeixinJSBridge.invoke('imagePreview', {
+        'current': this.chatDetail.msgdata.img_url,
+        'urls': [this.chatDetail.msgdata.img_url]
+      })
     }
   },
   created(){
@@ -86,7 +92,7 @@ p {
     font-weight: 600;
   }
   display: flex;
-  img {
+  .iconImg {
     @extend %minICon;
     border-radius: 100px;
   }

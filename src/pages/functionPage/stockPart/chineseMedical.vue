@@ -25,16 +25,13 @@ export default {
         warn_stock: val
       };
       stockHerbalList(params).then(res => {
-        console.log(res);
         if (res.code === 1000) {
           res.data.forEach(item => {
             this.payStreamData.push(item);
           });
-          console.log(this.payStreamData);
         } else {
           this.$Message.infor(res.msg);
         }
-        console.log(res.data.length);
         if (res.data.length != 10) {
           this.isShowLoad = false; //表示没有更多数据了
         }

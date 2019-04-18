@@ -12,7 +12,6 @@ const actions = {
                 store.commit('updateUserInfo', res.data);
             } else {
                 this.$Message.infor('网络出错！')
-                console.log(res);
             }
         });
     }

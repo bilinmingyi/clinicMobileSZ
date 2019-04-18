@@ -28,7 +28,8 @@ export default {
       platformList: [],
       normalPic: require("@/assets/images/banner-yun.png"),
       isShowLoad: true,
-      isLoad:false
+      isLoad:false,
+      type:''
     };
   },
   components: {
@@ -56,6 +57,7 @@ export default {
       };
       getPlatformList(params).then(res => {
         if (res.code === 1000) {
+          this.type=res.data.type;
           res.data.forEach(item => {
             this.platformList.push(item);
           });

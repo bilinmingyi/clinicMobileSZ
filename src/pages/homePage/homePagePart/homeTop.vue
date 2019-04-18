@@ -49,7 +49,7 @@ export default {
       this.$router.push({name:'patientInfoPage'})
     }
   },
-  mounted(){
+  created(){
     let params={
       session_type:'CLINIC_PATIENT'
     }

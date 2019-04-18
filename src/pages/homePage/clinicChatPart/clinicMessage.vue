@@ -17,7 +17,7 @@
         </div>
         <div class="reply-content" v-if="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='link'" >
           <div class="recommond">
-            <img :src="imgNormalToggle(imgDetail.avatar,imgDetail)" alt @error="error(imgDetail,$event)">
+            <img :src="imgNormalToggle(imgDetail.avatar,imgDetail)" alt @error="error(imgDetail,$event)" class="iconImg">
             <div class="recommond-content">
               <p class="recommond-title">
                 {{imgDetail.name}}
@@ -31,7 +31,7 @@
           class="reply-content"
           v-if="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='image'"
         >
-          <div class="imgMessage">
+          <div class="imgMessage" @click="showImg">
             <img :src="chatDetail.msgdata.img_url" alt>
           </div>
         </div>
@@ -47,7 +47,7 @@
         <img
           :src="imgNormalToggle(userInfoState.avatar,userInfoState)"
           alt
-          class="ml20"
+          class="ml20 iconImg"
           @error="error(userInfoState,$event)"
         >
       </div>
@@ -77,6 +77,9 @@ export default {
     ...mapState(["userInfoState"])
   },
   methods: {
+    gg(){
+      alert(11)
+    },
     //开始按
     gtouchstart() {
       if (this.chatDetail.msgdata.msg_type == "withdraw_msg") {
@@ -84,7 +87,6 @@ export default {
         //撤销消息不能撤回
       }
       this.timeOutEvent = setTimeout(() => {
-        console.log(11)
         this.$Message.confirm("确认撤销消息么？", () => {
           this.$emit("cancelMessage", this.chatDetail);
         });
@@ -101,6 +103,13 @@ export default {
     gtouchmove() {
       clearTimeout(this.timeOutEvent); //清除定时器
       this.timeOutEvent = 0;
+    },
+       // 调用微信接口展示图片
+    showImg () {
+      WeixinJSBridge.invoke('imagePreview', {
+        'current': this.chatDetail.msgdata.img_url,
+        'urls': [this.chatDetail.msgdata.img_url]
+      })
     }
   },
   created() {
@@ -136,9 +145,9 @@ p {
     font-weight: 600;
   }
   display: flex;
-  img {
-    border-radius: 100px;
+    .iconImg {
     @extend %minICon;
+    border-radius: 100px;
   }
   .recommond {
     @extend %aglinItem;

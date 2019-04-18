@@ -3,7 +3,7 @@
     <common-header :titleName="'平台动态'"></common-header>
     <div class="platform">
       <div class="platform-title">{{platformTitle}}</div>
-      <p>平台消息</p>
+      <p>{{detailData.type|articleType}}</p>
       <p>{{detailData.create_time |dateFormat('yyyy-MM-dd')}}</p>
       <div class="platform-content" v-html="detailData.content"></div>
       <div class="full-screen-hr mt188"></div>
@@ -59,14 +59,11 @@ export default {
         content_id: this.id,
         content_type: 1
       };
-      console.log(params)
       getCommentList(params).then(res => {
         if(res.code===1000){
           this.commentList = res.data;
-          console.log( this.commentList)
         }else{
-           this.$Message.infor('网络出错！')
-        console.log(res);
+           this.$Message.infor(res.msg)
         }
 
       });

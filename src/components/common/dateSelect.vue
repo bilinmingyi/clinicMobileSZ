@@ -36,7 +36,6 @@ export default {
       let startTimeStr=(new Date(this.startTime)).setHours(0, 0, 0, 0);
       let endTimeStr = (new Date(this.endTime)).setHours(23, 59, 59, 59);
       let timeParams = { startTime: startTimeStr, endTime: endTimeStr};
-      console.log(timeParams);
       switch (index) {
         case 1:
           this.$emit("selectToday", timeParams);

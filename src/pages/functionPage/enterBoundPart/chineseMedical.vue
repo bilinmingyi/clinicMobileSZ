@@ -55,7 +55,6 @@ export default {
       };
       enterType(params).then(res => {
         if (res.code === 1000) {
-          console.log(res);
           res.data.detail.forEach(item => {
             let params = {
               drug:item.name,

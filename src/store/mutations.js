@@ -6,12 +6,9 @@ const mutations = {
         state.userInfoState = object;
     },
     addReplySet(state, replyItem) {
-        // Number(state.defaultKey++);
-        // console.log(key)
         localStorage.defaultKey++;
         let obj = {};
         obj.key = Number(state.defaultKey++);
-        console.log(obj.key)
         obj.replyName = replyItem;
         state.defaultReply.push(obj);
         try {
@@ -29,9 +26,8 @@ const mutations = {
     },
     set_clinic_info(state, obj) {
         Object.keys(obj).forEach(item => {
-                state.clinic[item] = obj[item]
-            })
-            // console.log(state.clinic)
+            state.clinic[item] = obj[item]
+        })
     },
 }
 

@@ -39,7 +39,6 @@ export default {
     commonHeader
   },
   created(){
-    // console.log(this.defaultReply)
   }
 }
 </script>

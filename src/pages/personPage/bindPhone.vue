@@ -52,7 +52,6 @@ export default {
     ...mapActions(['getUserInfo']),
     //获取验证码
     sendCode() {
-      console.log(11)
       let self = this;
       if (self.tel == "") {
         this.$Message.infor("手机号不能为空！");

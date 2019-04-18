@@ -24,9 +24,11 @@
         :showFuc="isShowFuc"
         @addFunc="addFunc"
         @hideFunc="foucs"
-        @sendMessage="sendMessage"
+        @sendMessage="sendTextMessage"
+        @sendImg="sendImgMessage"
         @showReply="showReply"
         @goDocRecommond="goDocRecommond"
+        @inputBlur="inputBlur"
       ></chat-bottom>
     </div>
   </div>
@@ -99,21 +101,45 @@ export default {
         }
       });
     },
+    inputBlur() {
+      window.scrollTo(0, 0);
+    },
+    // 发送文本
+    sendTextMessage(val) {
+      this.sendMessage(1, val);
+    },
+    sendImgMessage(val) {
+      this.sendMessage(2, val);
+    },
     //发送信息的时候请求数据
-    sendMessage(val) {
+    sendMessage(type, val) {
       let index = this.allMsgList.length - 1;
       let msgid =
         this.allMsgList.length > 0 ? this.allMsgList[index].msgid : null;
-      let params = {
-        last_msgid: msgid,
-        to_userid: this.queryData.userId,
-        from_username: this.userInfoState.name,
-        from_userimg: this.userInfoState.avatar,
-        session_type: this.queryData.session_type,
-        msgdata: { msg_type: "text", text: val }
-      };
+      let params = {};
+      switch (type) {
+        case 1:
+          params = {
+            last_msgid: msgid,
+            to_userid: this.queryData.userId,
+            from_username: this.userInfoState.name,
+            from_userimg: this.userInfoState.avatar,
+            session_type: this.queryData.session_type,
+            msgdata: { msg_type: "text", text: val }
+          };
+          break;
+        case 2:
+          params = {
+            last_msgid: msgid,
+            to_userid: this.queryData.userId,
+            from_username: this.userInfoState.name,
+            from_userimg: this.userInfoState.avatar,
+            session_type: this.queryData.session_type,
+            msgdata: { msg_type: "image", img_url: val }
+          };
+          break;
+      }
       msgSend(params).then(res => {
-        // console.log(res);
         if (res.code === 1000) {
           res.data.msg_list.forEach((item, index) => {
             if (index == 0 && this.allMsgList.length != 0) {
@@ -145,7 +171,6 @@ export default {
     },
     //撤销消息
     cancelMessage(val) {
-      // console.log(val);
       let params = {
         session_type: val.session_type,
         session_id: val.session_id,
@@ -157,13 +182,12 @@ export default {
           this.allMsgList = newArray.filter(item => {
             return item.msgid !== val.msgid;
           });
-           setTimeout(() => {
-          this.scroll.scrollTo(0, this.scroll.maxScrollY, 1000);
-        }, 0);
+          setTimeout(() => {
+            this.scroll.scrollTo(0, this.scroll.maxScrollY, 1000);
+          }, 0);
         } else {
           this.$Message.infor(res.msg);
         }
-       
       });
     },
     showReply() {
@@ -205,31 +229,33 @@ export default {
         to_userid: this.queryData.userId
       };
       chatMsgList(params).then(res => {
-        // console.log(res);
-        let filterArray = [];
-        let withArray = [];
-        let secondArray = [];
         if (res.code === 1000) {
           res.data.msg_list.forEach((item, index) => {
             if (index == 0 && this.allMsgList.length !== 0) {
             } else {
-              this.allMsgList.push(item);
+              //避免发送数据和轮巡时 数据加了两天
+              let noData = true;
+              for(let i=0;i<this.allMsgList.length;i++){
+                if(this.allMsgList[i].msgid===item.msgid){
+                  noData=false;
+                  break;
+                }
+              }
+              if(noData){
+                this.allMsgList.push(item);
+              }
+              // this.allMsgList.push(item);
             }
             //过滤上面已经撤回的信息
             if (item.msgdata.msg_type == "withdraw_msg") {
-              withArray.push({ msgid: item.msgdata.msg_id });
+              this.allMsgList = this.allMsgList.filter(item1 => {
+                return item.msgid !== item.msgdata.msgid;
+              });
             }
           });
-          // console.log(this.allMsgList);
-          if (withArray.length > 0) {
-             let filterArray = JSON.parse(JSON.stringify(this.allMsgList));
-          withArray.forEach(item => {
-           filterArray.splice(filterArray.findIndex(v => v.msgid === item.msgid), 1)
-          })
-            this.allMsgList = filterArray;
-          }
-
-          // console.log(this.allMsgList);
+          // this.allMsgList = this.allMsgList.filter(item1 => {
+          //   return item.msgid !== item.msgdata.msgid;
+          // });
           this.allMsgList.forEach((item, index) => {
             if (index == 0) {
               this.$set(item, "showTime", true);
@@ -244,7 +270,7 @@ export default {
           });
           this.isReply = false;
         } else {
-           this.$Message.infor(res.msg);
+          this.$Message.infor(res.msg);
         }
       });
     },
@@ -258,7 +284,6 @@ export default {
         to_userid: this.queryData.userId
       };
       chatMsgList(params).then(res => {
-        // console.log(res);
         if (res.code == 1000) {
           this.allMsgList = res.data.msg_list;
           this.allMsgList.forEach((item, index) => {
@@ -276,7 +301,7 @@ export default {
           this.last_msgid =
             this.allMsgList.length > 0 ? this.allMsgList[0].msgid : null;
         } else {
-           this.$Message.infor(res.msg);
+          this.$Message.infor(res.msg);
         }
         setTimeout(() => {
           this.scroll.scrollTo(0, this.scroll.maxScrollY, 1000);
@@ -333,8 +358,9 @@ export default {
       pullDownRefresh: {
         threshold: 50, // 当下拉到超过顶部 50px 时，触发 pullingDown 事件
         stop: 20, // 刷新数据的过程中，回弹停留在距离顶部还有 20px 的位置
-        bounce: true
-      }
+        bounce: true,
+      },
+      click:true
     };
     //上拉加载数据
     this.scroll = new BScroll(this.$refs.wrapper, options);

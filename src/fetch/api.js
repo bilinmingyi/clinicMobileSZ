@@ -30,6 +30,8 @@ const msgRecent = params => fetch('/chat/msg/recent', params);
 const patientList = params => fetch('/chat/user/list', params);
 const doctorList = params => fetch('clinicmng/user/list ', params);
 const orderDetail = params => fetch('/treatmng/appoint/detail', params);
+// 图片生成链接
+const imgUpLoad = params => fetch('/chat/img/upload', params)
 
 /* 消息模块 */
 const getPlatformList = params => fetch('/article/list', params);
@@ -68,6 +70,7 @@ export {
     msgRecent,
     patientList,
     doctorList,
+    imgUpLoad,
     orderDetail,
     getPlatformList,
     getArticleDetail,

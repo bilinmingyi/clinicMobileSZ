@@ -75,9 +75,7 @@ export default {
         page_size: this.pageSize,
         start_time: val.startTime
       };
-      console.log(params);
       registerCharge(params).then(res => {
-        console.log(res);
         if (res.code === 1000) {
           res.data.detail.list.forEach(item => {
             this.payStreamData.push(item);
@@ -113,11 +111,9 @@ export default {
           this.firstTableList[3].value = Number(detailData.aliPay);
           this.firstTableList[4].value = Number(detailData.bankCard);
           this.firstTableList[5].value = Number(detailData.insurance);
-          console.log(this.payStreamData);
         } else {
           this.$Message.infor(res.msg);
         }
-        console.log(res.data.detail.list.length);
         if (res.data.detail.list.length != 10) {
           this.isShowLoad = false; //表示没有更多数据了
         }

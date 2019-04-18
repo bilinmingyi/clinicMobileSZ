@@ -2,7 +2,7 @@
   <div class="common-input">
     <div class="input-box">
       <img @click.stop="searchName()" src="@/assets/images/sousuo@2x.png">
-      <input class="serach-input " type="text" :placeholder="placeholder" v-model="inputText" @input="focusIuq">
+      <input class="serach-input " type="text" :placeholder="placeholder" v-model="inputText" @input="focusIuq" @blur="inputBlur" @focus="focus">
     </div>
     <div class="search-button ml26" @click="query">{{buttonName}}</div>
   </div>
@@ -32,11 +32,25 @@ export default {
     focusIuq(){
         var self=this;
       self.$emit("onInput", this.inputText);
+    },
+    focus(){
+    },
+    inputBlur(){
+              var self=this;
+      self.$emit("inputBlur", this.inputText);
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+[contenteditable="true"], input, textarea {
+    -webkit-user-select: auto!important;
+    -khtml-user-select: auto!important;
+    -moz-user-select: auto!important;
+    -ms-user-select: auto!important;
+    -o-user-select: auto!important;
+    user-select: auto!important;
+}
 .common-input {
   width: 100%;
   height: 96px;
