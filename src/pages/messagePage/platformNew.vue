@@ -83,7 +83,7 @@ export default {
   height: 100%;
   padding: 60px 30px;
   width: 750px;
-  // overflow: hidden;
+  overflow: hidden;
   p {
     color: $simpleGray;
     font-size: 30px;
