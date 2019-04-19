@@ -5,8 +5,8 @@
       <img src="@/assets/images/menzhen@2x.png" alt>
     </div>
     <div class="top-mid">
-      <p class="black-title pb16">深圳淳道门诊部</p>
-      <p class="gray-font">服务剩余时间：156天</p>
+      <p class="black-title pb16">{{clinic.name}}</p>
+      <p class="gray-font">服务剩余时间：{{clinic.rest}}</p>
     </div>
     <!-- <div class="top-right">服务详情</div> -->
   </div>
@@ -30,16 +30,20 @@
 
 <script>
 import {unRead} from "@/fetch/api"
+import { mapState } from 'vuex';
+import { getClinc } from "@/fetch/api";
 export default {
   data() {
     return {
       haveInfo:2,
       imglogo1:require('@/assets/images/ly.png'),
       imglogo2:require('@/assets/images/ly2.png'),
-      unReadNum:''
+      unReadNum:'',
+      clinics:{}
     };
   },
   computed:{
+    ...mapState(['clinic']),
     patientLogo(){
       return this.haveInfo==1?this.imglogo1:this.imglogo2;
     }

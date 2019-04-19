@@ -35,7 +35,8 @@ const state = {
         countyName: '',
         countyCode: '',
         address: '',
-        logo: ''
+        logo: '',
+        rest: ''
     },
     userInfoState: {}, //客户信息
     chatSessionList: [], //session的聊天室数据
