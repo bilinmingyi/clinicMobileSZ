@@ -6,7 +6,7 @@
     </div>
     <div class="top-mid">
       <p class="black-title pb16">深圳淳道门诊部</p>
-      <p class="gray-font">服务剩余时间：30天</p>
+      <p class="gray-font">服务剩余时间：156天</p>
     </div>
     <!-- <div class="top-right">服务详情</div> -->
   </div>
