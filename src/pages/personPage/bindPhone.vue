@@ -74,6 +74,10 @@ export default {
         }, 1000);
       }
       getMessageCode({ mobile: self.tel }).then(res => {
+        if(res.code===1000){
+        }else{
+          this.$Message.infor(res.msg);
+        }
         // console.log(res);
       });
     },
