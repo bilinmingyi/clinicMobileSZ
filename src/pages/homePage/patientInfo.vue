@@ -166,7 +166,6 @@ export default {
       this.getPatientList(self.copyVal);
     },
     msgDataType(params) {
-      console.log(params.msg_type)
       switch (params.msg_type) {
         case "text":
           return params.text;

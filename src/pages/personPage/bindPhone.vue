@@ -74,7 +74,7 @@ export default {
         }, 1000);
       }
       getMessageCode({ mobile: self.tel }).then(res => {
-        console.log(res);
+        // console.log(res);
       });
     },
     save() {

@@ -372,7 +372,6 @@ export default {
       },
       click:true
     };
-    // this.scroll.on('scroll',(pos)=>{console.log(pos.y)})
     //上拉加载数据
     this.scroll = new BScroll(this.$refs.wrapper, options);
     this.scroll.on("pullingDown", () => {

@@ -100,7 +100,6 @@ export default {
       }, 500);
     },
     onInput() {
-      console.log(111);
     },
     recommend(item) {
       let oject = {
