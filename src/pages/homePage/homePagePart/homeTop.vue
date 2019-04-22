@@ -19,7 +19,7 @@
     <div class=" flex-mid-center flex-one" @click="goPatientInfo">
       <div class="fix-img">
       <img :src="patientLogo" alt="" >
-      <span class="fix-icon" v-show="haveInfo==2">{{unReadNum}}</span>
+      <span class="fix-icon" v-show="unReadNum>0">{{unReadNum}}</span>
       </div>
       <span class="subtitle">患者信息</span>
     </div>
@@ -60,7 +60,12 @@ export default {
     unRead(params).then(res=>{
       if(res.code===1000){
           let self= this;
-        self.unReadNum = res.data.unread_count
+          try{
+        self.unReadNum = res.data.unread_count;
+          } catch(e){
+             self.unReadNum = 0
+          }
+       
       }else{
         this.$Message.infor(res.msg);
       }

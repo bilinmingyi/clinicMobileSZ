@@ -1,6 +1,6 @@
 <template>
   <div>
-    <common-header :isShowLeft="false"></common-header>
+    <!-- <common-header :isShowLeft="false"></common-header> -->
     <home-top></home-top>
     <home-mid></home-mid>
     <common-bottom :navtiveIndex="navtiveIndex"></common-bottom>

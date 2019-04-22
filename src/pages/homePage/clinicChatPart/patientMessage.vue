@@ -76,6 +76,7 @@ p {
   color: $simpleGray;
 }
 .chat-content {
+  margin-left: 20px;
   .reply-content {
     background: $bgwhite2;
     border: 1px solid $simpleGray;
@@ -99,7 +100,7 @@ p {
   .imgMessage {
     img {
       width: 100%;
-      height: 100%;
+      height: 400px;
     }
   }
   .recommond {

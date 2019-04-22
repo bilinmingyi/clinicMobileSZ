@@ -1,6 +1,6 @@
 <template>
   <div class="message">
-    <common-header :isShowLeft="false" :titleName="'首页'"></common-header>
+    <!-- <common-header :isShowLeft="false" :titleName="'首页'"></common-header> -->
     <div class="msg-img">
       <img src="@/assets/images/banner-yun.png" alt>
     </div>

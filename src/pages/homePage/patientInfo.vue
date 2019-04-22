@@ -2,7 +2,7 @@
   <div class="patient-info">
     <common-header :titleName="'患者信息'"></common-header>
     <div class="fixtop">
-      <input-search @query="inquery" @inputBlur="inputBlur" ></input-search>
+      <input-search @query="inquery"  ></input-search>
       <section class="patient-bar">
         <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==0}]" @click="changeIndex(0)">最新消息</div>
         <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==1}]" @click="changeIndex(1)">患者列表</div>
@@ -137,18 +137,18 @@ export default {
         } else {
           this.$Message.infor(res.msg);
         }
-        if (res.data.length !==2) {
+        if (res.data.length !==10) {
           this.isShowLoad = false;
         }
         //  this.$Message.infor("网络出错！");
         this.isLoad = true;
       });
     },
-    inputBlur(val){
-      if(val==''){
-        this.inquery(val);
-      }
-    },
+    // inputBlur(val){
+    //   if(val==''){
+    //     this.inquery(val);
+    //   }
+    // },
     inquery(val) {
       let self = this;
       self.copyVal = val;

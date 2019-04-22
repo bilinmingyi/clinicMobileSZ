@@ -13,7 +13,7 @@
       >
         <!-- messagetype  text-->
         <div class="reply-content" v-if="chatDetail.msgdata.msg_type=='text'">
-          <span>{{chatDetail.msgdata.text}}</span>
+          <div class="reply-text">{{chatDetail.msgdata.text}}</div>
         </div>
         <div class="reply-content" v-if="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='link'" >
           <div class="recommond">
@@ -45,10 +45,10 @@
               class="reply-content"
         >医生，我想要咨询鼻炎之类的问题呢，最近不舒服医<a href="www.baidu.com">打开</a></div>-->
         <img
-          :src="imgNormalToggle(userInfoState.avatar,userInfoState)"
+          :src="imgNormalToggle(chatDetail.from_userimg,userInfoState)"
           alt
           class="ml20 iconImg"
-          @error="error(userInfoState,$event)"
+          @error="error(chatDetail.from_userimg,$event)"
         >
       </div>
     </div>
@@ -77,9 +77,6 @@ export default {
     ...mapState(["userInfoState"])
   },
   methods: {
-    gg(){
-      alert(11)
-    },
     //开始按
     gtouchstart() {
       if (this.chatDetail.msgdata.msg_type == "withdraw_msg") {
@@ -121,6 +118,15 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.ml20{
+  margin-left:20px;
+}
+.mb24{
+  margin-bottom: 24px;
+}
+.reply-text{
+   user-select:none
+}
 p {
   text-align: center;
   font-size: 26px;
@@ -128,6 +134,7 @@ p {
   color: $simpleGray;
 }
 .chat-content {
+  padding-bottom: 24px;
   .reply-content {
     background: $bgwhite2;
     border: 1px solid $simpleGray;
@@ -186,12 +193,15 @@ p {
 }
 .imgMessage {
   img {
+    
     width: 100%;
-    height: 100%;
+    height: 400px;
   }
 }
 .right-chat {
+  padding-left: 20px;
   .chat-content {
+    margin-right:20px;
     justify-content: flex-end;
     display: flex;
   }
@@ -200,6 +210,10 @@ p {
   color: $gray3;
   font-size: 28px;
   @extend %aglinItem;
+  p{
+    height: 28px;
+    line-height: 28px;
+  }
 }
 .color-29BBFF {
   background: #29bbff;

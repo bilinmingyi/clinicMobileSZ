@@ -32,11 +32,14 @@ export default {
 
 <style lang="scss" scoped>
   .preview {
-    position: fixed;
+    // position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    bottom:0;
+    // right: 0;
+    z-index: 999;
+    width: 100vw;
+    height: 100vh;
     background: #000;
 
     .img-content {
