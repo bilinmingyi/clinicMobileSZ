@@ -194,10 +194,10 @@ export default {
           canvas.height = height;
 
           ctx.save();
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.translate(width / 2, height / 2);
-          ctx.rotate(Math.PI / 2);
-          ctx.translate(-width / 2, -height / 2);
+          // ctx.clearRect(0, 0, canvas.width, canvas.height);
+          // ctx.translate(width / 2, height / 2);
+          // ctx.rotate(Math.PI / 2);
+          // ctx.translate(-width / 2, -height / 2);
 
           ctx.fillStyle = "#fff";
           ctx.fillRect(0, 0, canvas.width, canvas.height);
