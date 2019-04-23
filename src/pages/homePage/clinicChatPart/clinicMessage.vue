@@ -109,6 +109,7 @@ export default {
   line-height: 50px;
   text-align: center;
   height: 50px;
+  font-size: 26px;
   color: $gray3;
   span{
     border-bottom: 1px solid $gray3;
