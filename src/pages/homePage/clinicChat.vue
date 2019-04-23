@@ -383,7 +383,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.userInfoState)
     this.getChatMsg();
     this.dataInterval = setInterval(() => {
       this.setIntervalData();
