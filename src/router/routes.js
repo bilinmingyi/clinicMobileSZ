@@ -58,6 +58,19 @@ const outerBound = () =>
 const stockStatistic = () =>
     import ( /* webpackChunkName: "commonFunction" */ "@/pages/functionPage/stockStatistic");
 
+/* clinic 商城订单模块 */
+const mallIndex = () =>
+    import ( /* webpackChunkName: "mallOrderFunction" */ "@/pages/mallPage/index");
+const mallOrder = () =>
+    import ( /* webpackChunkName: "mallOrderFunction" */ "@/pages/mallPage/mallOrder");
+const shipmentDetail = () =>
+    import ( /* webpackChunkName: "mallOrderFunction" */ "@/pages/mallPage/shipmentDetail");
+const auditDetail = () =>
+    import ( /* webpackChunkName: "mallOrderFunction" */ "@/pages/mallPage/auditDetail");
+    const orderDetail = () =>
+    import ( /* webpackChunkName: "mallOrderFunction" */ "@/pages/mallPage/orderDetail");
+const drugRecommond = () =>
+    import ( /* webpackChunkName: "mallOrderFunction" */ "@/pages/mallPage/drugRecommond");
 
 
 const routes = [{
@@ -156,7 +169,7 @@ const routes = [{
         ]
     },
     {
-        path: '/functionPage/',
+        path: '/functionPage',
         component: () => functionIndex(),
         children: [{
                 path: '',
@@ -207,7 +220,52 @@ const routes = [{
                 }
             }
         ]
-    }
+    },
+    {
+      path: '/mallPage',
+      component: () => mallIndex(),
+      children: [{
+              path: '',
+              name: 'mallOrderPage',
+              component: () => mallOrder(),
+              meta: {
+                  title: '商城订单'
+              }
+          },
+          {
+              path: 'auditDetail',
+              name: 'auditDetailPage',
+              component: () => auditDetail(),
+              meta: {
+                  title: '订单审核'
+              }
+          },
+          {
+              path: 'shipmentDetail',
+              name: 'shipmentDetailPage',
+              component: () => shipmentDetail(),
+              meta: {
+                  title: '发货详情'
+              }
+          },
+          {
+              path: 'orderDetail',
+              name: 'orderDetailPage',
+              component: () => orderDetail(),
+              meta: {
+                  title: '订单详情'
+              }
+          },
+          {
+              path: 'drugRecommond',
+              name: 'drugRecommondPage',
+              component: () => drugRecommond(),
+              meta: {
+                  title: '药品推荐'
+              }
+          }
+      ]
+  }
 ]
 
 export default routes;

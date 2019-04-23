@@ -27,6 +27,10 @@
         <img src="@/assets/images/kuchun@2x.png" alt="库存统计">
         <span>库存统计</span>
       </div>
+              <div class="function-item" @click="goFunctionPage(7)">
+        <img src="@/assets/images/mall_logo.png" alt="库存统计">
+        <span>商城订单</span>
+      </div>
       
     </div>
     
@@ -55,11 +59,14 @@ export default {
         case 4:
           this.$router.push({ name: "enterBoundPage" });
           break;
-            case 5:
+        case 5:
           this.$router.push({ name: "outerBoundPage" });
           break;
-            case 6:
+        case 6:
           this.$router.push({ name: "stockStatisticPage" });
+          break;
+        case 7:
+          this.$router.push({path:"/mallPage"});
           break;
       }
     }
