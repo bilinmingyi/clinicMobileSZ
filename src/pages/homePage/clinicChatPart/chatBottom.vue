@@ -117,6 +117,7 @@ export default {
       this.$emit("goDocRecommond");
     },
     sendMessage() {
+      // alert(this.sendContent)
       this.$emit("sendMessage", this.sendContent);
       this.sendContent = "";
     },

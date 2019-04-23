@@ -19,7 +19,7 @@
           <div class="infolist-item">
             <img :src="imgNormalToggle(item.avatar,item)" alt @error="error(item,$event)">
             <div class="item-mid ml24">
-              <p class="item-name">{{item.username}}/{{item.sex|parseSex}}/{{item.age}}岁</p>
+              <p class="item-name">{{item.username}}/{{item.sex|parseSex}}/{{item.birthday==0?'未知':item.age+'岁'}}</p>
               <p
                 class="item-content"
                 v-if="item.recent_msg"
@@ -42,7 +42,7 @@
           <div class="infolist-item">
             <img :src="imgNormalToggle(item.avatar,item)" alt>
             <div class="item-mid ml24">
-              <p class="item-name">{{item.name}}/{{item.sex|parseSex}}/{{item.age}}</p>
+              <p class="item-name">{{item.name}}/{{item.sex|parseSex}}/{{item.birthday==0?'未知':item.age+'岁'}}</p>
             </div>
           </div>
         </div>
@@ -83,6 +83,9 @@ export default {
   methods: {
     leftToggle() {
       this.$router.go(-1);
+    },
+    ageFilter(item){
+      return item.birthday==0?'未知':item.age+'岁'
     },
     changeIndex(index) {
       this.navtiveIndex = index;

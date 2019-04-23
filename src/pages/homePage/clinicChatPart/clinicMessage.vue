@@ -7,13 +7,11 @@
       >{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
       <div
         class="chat-content"
-        @touchstart="gtouchstart()"
-        @touchmove="gtouchmove()"
-        @touchend="gtouchend()"
       >
+      <div class="cancelButton" v-if="chatDetail.msgdata.msg_type !== 'withdraw_msg'&&userInfoState.id===chatDetail.from_userid" @click="cancelThis"> <span>撤回</span></div>
         <!-- messagetype  text-->
         <div class="reply-content" v-if="chatDetail.msgdata.msg_type=='text'">
-          <div class="reply-text">{{chatDetail.msgdata.text}}</div>
+          <p class="reply-text">{{chatDetail.msgdata.text}}</p>
         </div>
         <div class="reply-content" v-if="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='link'" >
           <div class="recommond">
@@ -77,31 +75,12 @@ export default {
     ...mapState(["userInfoState"])
   },
   methods: {
-    //开始按
-    gtouchstart() {
-      if (this.chatDetail.msgdata.msg_type == "withdraw_msg") {
-        return;
-        //撤销消息不能撤回
-      }
-      this.timeOutEvent = setTimeout(() => {
+    cancelThis(){
         this.$Message.confirm("确认撤销消息么？", () => {
           this.$emit("cancelMessage", this.chatDetail);
         });
-      }, 1000); //这里设置定时器，定义长按1000毫秒触发长按事件，时间可以自己改
-      return false;
     },
-    //手释放，如果在500毫秒内就释放，则取消长按事件，此时可以执行onclick应该执行的事件
-    gtouchend() {
-      clearTimeout(this.timeOutEvent);
-      //清除定时器
-      return false;
-    },
-    //如果手指有移动，则取消所有事件，此时说明用户只是要移动而不是长按
-    gtouchmove() {
-      clearTimeout(this.timeOutEvent); //清除定时器
-      this.timeOutEvent = 0;
-    },
-       // 调用微信接口展示图片
+    // 调用微信接口展示图片
     showImg () {
       WeixinJSBridge.invoke('imagePreview', {
         'current': this.chatDetail.msgdata.img_url,
@@ -124,8 +103,20 @@ export default {
 .mb24{
   margin-bottom: 24px;
 }
+.cancelButton{
+  // background: yellow;
+  width: 88px;
+  line-height: 50px;
+  text-align: center;
+  height: 50px;
+  font-size: 26px;
+  color: $gray3;
+  span{
+    border-bottom: 1px solid $gray3;
+  }
+}
 .reply-text{
-   user-select:none
+   @extend %normalTitle;
 }
 p {
   text-align: center;
@@ -134,6 +125,7 @@ p {
   color: $simpleGray;
 }
 .chat-content {
+  @extend %aglinItem;
   padding-bottom: 24px;
   .reply-content {
     background: $bgwhite2;
@@ -141,7 +133,6 @@ p {
     max-width: 480px;
     height: auto;
     border-radius: 16px;
-
     padding: 22px 30px;
     @extend %normalTitle;
   }

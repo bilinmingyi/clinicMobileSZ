@@ -83,7 +83,7 @@ export default {
     hideFuc() {
             this.isShowFuc = false;
       this.isReply = false;
-         this.$refs.chatBottoms.$refs.inputText.blur();
+        //  this.$refs.chatBottoms.$refs.inputText.blur();
     },
     addFunc() {
       this.isShowFuc = !this.isShowFuc;
@@ -386,7 +386,7 @@ export default {
     this.getChatMsg();
     this.dataInterval = setInterval(() => {
       this.setIntervalData();
-    }, 5000);
+    }, 3000);
   },
   created() {
     this.queryData = this.$route.query;

@@ -73,19 +73,22 @@ export default {
       this.recordParams.create_end_time = val.endTime;
       registerDoctor(this.recordParams).then(res => {
         if (res.code === 1000) {
-          this.$set(this.firstTableList[0], "value", res.data.totalCount);
+          let allRegisterNum = 0;
+            res.data.doctorAmtList.forEach(item => {
+            let object = {};
+            object.doctor = item.doctor_name;
+            object.num = item.total_count;
+            object.money1 = item.amount_receivable;
+            allRegisterNum = allRegisterNum + item.total_count
+            this.payStreamData.push(object);
+          });
+          this.$set(this.firstTableList[0], "value", allRegisterNum);
           this.$set(
             this.firstTableList[1],
             "value",
             res.data.totalAmt.amount_receivable
           );
-          res.data.doctorAmtList.forEach(item => {
-            let object = {};
-            object.doctor = item.doctor_name;
-            object.num = item.total_count;
-            object.money1 = item.amount_receivable;
-            this.payStreamData.push(object);
-          });
+        
           this.isLoad = true;
           if (res.data.doctorAmtList.length !== 10) {
             this.isShowLoad = false; //不显示加载更多
