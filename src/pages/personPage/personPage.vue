@@ -28,10 +28,9 @@
 import imgMixins from "@/assets/js/imgMixins";
 import { userInfo } from "@/fetch/api";
 import { mapState } from "vuex";
-import commonHeader from "@/components/common/commonHeader";
-import commonBottom from "@/components/common/commonBottom";
+import {commonHeader,commonBottom} from "@/components/common";
 export default {
-      mixins:[imgMixins],
+  mixins:[imgMixins],
   data() {
     return {
       navtiveIndex: 3,

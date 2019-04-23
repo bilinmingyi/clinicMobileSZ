@@ -18,7 +18,7 @@
   </div>
 </template>
 <script>
-import loadMore from "@/components/common/loadMore";
+import {loadMore} from "@/components/common";
 import { getPlatformList } from "@/fetch/api";
 export default {
   data() {

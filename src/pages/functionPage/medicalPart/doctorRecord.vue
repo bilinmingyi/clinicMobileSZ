@@ -19,8 +19,7 @@
   </div>
 </template>
 <script>
-import firstTable from "@/components/common/firstTable";
-import secondTable from "@/components/common/secondTable";
+import {firstTable,secondTable} from "@/components/common";
 import medicalList from "./medicalList";
 import functionMixins from "@/assets/js/functionMixins";
 import { medicalDoctor } from "@/fetch/api";

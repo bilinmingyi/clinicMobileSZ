@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-import firstTable from "@/components/common/firstTable";
+import {firstTable} from "@/components/common";
 import orderList from "./orderList";
 import functionMixins from "@/assets/js/functionMixins"
 export default {

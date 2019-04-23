@@ -31,7 +31,7 @@
 </template>
 <script>
 import { getArticleDetail, getCommentList } from "@/fetch/api";
-import commonHeader from "@/components/common/commonHeader";
+import {commonHeader} from "@/components/common";
 export default {
   props: ["platformTitle", "id"],
   data() {

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import commonHeader from "@/components/common/commonHeader";
+import {commonHeader} from "@/components/common";
 export default {
   props: ["platformTitle"],
   data() {

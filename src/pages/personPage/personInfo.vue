@@ -50,7 +50,7 @@
 import { updateUserInfo} from "@/fetch/api";
 import { dateFormat } from "@/assets/js/filters";
 import { mapState,mapActions} from "vuex";
-import commonTitle from "@/components/common/commonTitle";
+import {commonTitle}from "@/components/common";
 export default {
   props: ["userData"],
   data() {

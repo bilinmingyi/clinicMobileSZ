@@ -11,7 +11,7 @@
     </div>
 </template>
 <script>
-import commonHeader from "@/components/common/commonHeader";
+import {commonHeader} from "@/components/common";
 import {mapState,mapMutations} from "vuex";
 export default {
   data(){

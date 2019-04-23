@@ -20,8 +20,7 @@
   </div>
 </template>
 <script>
-import commonHeader from "@/components/common/commonHeader";
-import commonBottom from "@/components/common/commonBottom";
+import {commonHeader,commonBottom} from "@/components/common";
 import msgBottom from "./messagePart/msgBottom";
 export default {
   data() {

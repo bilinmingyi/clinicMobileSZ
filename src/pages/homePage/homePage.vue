@@ -8,10 +8,9 @@
   </div>
 </template>
 <script>
-import commonHeader from "@/components/common/commonHeader";
+import {commonHeader,commonBottom} from "@/components/common";
 import homeTop from "./homePagePart/homeTop";
 import homeMid from "./homePagePart/homeMid";
-import commonBottom from "@/components/common/commonBottom";
 export default {
   name: "HomePage",
   data() {

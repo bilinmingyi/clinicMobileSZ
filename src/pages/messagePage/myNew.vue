@@ -16,7 +16,7 @@
   </div>
 </template>
 <script>
-import commonHeader from "@/components/common/commonHeader";
+import {commonHeader} from "@/components/common";
 export default {
   data() {
     return {};

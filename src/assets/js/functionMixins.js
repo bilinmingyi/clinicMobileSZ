@@ -1,6 +1,5 @@
-import loadMore from "@/components/common/loadMore";
-import withoutData from "@/components/common//withoutData";
-import dateSelect from "@/components/common/dateSelect";
+import {loadMore,withoutData,dateSelect} from "@/components/common/index.js";
+
 export default {
     data() {
         return {

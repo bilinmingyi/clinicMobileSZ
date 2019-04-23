@@ -34,8 +34,7 @@
 <script>
 import withoutData from "@/components/common//withoutData";
 import imgMixins from "@/assets/js/imgMixins";
-import commonHeader from "@/components/common/commonHeader";
-import inputSearch from "@/components/common/inputSearch";
+import {commonHeader,inputSearch} from "@/components/common";
 import { doctorList } from "@/fetch/api";
 import { msgSend } from "@/fetch/api";
 export default {

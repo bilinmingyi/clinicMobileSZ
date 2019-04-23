@@ -54,10 +54,7 @@
 </template>
 <script>
 import { chatSessionList, patientList } from "@/fetch/api";
-import commonHeader from "@/components/common/commonHeader";
-import inputSearch from "@/components/common/inputSearch";
-import loadMore from "@/components/common/loadMore";
-import withoutData from "@/components/common//withoutData";
+import { commonHeader,inputSearch,loadMore,withoutData} from "@/components/common";
 //添加公共的混入 里面有图片的默认图和错误处理
 import imgMixins from "@/assets/js/imgMixins";
 export default {

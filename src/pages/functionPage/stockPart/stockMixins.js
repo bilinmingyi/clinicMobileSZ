@@ -1,8 +1,7 @@
 import stockFilter from "./stockFilter";
-import inputSearch from "@/components/common/inputSearch";
+import {inputSearch,loadMore,withoutData} from "@/components/common";
 import stockList from "./stockList";
-import loadMore from "@/components/common/loadMore";
-import withoutData from "@/components/common//withoutData";
+
 export default {
     data() {
         return {

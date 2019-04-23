@@ -31,8 +31,7 @@
 </template>
 <script>
 import { registerDoctor, registerStream } from "@/fetch/api";
-import firstTable from "@/components/common/firstTable";
-import secondTable from "@/components/common/secondTable";
+import {firstTable,secondTable}from "@/components/common";
 import functionMixins from "@/assets/js/functionMixins"
 export default {
   mixins: [functionMixins],

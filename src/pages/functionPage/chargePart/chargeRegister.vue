@@ -21,8 +21,7 @@
 </template>
 <script>
 import functionMixins from "@/assets/js/functionMixins";
-import firstTable from "@/components/common/firstTable";
-import secondTable from "@/components/common/secondTable";
+import {firstTable,secondTable} from "@/components/common";
 import chargeList from "./chargeList";
 import { registerCharge } from "@/fetch/api";
 export default {

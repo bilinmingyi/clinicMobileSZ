@@ -24,7 +24,7 @@
   </div>
 </template>
 <script>
-import secondTable from "@/components/common/secondTable";
+import {secondTable} from "@/components/common";
 import functionMixins from "@/assets/js/functionMixins";
 import { outerType } from "@/fetch/api";
 export default {

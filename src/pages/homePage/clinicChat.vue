@@ -38,7 +38,7 @@
 // import BScroll from "better-scroll";
 import { chatMsgList, msgSend, msgWithdraw } from "@/fetch/api";
 import { mapState } from "vuex";
-import commonHeader from "@/components/common/commonHeader";
+import {commonHeader} from "@/components/common";
 import chatBottom from "./clinicChatPart/chatBottom";
 import clinicMessage from "./clinicChatPart/clinicMessage";
 import patientMessage from "./clinicChatPart/patientMessage";

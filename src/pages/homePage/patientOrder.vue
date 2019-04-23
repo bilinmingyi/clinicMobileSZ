@@ -62,8 +62,7 @@
 </template>
 
 <script>
-import SmallTitle from "@/components/common/SmallTitle";
-import commonHeader from "@/components/common/commonHeader";
+import {SmallTitle,commonHeader} from "@/components/common";
 import {mapState} from 'vuex'
 import {orderDetail} from '@/fetch/api.js'
 

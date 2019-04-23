@@ -55,7 +55,7 @@ export default {
       display: block;
       height: 88px;
       width: 100px;
-      background: url("../../assets/imgages/fanghui@2x.png") no-repeat center center;
+   background: url("../../assets/images/fanghui@3x.png") no-repeat center center;
       background-size: 55px 55px;
       border: none;
     }
