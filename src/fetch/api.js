@@ -32,6 +32,8 @@ const doctorList = params => fetch('clinicmng/user/list ', params);
 const orderDetail = params => fetch('/treatmng/appoint/detail', params);
 // 图片生成链接
 const imgUpLoad = params => fetch('/chat/img/upload', params)
+const isShowPatient = params => fetch('/chat/enabled', params)
+
 
 /* 消息模块 */
 const getPlatformList = params => fetch('/article/list', params);
@@ -71,6 +73,7 @@ export {
     patientList,
     doctorList,
     imgUpLoad,
+    isShowPatient,
     orderDetail,
     getPlatformList,
     getArticleDetail,

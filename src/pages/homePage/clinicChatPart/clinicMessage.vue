@@ -37,7 +37,8 @@
           class="cancel"
           v-if="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='withdraw_msg'"
         >
-          <p>你撤回了一条消息</p>
+          <p v-show="userInfoState.id!==chatDetail.from_userid">"{{chatDetail.from_username}}" 撤销了一条消息</p>
+          <p v-show="userInfoState.id===chatDetail.from_userid">你撤回了一条消息</p>
         </div>
         <!-- <div
               class="reply-content"
