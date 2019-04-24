@@ -1,0 +1,67 @@
+<!-- 
+      药品（商品）的item 一栏介绍
+      介绍的话 超过两行会变...
+-->
+<template>
+  <div class="drugs">
+    <div class="drugs-img">
+      <img src="@/assets/images/banner-yun.png" alt>
+    </div>
+    <div class="drugs-title">
+      <p class="drugs-desc">葵花牌 葵花健儿消食口服液口服液10ml* 6支/10盒</p>
+      <div class="drugs-bottom">
+        <p class="money">￥13232</p>
+        <p>
+          <slot name="rightBottom">数量：5</slot>
+        </p>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+export default {
+  data() {
+    return {};
+  },
+  methods: {}
+};
+</script>
+<style lang="scss" scoped>
+.drugs {
+  display: flex;
+  width: 100%;
+  height: 224px;
+  padding: 32px;
+  background: $bgwhite2;
+  @include commonBorder();
+  &-img {
+    border: 1px solid $borderColor;
+    @include sameWH(160px) img {
+      padding: 7px;
+      @include sameWH(160px);
+    }
+  }
+  &-title {
+    margin-left: 20px;
+  }
+  &-desc {
+    color: $grayColor;
+    width: auto;
+    // word-wrap:normal;
+    font-size: 28px;
+    @include textEllipsis(80px, 504px, 2);
+  }
+  &-bottom {
+    color: $grayColor;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 35px;
+    font-size: 32px;
+    .money {
+      color: $redColor;
+    }
+  }
+}
+</style>
+
+

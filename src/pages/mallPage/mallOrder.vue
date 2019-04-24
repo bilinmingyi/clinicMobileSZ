@@ -6,10 +6,8 @@
       <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==1}]" @click="changeIndex(1)">待发货</div>
       <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==2}]" @click="changeIndex(2)">订单查询</div>
     </section>
-    <keep-alive>
-      <component :is="mallComponent"></component> 
-    </keep-alive>
-    <!-- <order-inquery></order-inquery> -->
+  <!-- 不使用keep-alive 因为需要每次切换的时候 都可以查的新的数据 -->
+  <component :is="mallComponent"></component> 
   </div>
 </template>
 <script>

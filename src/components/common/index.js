@@ -12,6 +12,8 @@ export {default as secondTable} from './secondTable'
 export {default as SmallTitle} from './SmallTitle'
 export {default as withoutData} from './withoutData'
 export {default as mallItem} from './mallItem'
+export {default as drugsItem} from './drugsItem'
+export {default as inputSelect} from './inputSelect'
 
 
 // import commonBottom from "./commonBottom"

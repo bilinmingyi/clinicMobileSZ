@@ -2,8 +2,8 @@
   <!-- 订单查询组件 -->
   <div class="mall-type">
     <div class="order-top">
-<input-search :isShowButton="false" ></input-search>
-<date-select></date-select>
+      <input-search :isShowButton="false"></input-search>
+      <date-select></date-select>
     </div>
     <div class="pt200"></div>
     <mall-item
@@ -18,61 +18,31 @@
         <span class="type">诊所药房</span>
       </template>
     </mall-item>
+    <without-data v-show="hasData&&isLoad"></without-data>
+    <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
   </div>
 </template>
 <script>
-import { mallItem,inputSearch,dateSelect} from "@/components/common";
+import { inputSearch, dateSelect } from "@/components/common";
+import mallMixins from "./mallMixins";
 export default {
+  mixins: [mallMixins],
   data() {
-    return {
-      mallList: [
-        {
-          name: "李四",
-          time: "2019/4/24 10:36",
-          number: "13631780571",
-          money: "100"
-        },
-        {
-          name: "李四2",
-          time: "2019/4/24 10:36",
-          number: "13631780572",
-          money: "200"
-        },
-        {
-          name: "李四3",
-          time: "2019/4/24 10:36",
-          number: "13631780573",
-          money: "300"
-        },
-        {
-          name: "李四4",
-          time: "2019/4/24 10:36",
-          number: "13631780574",
-          money: "400"
-        },
-          {
-          name: "李四4",
-          time: "2019/4/24 10:36",
-          number: "13631780574",
-          money: "400"
-        }
-      ]
-    };
+    return {};
   },
   components: {
-    mallItem,
     inputSearch,
     dateSelect
   }
 };
 </script>
 <style lang="scss" scoped>
-.pt200{
+.pt200 {
   margin-top: 100px;
 }
 .mall-type {
   padding-top: 96px;
-  .order-top{
+  .order-top {
     position: fixed;
     width: 100%;
     background: $bgwhite2;
@@ -80,7 +50,7 @@ export default {
   }
   .type {
     color: $simpleGray;
-    font-size:30px;
+    font-size: 30px;
   }
 }
 </style>

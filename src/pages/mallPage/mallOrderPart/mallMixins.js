@@ -1,5 +1,5 @@
 import { mallItem, withoutData, loadMore } from "@/components/common";
-export default{
+export default {
   data() {
     return {
       mallList: [
@@ -29,26 +29,26 @@ export default{
         }
       ],
       isShowLoad: true,
-      isLoad: true,
+      isLoad: false,
       page: "1",
       pageSize: "10"
     };
   },
-  computed:{
-          hasData() {
-            return this.mallList.length !== 0;
-        }
+  computed: {
+    hasData() {
+      return this.mallList.length !== 0;
+    }
   },
   components: {
     mallItem,
     withoutData,
     loadMore
   },
-  methods:{
+  methods: {
     loadMore() {
-    this.page++;
-    let self = this;
-    this.getWater(self.copyval);
-}
-}
-}
+      this.page++;
+      let self = this;
+      this.mallData(self.copyval); //加载数据的一个方法
+    }
+  }
+};

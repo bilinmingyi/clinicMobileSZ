@@ -144,17 +144,24 @@ $depthTextColor: #3F3F3F;
     overflow: hidden;
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
-    @if $clamp==2 {
-        display: box;
-        -webkit-line-clamp: 2; //块元素显示的文本行数
+    @if $clamp==1 {
+      white-space: nowrap; //不换行
     }
     @else {
-        white-space: nowrap; //不换行
+      display:-webkit-box; 
+      display: box;
+      line-clamp:$clamp;
+      -webkit-line-clamp: $clamp; //块元素显示的文本行数
+
     }
 }
 
 @mixin commonBorder( $borerSeat:bottom, $color:$borderColor, $px:1px) {
     border-#{$borerSeat}: $px solid $color;
+}
+@mixin sameWH($val) {
+    width: $val;
+    height: $val;
 }
 
 .no-platform {

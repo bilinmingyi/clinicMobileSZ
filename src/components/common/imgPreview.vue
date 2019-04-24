@@ -1,3 +1,4 @@
+<!-- canvas画完图回来的一个页面 是否选择发送 -->
 <template>
   <div class="preview">
     <div class="title-block bottom-link">

@@ -13,43 +13,17 @@
         <span class="type">待发货</span>
       </template>
     </mall-item>
+        <without-data v-show="hasData&&isLoad"></without-data>
+    <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
   </div>
 </template>
 <script>
-import { mallItem } from "@/components/common";
+import mallMixins from "./mallMixins"
 export default {
+      mixins: [mallMixins],
   data() {
     return {
-      mallList: [
-        {
-          name: "李四",
-          time: "2019/4/24 10:36",
-          number: "13631780571",
-          money: "100"
-        },
-        {
-          name: "李四2",
-          time: "2019/4/24 10:36",
-          number: "13631780572",
-          money: "200"
-        },
-        {
-          name: "李四3",
-          time: "2019/4/24 10:36",
-          number: "13631780573",
-          money: "300"
-        },
-        {
-          name: "李四4",
-          time: "2019/4/24 10:36",
-          number: "13631780574",
-          money: "400"
-        }
-      ]
     };
-  },
-  components: {
-    mallItem
   }
 };
 </script>
