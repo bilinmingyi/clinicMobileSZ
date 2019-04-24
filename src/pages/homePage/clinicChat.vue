@@ -110,9 +110,8 @@ export default {
       });
     },
     inputBlur() {
-           let self =this;
-              self.$refs.wrapper.scrollTo (0,self.$refs.wrapper.scrollHeight)
-
+    let self =this;
+    self.$refs.wrapper.scrollTo (0,self.$refs.wrapper.scrollHeight)
     },
     // 发送文本
     sendTextMessage(val) {
