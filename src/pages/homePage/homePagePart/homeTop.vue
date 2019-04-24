@@ -19,7 +19,7 @@
     <div class=" flex-mid-center flex-one" @click="goPatientInfo">
       <div class="fix-img">
       <img :src="patientLogo" alt="" >
-      <span class="fix-icon" v-show="unReadNum>0&&haveInfo">{{unReadNum}}</span>
+      <span class="fix-icon" v-show="unReadNum>0">{{unReadNum}}</span>
       </div>
       <span class="subtitle">患者信息</span>
     </div>
@@ -53,9 +53,8 @@ export default {
         return
       }
       this.$router.push({name:'patientInfoPage'})
-    }
-  },
-  created(){
+    },
+    getUnRead(){
     let params={
       session_type:'CLINIC_PATIENT'
     }
@@ -67,15 +66,20 @@ export default {
           } catch(e){
              self.unReadNum = 0
           }
-       
       }else{
         this.$Message.infor(res.msg);
       }
     })
+    }
+  },
+  created(){
     isShowPatient().then(res=>{
       if(res.code===1000){
              let self= this;
         self.haveInfo = res.data;
+        if(self.haveInfo){
+          this.getUnRead();
+        }
       }else{
         this.$Message.infor(res.msg);
       }
