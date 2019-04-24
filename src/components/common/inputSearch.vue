@@ -4,7 +4,7 @@
       <img @click.stop="searchName()" src="@/assets/images/sousuo@2x.png">
       <input class="serach-input " type="text" :placeholder="placeholder" v-model="inputText" @input="focusIuq" @blur="inputBlur" @focus="focus">
     </div>
-    <div class="search-button ml26" @click="query">{{buttonName}}</div>
+    <div class="search-button ml26" @click="query" v-if="isShowButton">{{buttonName}}</div>
   </div>
 </template>
 <script>
@@ -17,6 +17,10 @@ export default {
       buttonName:{
       type:String,
       default:'搜索'
+    },
+    isShowButton:{
+      type:Boolean,
+      default:false
     }
   },
   data() {

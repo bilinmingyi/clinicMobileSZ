@@ -11,6 +11,7 @@ export {default as loadMore} from './loadMore'
 export {default as secondTable} from './secondTable'
 export {default as SmallTitle} from './SmallTitle'
 export {default as withoutData} from './withoutData'
+export {default as mallItem} from './mallItem'
 
 
 // import commonBottom from "./commonBottom"

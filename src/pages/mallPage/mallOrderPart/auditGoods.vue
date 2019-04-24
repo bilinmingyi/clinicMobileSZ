@@ -1,5 +1,5 @@
 <template>
-  <!-- 待发货组件 -->
+  <!-- 待审核商品组件 -->
   <div class="mall-type">
     <mall-item
       v-for="(item,index) in mallList"
@@ -10,13 +10,15 @@
       :key="index"
     >
       <template slot="type">
-        <span class="type">待发货</span>
+        <span class="type">待审核</span>
       </template>
     </mall-item>
+    <without-data v-show="hasData&&isLoad"></without-data>
+      <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
   </div>
 </template>
 <script>
-import { mallItem } from "@/components/common";
+import { mallItem, withoutData, loadMore } from "@/components/common";
 export default {
   data() {
     return {
@@ -45,11 +47,29 @@ export default {
           number: "13631780574",
           money: "400"
         }
-      ]
+      ],
+      isShowLoad: true,
+      isLoad: true,
+      page: "1",
+      pageSize: "10"
     };
   },
+  computed:{
+          hasData() {
+            return this.mallList.length !== 0;
+        }
+  },
   components: {
-    mallItem
+    mallItem,
+    withoutData,
+    loadMore
+  },
+  methods:{
+            loadMore() {
+            this.page++;
+            let self = this;
+            this.getWater(self.copyval);
+        }
   }
 };
 </script>

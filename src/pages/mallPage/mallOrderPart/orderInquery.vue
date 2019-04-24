@@ -1,6 +1,11 @@
 <template>
-  <!-- 待发货组件 -->
+  <!-- 订单查询组件 -->
   <div class="mall-type">
+    <div class="order-top">
+<input-search :isShowButton="false" ></input-search>
+<date-select></date-select>
+    </div>
+    <div class="pt200"></div>
     <mall-item
       v-for="(item,index) in mallList"
       :itemName="item.name"
@@ -10,13 +15,13 @@
       :key="index"
     >
       <template slot="type">
-        <span class="type">待发货</span>
+        <span class="type">诊所药房</span>
       </template>
     </mall-item>
   </div>
 </template>
 <script>
-import { mallItem } from "@/components/common";
+import { mallItem,inputSearch,dateSelect} from "@/components/common";
 export default {
   data() {
     return {
@@ -44,21 +49,38 @@ export default {
           time: "2019/4/24 10:36",
           number: "13631780574",
           money: "400"
+        },
+          {
+          name: "李四4",
+          time: "2019/4/24 10:36",
+          number: "13631780574",
+          money: "400"
         }
       ]
     };
   },
   components: {
-    mallItem
+    mallItem,
+    inputSearch,
+    dateSelect
   }
 };
 </script>
 <style lang="scss" scoped>
+.pt200{
+  margin-top: 100px;
+}
 .mall-type {
   padding-top: 96px;
+  .order-top{
+    position: fixed;
+    width: 100%;
+    background: $bgwhite2;
+    z-index: 999;
+  }
   .type {
-    color: $redColor;
-    font-size: 30px;
+    color: $simpleGray;
+    font-size:30px;
   }
 }
 </style>

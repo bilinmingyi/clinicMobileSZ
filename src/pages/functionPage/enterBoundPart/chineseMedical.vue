@@ -1,6 +1,6 @@
 <template>
   <div>
-     <div class="pt96"></div>
+    <div class="pt96"></div>
     <date-select
       @selectToday="selectToday"
       @selectYesterday="selectYesterday"
@@ -8,20 +8,23 @@
       @selectLastMonth="selectLastMonth"
       @selectQuery="selectQuery"
     ></date-select>
-        <div class="pt200"></div>
+    <div class="pt200"></div>
     <div class="doctor">
-      <second-table :titleArray="titleArray" :contentArray="payStreamData"  :hasData="hasData&&isLoad">
+      <second-table
+        :titleArray="titleArray"
+        :contentArray="payStreamData"
+        :hasData="hasData&&isLoad"
+      >
         <template slot="value" slot-scope="tableValue">
           <span>{{filterValue(tableValue.objectKey,tableValue.value)}}</span>
         </template>
       </second-table>
-       
     </div>
-      <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
+    <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
   </div>
 </template>
 <script>
-import {secondTable} from "@/components/common";
+import { secondTable } from "@/components/common";
 import functionMixins from "@/assets/js/functionMixins";
 import { enterType } from "@/fetch/api";
 export default {
@@ -37,15 +40,15 @@ export default {
   methods: {
     filterValue(key, value) {
       switch (key) {
-        case 'money':
-          return `￥${value}`
+        case "money":
+          return `￥${value}`;
           break;
         default:
-        return  value;
-        break;
+          return value;
+          break;
       }
     },
-       getWater(val) {
+    getWater(val) {
       let params = {
         start_time: val.startTime,
         end_time: val.endTime,
@@ -57,17 +60,17 @@ export default {
         if (res.code === 1000) {
           res.data.detail.forEach(item => {
             let params = {
-              drug:item.name,
-              type:item.spec,
-              number:item.num,
-              money:item.cost_price
-            }
+              drug: item.name,
+              type: item.spec,
+              number: item.num,
+              money: item.cost_price
+            };
             this.payStreamData.push(params);
           });
         } else {
           this.$Message.infor(res.msg);
         }
-        if ( res.data.detail.length != 10) {
+        if (res.data.detail.length != 10) {
           this.isShowLoad = false; //表示没有更多数据了
         }
         this.isLoad = true;

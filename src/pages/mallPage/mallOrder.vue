@@ -7,13 +7,14 @@
       <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==2}]" @click="changeIndex(2)">订单查询</div>
     </section>
     <keep-alive>
-      <component :is="mallComponent"></component>
+      <component :is="mallComponent"></component> 
     </keep-alive>
+    <!-- <order-inquery></order-inquery> -->
   </div>
 </template>
 <script>
-import auditGoodsList from "./mallOrderPart/auditGoodsList";
-import orderInqueryList from "./mallOrderPart/orderInqueryList";
+import auditGoods from "./mallOrderPart/auditGoods";
+import orderInquery from "./mallOrderPart/orderInquery";
 import shipmentList from "./mallOrderPart/shipmentList";
 export default {
   data() {
@@ -21,20 +22,28 @@ export default {
       navtiveIndex: 0
     };
   },
-  methods: {
-    changeIndex(index) {
-      this.navtiveIndex = index;
-    },
+  components:{
+    auditGoods,
+    orderInquery,
+    shipmentList
+  },
+  computed:{
     mallComponent() {
       switch (this.navtiveIndex) {
         case 0:
-          return "auditGoodsList";
+          return "auditGoods";
         case 1:
           return "shipmentList";
         case 2:
-          return "orderInqueryList";
+          return "orderInquery";
       }
     }
+  },
+  methods: {
+    changeIndex(index) {
+      this.navtiveIndex = index;
+    }
+
   }
 };
 </script>

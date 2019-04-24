@@ -3,7 +3,6 @@
   desc:需要传入两个数组
       titleArray:标题的数组 按页面的标题顺序
       contentArray:内容的数组 注意数组里面的对象需要是处理过（顺序）且必要的数据
-
     可参考入库统计的 chineseMedical组件
     {{tableValue.objectKey}} 
     {{tableValue.value}}
@@ -21,7 +20,6 @@
           <tr v-for="(content,index) in contentArray">
             <td v-for="(value,key,index) in content">
               <slot name="value" :value ="value" :objectKey="key">  {{value}}</slot>
-         
             </td>
           </tr>
           <tr  v-show="hasData">
