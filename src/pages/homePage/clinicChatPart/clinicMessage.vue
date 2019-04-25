@@ -15,7 +15,7 @@
         </div>
         <div class="reply-content" v-if="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='link'" >
           <div class="recommond">
-            <img :src="imgNormalToggle(imgDetail.avatar,imgDetail)" alt @error="error(imgDetail,$event)" class="iconImg">
+            <img :src="imgNormalToggle(imgDetail.avatar,imgDetail.sex)" alt @error="error(imgDetail.sex,$event)" class="iconImg">
             <div class="recommond-content">
               <p class="recommond-title">
                 {{imgDetail.name}}
@@ -44,10 +44,10 @@
               class="reply-content"
         >医生，我想要咨询鼻炎之类的问题呢，最近不舒服医<a href="www.baidu.com">打开</a></div>-->
         <img
-          :src="imgNormalToggle(chatDetail.from_userimg,userInfoState)"
+          :src="imgNormalToggle(chatDetail.from_userimg,userInfoState.sex)"
           alt
           class="ml20 iconImg"
-          @error="error(chatDetail.from_userimg,$event)"
+          @error="error(userInfoState.sex,$event)"
         >
       </div>
     </div>

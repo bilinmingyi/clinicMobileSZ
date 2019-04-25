@@ -12,7 +12,7 @@
       :key="index"
     >
       <div class="doc">
-        <img :src="imgNormalToggle(item.avatar,item)" alt @error="error(item,$event)">
+        <img :src="imgNormalToggle(item.avatar,item.sex)" alt @error="error(item.sex,$event)">
         <div class="doc-detail">
           <p class="doc-title">
             {{item.name}}
