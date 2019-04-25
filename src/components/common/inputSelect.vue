@@ -3,7 +3,7 @@
   <div class="select">
     <p>医生名称</p>
     <input type="text" name="makeupCo" placeholder="请选择或输入医生名称" v-model="doctorName" @focus="inputFocus($event)" @blur="inputBlur">
-    <select name="makeupCoSe" v-model="select" @change="changeF()">
+    <select name="makeupCoSe" v-model="select" @change="changeF()" @>
       <option id="1" :value="'java'">java</option>
       <option id="2" :value="'c++'">c++</option>
       <option id="3" :value="'python'">python</option>
