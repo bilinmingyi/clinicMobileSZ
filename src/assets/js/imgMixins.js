@@ -11,7 +11,6 @@ export default {
   methods: {
       //图片加载错误的时候
       error(sex, e,type='doctor') {
-        console.log(e)
          return  type==='doctor'?e.target.src = this.getNormalHead(sex):e.target.src = this.getPatientImg(sex); //默认图  
       },
       // 医生头像的默认图
