@@ -2,7 +2,7 @@
 <div>
   <div class="home-top">
     <div class="top-left">
-      <img src="@/assets/images/menzhen@2x.png" alt>
+      <img :src="clinicLogo" alt>
     </div>
     <div class="top-mid">
       <p class="black-title pb16">{{clinic.name}}</p>
@@ -37,6 +37,7 @@ export default {
       haveInfo:false,
       imglogo1:require('@/assets/images/ly.png'),
       imglogo2:require('@/assets/images/ly2.png'),
+      menzhenlogo:require('@/assets/images/menzhen@2x.png'),
       unReadNum:'',
       clinics:{}
     };
@@ -45,6 +46,9 @@ export default {
     ...mapState(['clinic']),
     patientLogo(){
       return this.haveInfo==false?this.imglogo1:this.imglogo2;
+    },
+    clinicLogo(){
+      return this.clinic.logo!==''? this.clinic.logo:this.menzhenlogo;
     }
   },
   methods:{
