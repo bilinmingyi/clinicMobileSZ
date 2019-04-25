@@ -23,7 +23,8 @@ const priceType = function(val) {
 const medType = function(val) {
         return clinicDict.medType.codeToName(val);
     }
-    // 中药类别
+
+// 中药类别
 const parseHerbalCategory = function(val) {
     return clinicDict.herbalCategory.codeToName(val);
 }
@@ -35,6 +36,10 @@ const parseWesternCategory = function(val) {
 }
 const articleType = (val) => {
     return clinicDict.articleType.codeToName(val);
+}
+//clinic类型
+const clinicType = function(val){
+  return clinicDict.clinicType.codeToName(val);
 }
 
 
@@ -141,5 +146,6 @@ export default {
     parseHerbalCategory,
     pharmacyCategory,
     parseWesternCategory,
-    articleType
+    articleType,
+    clinicType
 }

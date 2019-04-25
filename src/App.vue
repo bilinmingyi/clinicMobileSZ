@@ -28,7 +28,8 @@ export default {
               countyCode: res.data.county_code,
               address: res.data.address,
               logo: res.data.logo,
-              rest:res.data.rest
+              rest:res.data.rest,
+              type:res.data.type
             });
           } else {
             this.$Message.infor(res.msg);
