@@ -28,12 +28,9 @@
     <common-title :titleName="titleName2">
     </common-title>
     <!-- 订单的产品列表 -->
-    <drugs-item></drugs-item>
-      <drugs-item></drugs-item>
-        <drugs-item></drugs-item>
-          <drugs-item></drugs-item>
-            <drugs-item></drugs-item>
-    <div class="pb130"></div>
+    <drugs-item v-for="(item,index) in drugsList" :key="index"></drugs-item>
+    <input-select></input-select>
+    <div class="pb150"></div>
     <section class="auditDetail-bottom">
       <div class="cancel">拒绝</div>
         <div class="pass">通过</div>
@@ -46,7 +43,8 @@ export default {
   data() {
     return {
       titleName: "订单信息",
-      titleName2:'诊所药房'
+      titleName2:'诊所药房',
+      drugsList:[1,2,3,4]
     };
   },
   components: {
