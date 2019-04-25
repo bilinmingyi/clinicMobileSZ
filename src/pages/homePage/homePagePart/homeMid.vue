@@ -41,12 +41,11 @@
 export default {
   data(){
     return{
-
     }
   },
   methods:{
     goFunctionPage(index){
-        switch (index) {
+      switch (index) {
         case 1:
           this.$router.push({ name: "registerStatisticPage" });
           break;

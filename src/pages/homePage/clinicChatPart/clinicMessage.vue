@@ -15,7 +15,7 @@
         </div>
         <div class="reply-content" v-if="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='link'" >
           <div class="recommond">
-            <img :src="imgNormalToggle(imgDetail.avatar,imgDetail)" alt @error="error(imgDetail,$event)" class="iconImg">
+            <img :src="imgNormalToggle(imgDetail.avatar,imgDetail.sex)" alt @error="error(imgDetail.sex,$event)" class="iconImg">
             <div class="recommond-content">
               <p class="recommond-title">
                 {{imgDetail.name}}

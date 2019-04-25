@@ -2,12 +2,11 @@
   <!--挂号统计页面 -->
   <div class="medical">
     <section class="medical-bar">
-      <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==0}]" @click="changeIndex(0)">待审核</div>
-      <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==1}]" @click="changeIndex(1)">待发货</div>
-      <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==2}]" @click="changeIndex(2)">订单查询</div>
+      <div :class="['flex-mid-center',{'nt-bar':navtiveIndex===0}]" @click="changeIndex(0)">待审核</div>
+      <div :class="['flex-mid-center',{'nt-bar':navtiveIndex===1}]" @click="changeIndex(1)">待发货</div>
+      <div :class="['flex-mid-center',{'nt-bar':navtiveIndex===2}]" @click="changeIndex(2)">订单查询</div>
     </section>
-  <!-- 不使用keep-alive 因为需要每次切换的时候 都可以查的新的数据 -->
-  <component :is="mallComponent"></component> 
+      <component :is="mallComponent" ></component> 
   </div>
 </template>
 <script>
@@ -15,6 +14,12 @@ import auditGoods from "./mallOrderPart/auditGoods";
 import orderInquery from "./mallOrderPart/orderInquery";
 import shipmentList from "./mallOrderPart/shipmentList";
 export default {
+  beforeRouteLeave(to, from, next) {
+         if(to.name==="homePage"){
+            from.meta.nativeIndex = 0;  // 跳回到首页的话,nativeIndex初始化为0
+         }
+        next();
+    },
   data() {
     return {
       navtiveIndex: 0
@@ -41,7 +46,9 @@ export default {
     changeIndex(index) {
       this.navtiveIndex = index;
     }
-
+  },
+  created(){
+    this.navtiveIndex = this.$route.meta.nativeIndex
   }
 };
 </script>

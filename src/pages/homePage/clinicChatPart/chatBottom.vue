@@ -34,10 +34,7 @@
           @change="fileChange($event, 'get')"
         >
       </div>
-      <!-- <div class="function-content mr64">
-        <img src="@/assets/images/huifu@2x.png" alt>
-        <p>快捷回复</p>
-      </div>-->
+
       <div class="function-content mr64" @click.stop="fileClick('set')">
         <img src="@/assets/images/paizhao@2x.png" alt>
         <p>拍照</p>
@@ -55,10 +52,10 @@
         <img src="@/assets/images/liangjie@2x.png" alt @click="goDocRecommond">
         <p>预约链接</p>
       </div>
-      <!-- <div class="function-content">
-        <img src="@/assets/images/tuijiang@2x.png" alt>
+      <div class="function-content">
+        <img src="@/assets/images/tuijiang@2x.png" alt @click="jumpToDrug">
         <p>商品推荐</p>
-      </div>-->
+      </div>
     </div>
 
     <img-preview :imgUrl="imgUrl" v-if="imgUrl!=''" @send="sendImgMessage" @cancel="cancelSendImg"></img-preview>
@@ -96,6 +93,9 @@ export default {
         window.scrollTo(0, 0);
         self.$emit("inputBlur");
       }, 64);
+    },
+    jumpToDrug(){
+           this.$router.push({name:"drugRecommondPage"});
     },
     addFunc() {
       this.$emit("addFunc");

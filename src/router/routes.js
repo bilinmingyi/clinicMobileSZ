@@ -229,7 +229,8 @@ const routes = [{
               name: 'mallOrderPage',
               component: () => mallOrder(),
               meta: {
-                  title: '商城订单'
+                  title: '商城订单',
+                  nativeIndex:0
               }
           },
           {

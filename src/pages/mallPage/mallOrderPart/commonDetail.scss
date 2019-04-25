@@ -1,0 +1,48 @@
+.auditDetail {
+  position: relative;
+  .rightIcon {
+    @extend %normalTitle;
+    color: $redColor;
+  }
+  &-content {
+    box-sizing: border-box;
+    overflow: hidden;
+    height: calc(100vh - 112px);
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+  &-desc {
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 20px 0px 12px 30px;
+    background: $bgwhite2;
+    font-size: 30px;
+    color: $grayColor;
+    .left {
+      color: $simpleGray;
+    }
+    p {
+      padding-bottom: 8px;
+    }
+  }
+  &-bottom {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    height: 112px;
+    width: 100%;
+    background: $bgwhite2;
+    padding: 0 43px;
+    @extend %aglinItem;
+    .cancel {
+      @include simpleButton(80px, 320px, 30px);
+      margin-right: 24px;
+    }
+    .pass {
+      @include deepButton(80px, 320px, 30px);
+    }
+  }
+  .drug-list {
+    margin-bottom: 24px;
+  }
+}

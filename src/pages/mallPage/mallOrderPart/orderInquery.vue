@@ -13,6 +13,7 @@
       :itemMoney="item.money"
       :itemNumber="item.number"
       :key="index"
+      @jumpDetail="jumpDetail"
     >
       <template slot="type">
         <span class="type">诊所药房</span>
@@ -33,6 +34,11 @@ export default {
   components: {
     inputSearch,
     dateSelect
+  },
+  methods:{
+    jumpDetail(){
+          this.$router.push({name:'orderDetailPage'})
+    }
   }
 };
 </script>

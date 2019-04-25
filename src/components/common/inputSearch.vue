@@ -1,7 +1,7 @@
 <template>
   <div class="common-input">
     <div class="input-box">
-      <img @click.stop="searchName()" src="@/assets/images/sousuo@2x.png">
+      <img  src="@/assets/images/sousuo@2x.png">
       <input class="serach-input " type="text" :placeholder="placeholder" v-model="inputText" @input="focusIuq" @blur="inputBlur" @focus="focus">
     </div>
     <div class="search-button ml26" @click="query" v-if="isShowButton">{{buttonName}}</div>
