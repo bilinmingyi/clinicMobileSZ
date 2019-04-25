@@ -11,6 +11,7 @@
               :key="item.msgid"
               :is="RenderComponent(item.from)"
               :chatDetail="item"
+              :patientSex="queryData.sex"
               :patientImg="queryData.avatar"
               @cancelMessage="cancelMessage"
             ></component>

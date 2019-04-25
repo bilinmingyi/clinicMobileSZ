@@ -45,7 +45,7 @@ export default {
   computed:{
     ...mapState(['clinic']),
     patientLogo(){
-      return this.haveInfo==1?this.imglogo1:this.imglogo2;
+      return this.haveInfo==false?this.imglogo1:this.imglogo2;
     },
     clinicLogo(){
       return this.clinic.logo!==''? this.clinic.logo:this.menzhenlogo;

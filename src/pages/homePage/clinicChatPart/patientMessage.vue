@@ -3,7 +3,7 @@
     <div class="left-chat mb50">
       <p class="chat-time mb24" v-if="chatDetail.showTime">{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
       <div class="chat-content">
-        <img :src="imgNormalToggle(patientImg,chatDetail)" alt @error="error(chatDetail,$event)" class="iconImg">
+        <img :src="imgNormalToggle(patientImg,patientSex)" alt @error="error(patientSex,$event,'patient')" class="iconImg">
         <div
           class="reply-content ml16"
           v-if="chatDetail.msgdata.msg_type=='text'"
@@ -35,7 +35,7 @@
 import imgMixins from "@/assets/js/imgMixins";
 export default {
   mixins:[imgMixins],
-  props: ["chatDetail",'patientImg'],
+  props: ["chatDetail",'patientImg','patientSex'],
   data() {
     return {
          color_list: [

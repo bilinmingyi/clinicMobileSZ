@@ -17,7 +17,7 @@
           :key="index"
         >
           <div class="infolist-item">
-            <img :src="imgNormalToggle(item.avatar,item)" alt @error="error(item,$event)">
+            <img :src="imgNormalToggle(item.avatar,item.sex)" alt @error="error(item.sex,$event)">
             <div class="item-mid ml24">
               <p class="item-name">{{item.username}}/{{item.sex|parseSex}}/{{item.birthday==0?'未知':item.age+'岁'}}</p>
               <p
@@ -40,7 +40,7 @@
           v-for="(item,index) in patientList"
         >
           <div class="infolist-item">
-            <img :src="imgNormalToggle(item.avatar,item)" alt>
+            <img :src="imgNormalToggle(item.avatar,item.sex)" alt @error="error(item.sex,$event)">
             <div class="item-mid ml24">
               <p class="item-name">{{item.name}}/{{item.sex|parseSex}}/{{item.birthday==0?'未知':item.age+'岁'}}</p>
             </div>
@@ -96,7 +96,8 @@ export default {
             session_id: item.session_id,
             session_type: "CLINIC_PATIENT",
             userId: item.userId,
-            avatar: item.avatar
+            avatar: item.avatar,
+            sex:item.sex
           }
         });
       } else {
@@ -107,7 +108,8 @@ export default {
             session_id: "",
             session_type: "CLINIC_PATIENT",
             userId: item.id,
-            avatar: item.avatar
+            avatar: item.avatar,
+            sex:item.sex
           }
         });
       }

@@ -44,10 +44,10 @@
               class="reply-content"
         >医生，我想要咨询鼻炎之类的问题呢，最近不舒服医<a href="www.baidu.com">打开</a></div>-->
         <img
-          :src="imgNormalToggle(chatDetail.from_userimg,userInfoState)"
+          :src="imgNormalToggle(chatDetail.from_userimg,userInfoState.sex)"
           alt
           class="ml20 iconImg"
-          @error="error(chatDetail.from_userimg,$event)"
+          @error="error(userInfoState.sex,$event)"
         >
       </div>
     </div>
