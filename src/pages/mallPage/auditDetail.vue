@@ -1,7 +1,8 @@
 <template>
   <!-- 待审核详情页面 -->
-  <div class="auditDetail">
-    <common-title :titleName="titleName">
+  <div class="auditDetail" ref="auditDetail">
+    <div class="auditDetail-content">
+<common-title :titleName="titleName">
       <template slot="rightContent">
         <span class="rightIcon">待审核</span>
       </template>
@@ -28,9 +29,14 @@
     <common-title :titleName="titleName2">
     </common-title>
     <!-- 订单的产品列表 -->
-    <drugs-item v-for="(item,index) in drugsList" :key="index"></drugs-item>
-    <input-select></input-select>
+    <div class="drug-list">
+  <drugs-item v-for="(item,index) in drugsList" :key="index"></drugs-item>
+    </div>
+  
+    <input-select @inputFocus="inputFocus"></input-select>
     <div class="pb150"></div>
+    </div>
+    
     <section class="auditDetail-bottom">
       <div class="cancel">拒绝</div>
         <div class="pass">通过</div>
@@ -52,15 +58,27 @@ export default {
     drugsItem,
     inputSelect
   },
-  methods: {}
+  methods: {
+    inputFocus(){
+      console.log(this.$refs.auditDetail.scrollHeight )
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
 .auditDetail{
+  position: relative;
   .rightIcon {
   @extend %normalTitle;
   color: $redColor;
 }
+  &-content{
+  box-sizing: border-box;
+  overflow:hidden;
+  height: calc(100vh - 112px);
+  overflow-y: scroll; 
+  -webkit-overflow-scrolling: touch;
+  }
   &-desc{
     margin-bottom:20px;
     width: 100%;
@@ -76,17 +94,25 @@ export default {
     }
   }
   &-bottom{
-    @include psFixed(bottom,112px);
+    position: absolute;
+    bottom: 0px;
+    left:0px;
+    height: 112px;
+    width: 100%;
+    // @include psFixed(bottom,112px);
     background: $bgwhite2;
     padding:0 43px;
     @extend %aglinItem;
     .cancel{
-      @include simpleButton(80px,320px,30px)
+      @include simpleButton(80px,320px,30px);
       margin-right:24px;
     }
     .pass{
-      @include deepButton(80px,320px,30px)
+      @include deepButton(80px,320px,30px);
     }
+  }
+  .drug-list{
+    margin-bottom: 24px;
   }
 }
 

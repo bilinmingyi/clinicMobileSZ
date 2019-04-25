@@ -36,7 +36,8 @@ export default {
   @include commonBorder();
   &-img {
     border: 1px solid $borderColor;
-    @include sameWH(160px) img {
+    @include sameWH(160px);
+     img {
       padding: 7px;
       @include sameWH(160px);
     }
@@ -45,11 +46,12 @@ export default {
     margin-left: 20px;
   }
   &-desc {
-    color: $grayColor;
+
     width: auto;
     // word-wrap:normal;
     font-size: 28px;
     @include textEllipsis(80px, 504px, 2);
+        color: $grayColor;
   }
   &-bottom {
     color: $grayColor;

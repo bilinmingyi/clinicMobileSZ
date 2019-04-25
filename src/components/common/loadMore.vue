@@ -25,7 +25,7 @@ export default {
 <style lang="scss" scoped>
 .load{
  @extend %flexMidCenter ;
- background: $bgwhite2;
+//  background: $bgwhite2;
   height: 80px;
   width: 100%;
   display: flex;
