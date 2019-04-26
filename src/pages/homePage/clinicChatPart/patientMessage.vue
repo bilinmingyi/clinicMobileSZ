@@ -3,7 +3,7 @@
     <div class="left-chat mb50">
       <p class="chat-time mb24" v-if="chatDetail.showTime">{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
       <div class="chat-content">
-        <img :src="imgNormalToggle(patientImg,patientSex)" alt @error="error(patientSex,$event,'patient')" class="iconImg">
+        <img :src="imgNormalToggle(patientImg,patientSex)" alt @error="error(patientSex,$event,'paitent')" class="iconImg">
         <div
           class="reply-content ml16"
           v-if="chatDetail.msgdata.msg_type=='text'"

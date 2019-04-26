@@ -75,6 +75,7 @@ export default {
 
 <style lang="scss" scoped>
 .home-mid{
+  height: 100%;
   .mid-title{
     background: $bgwhite2;
     @include textLineHeight(88px);
@@ -86,7 +87,11 @@ export default {
   }
  .function-list{
    width: 100%;
-   min-height: 633px;
+   height: calc(100vh - 600px);
+  //  min-height: 833px;
+   margin-bottom: 20px;
+  // height: 100%;
+  // height: (100vh- 100px);
    background:  $bgwhite2;
    float: left;
    .function-item{

@@ -398,6 +398,13 @@ const clinicDict = {
         { code: 0, name: "未上传" },
         { code: 1, name: "已上传" },
         { code: 2, name: "部分上传" }
+    ],
+    clinicType:[
+      {code:1,name:"诊所"},
+      {code:2,name:"门诊部"},
+      {code:3,name:"医务室"},
+      {code:4,name:"卫生所"},
+      {code:5,name:"工作室"},
     ]
 };
 
