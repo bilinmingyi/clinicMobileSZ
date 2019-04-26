@@ -100,8 +100,8 @@ export default {
   background: $bgwhite2;
   @extend %flexMidCenter;
   .top-left {
-    width: 112px;
     img {
+      border-radius: 100px;
       @extend %mediumIcon;
     }
   }
