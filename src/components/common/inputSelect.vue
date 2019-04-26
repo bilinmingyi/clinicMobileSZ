@@ -13,11 +13,13 @@
       v-model="inputValue"
       @focus="inputFocus($event)"
       @blur="inputBlur"
+      v-if="isShowInput"
     >
-    <select name="makeupCoSe" v-model="select" @change="changeF()" @blur="selectBlur" v-if="isShowSelect">
+    <select name="makeupCoSe" v-model="select" @change="changeF()" @blur="selectBlur" v-if="isShowSelect" :selected="select">
       <option id="1" :value="'java'">java</option>
       <option id="2" :value="'c++'">c++</option>
-      <option id="3" :value="'python'">python</option>
+      <option id="3" :value="'python'">python22</option>
+      <option id="4" :value="'热门'">热门</option>
     </select>
   </div>
 </template>
@@ -43,6 +45,10 @@ export default {
     placeHolder:{
       type:String,
       default:'请选择或输入医生名称'
+    },
+    isShowInput:{
+      type:Boolean,
+      default:true
     }
   },
   data() {
@@ -56,6 +62,8 @@ export default {
     changeF() {
       this.inputValue = this.select;
       window.scrollTo(0, 0);
+      console.log(this.select)
+      this.$emit('selectChange')
     },
     inputFocus(e) {
       setTimeout(function() {
@@ -81,6 +89,8 @@ export default {
   },
   created() {
     this.inputValue = this.modelValue;
+    this.select = this.modelValue;
+    console.log(  this.select )
   }
 };
 </script>
@@ -130,6 +140,7 @@ textarea {
     background-size: 56px 56px;
     flex: 1;
     height: 56px;
+    font-size: 32px;
   }
   option {
     border: 1px solid red;

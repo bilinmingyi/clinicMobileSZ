@@ -20,6 +20,10 @@ export default {
     },
     isShowButton:{
       type:Boolean,
+      default:true
+    },
+    postionA:{
+      type:Boolean,
       default:false
     }
   },
