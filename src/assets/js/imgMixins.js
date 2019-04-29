@@ -38,8 +38,12 @@ export default {
         }
       },
       //如果有图片传入 就用传入的图片 否则用默认图
-      imgNormalToggle(url, sex) {
+      imgNormalToggle(url, sex,type='doctor') {
+        if(type=='doctor'){
           return url == '' ? this.getNormalHead(sex) : url;
+        }else{
+          return url == '' ? this.getPatientImg(sex) : url;
+        }
       }
   }
 }

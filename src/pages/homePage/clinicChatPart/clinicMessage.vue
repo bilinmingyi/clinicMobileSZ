@@ -5,39 +5,49 @@
         class="chat-time mb24"
         v-if="chatDetail.showTime"
       >{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
-      <div
-        class="chat-content"
-      >
-      <div class="cancelButton" v-if="chatDetail.msgdata.msg_type !== 'withdraw_msg'&&userInfoState.id===chatDetail.from_userid" @click="cancelThis"> <span>撤回</span></div>
+      <div class="chat-content">
+        <div
+          class="cancelButton"
+          v-if="chatDetail.msgdata.msg_type !== 'withdraw_msg'&&userInfoState.id===chatDetail.from_userid"
+          @click="cancelThis"
+        >
+          <span>撤回</span>
+        </div>
         <!-- messagetype  text-->
         <div class="reply-content" v-if="chatDetail.msgdata.msg_type=='text'">
           <p class="reply-text">{{chatDetail.msgdata.text}}</p>
         </div>
-        <div class="reply-content" v-if="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='link'" >
+        <div class="reply-content" v-if="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='link'">
           <div class="recommond">
-            <img :src="imgNormalToggle(imgDetail.avatar,imgDetail.sex)" alt @error="error(imgDetail.sex,$event)" class="iconImg">
+            <img
+              :src="imgNormalToggle(imgDetail.avatar,imgDetail.sex)"
+              alt
+              @error="error(imgDetail.sex,$event)"
+              class="iconImg"
+            >
             <div class="recommond-content">
               <p class="recommond-title">
                 {{imgDetail.name}}
-                <span :class="color_list[imgDetail.title-1]">{{imgDetail.title|doctorTypes}}</span>
+                <span
+                  :class="color_list[imgDetail.title-1]"
+                >{{imgDetail.title|doctorTypes}}</span>
               </p>
               <p class="recommond-subTitle">请点击进行预约</p>
             </div>
           </div>
         </div>
-        <div
-          class="reply-content"
-          v-if="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='image'"
-        >
+        <div class="reply-content" v-if="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='image'">
           <div class="imgMessage" @click="showImg">
-            <img :src="chatDetail.msgdata.img_url" alt>
+            <img
+              :src="chatDetail.msgdata.img_url"
+              :class="[{'img-loadH':chatDetail.imgLoadH},{'img-loadW':chatDetail.imgLoadW}]"
+            >
           </div>
         </div>
-        <div
-          class="cancel"
-          v-if="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='withdraw_msg'"
-        >
-          <p v-show="userInfoState.id!==chatDetail.from_userid">"{{chatDetail.from_username}}" 撤销了一条消息</p>
+        <div class="cancel" v-if="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='withdraw_msg'">
+          <p
+            v-show="userInfoState.id!==chatDetail.from_userid"
+          >"{{chatDetail.from_username}}" 撤销了一条消息</p>
           <p v-show="userInfoState.id===chatDetail.from_userid">你撤回了一条消息</p>
         </div>
         <!-- <div
@@ -62,49 +72,70 @@ export default {
   props: ["chatDetail"],
   data() {
     return {
-         color_list: [
+      color_list: [
         "color-4DBC89",
         "color-EDAB15",
         "color-08BAC6",
         "color-29BBFF"
       ],
       timeOutEvent: "",
-      imgDetail:''
+      imgDetail: "",
+      loadSuc: false
     };
   },
   computed: {
     ...mapState(["userInfoState"])
   },
   methods: {
-    cancelThis(){
-        this.$Message.confirm("确认撤销消息么？", () => {
-          this.$emit("cancelMessage", this.chatDetail);
-        });
+    cancelThis() {
+      this.$Message.confirm("确认撤销消息么？", () => {
+        this.$emit("cancelMessage", this.chatDetail);
+      });
     },
     // 调用微信接口展示图片
-    showImg () {
-      WeixinJSBridge.invoke('imagePreview', {
-        'current': this.chatDetail.msgdata.img_url,
-        'urls': [this.chatDetail.msgdata.img_url]
-      })
+    showImg() {
+      WeixinJSBridge.invoke("imagePreview", {
+        current: this.chatDetail.msgdata.img_url,
+        urls: [this.chatDetail.msgdata.img_url]
+      });
+    },
+    sucLoad() {
+      // 下面的方法放在mounted里面 速度会比加载完的执行快 因为我只是想控制其类就可
+      let self = this;
+      let loadImg = new Image();
+      loadImg.src = self.chatDetail.msgdata.img_url;
+      loadImg.onload = function() {
+        let width = loadImg.width;
+        let height = loadImg.height;
+        if (width > height) {
+          self.chatDetail.imgLoadW = true;
+        } else {
+          self.chatDetail.imgLoadH = true;
+        }
+      };
     }
   },
   created() {
-      if(this.chatDetail.msgdata.msg_type=='link'){
-        this.imgDetail=this.chatDetail.msgdata.link_desc ?JSON.parse(this.chatDetail.msgdata.link_desc):{};
+    if (this.chatDetail.msgdata.msg_type === "link") {
+      this.imgDetail = this.chatDetail.msgdata.link_desc
+        ? JSON.parse(this.chatDetail.msgdata.link_desc)
+        : {};
+    } else if (this.chatDetail.msgdata.msg_type === "image") {
+      this.$set(this.chatDetail, "imgLoadW", null);
+      this.$set(this.chatDetail, "imgLoadH", null);
+      this.sucLoad();
     }
-    // this.$Message.infor('网络出错！');
   }
 };
 </script>
 <style lang="scss" scoped>
-.ml20{
-  margin-left:20px;
+.ml20 {
+  margin-left: 20px;
 }
-.mb24{
+.mb24 {
   margin-bottom: 24px;
 }
-.cancelButton{
+.cancelButton {
   // background: yellow;
   width: 88px;
   line-height: 50px;
@@ -112,12 +143,12 @@ export default {
   height: 50px;
   font-size: 26px;
   color: $gray3;
-  span{
+  span {
     border-bottom: 1px solid $gray3;
   }
 }
-.reply-text{
-   @extend %normalTitle;
+.reply-text {
+  @extend %normalTitle;
 }
 p {
   text-align: center;
@@ -144,7 +175,7 @@ p {
     font-weight: 600;
   }
   display: flex;
-    .iconImg {
+  .iconImg {
     @extend %minICon;
     border-radius: 100px;
   }
@@ -164,7 +195,7 @@ p {
       font-weight: 600;
       span {
         min-width: 72px;
-        padding:0 8px;
+        padding: 0 8px;
         height: 40px;
         border-radius: 8px;
         line-height: 40px;
@@ -185,15 +216,22 @@ p {
 }
 .imgMessage {
   img {
-    
-    width: 100%;
-    height: 400px;
+    width: 300px;
+    height: 300px;
+  }
+  .img-loadH {
+    height: 300px;
+    width: auto;
+  }
+  .img-loadW {
+    width: 300px;
+    height: auto;
   }
 }
 .right-chat {
   padding-left: 20px;
   .chat-content {
-    margin-right:20px;
+    margin-right: 20px;
     justify-content: flex-end;
     display: flex;
   }
@@ -202,7 +240,7 @@ p {
   color: $gray3;
   font-size: 28px;
   @extend %aglinItem;
-  p{
+  p {
     height: 28px;
     line-height: 28px;
   }

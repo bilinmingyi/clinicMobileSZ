@@ -1,24 +1,39 @@
 <template>
   <div>
     <div class="left-chat mb50">
-      <p class="chat-time mb24" v-if="chatDetail.showTime">{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
+      <p
+        class="chat-time mb24"
+        v-if="chatDetail.showTime"
+      >{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
       <div class="chat-content">
-        <img :src="imgNormalToggle(patientImg,patientSex)" alt @error="error(patientSex,$event,'paitent')" class="iconImg">
+        <img
+          :src="imgNormalToggle(patientImg,patientSex,'patient')"
+          alt
+          @error="error(patientSex,$event,'paitent')"
+          class="iconImg"
+        >
+        <div class="reply-content ml16" v-if="chatDetail.msgdata.msg_type=='text'">
+          <span>{{chatDetail.msgdata.text}}</span>
+        </div>
         <div
           class="reply-content ml16"
-          v-if="chatDetail.msgdata.msg_type=='text'"
-        ><span>{{chatDetail.msgdata.text}}</span></div>
-          <div class="reply-content ml16" v-if="chatDetail.msgdata && chatDetail.msgdata.msg_type=='link'">
-          <div class="recommond" v-if="chatDetail.msgdata.link_type == 'treatment_order_Submission'">
+          v-if="chatDetail.msgdata && chatDetail.msgdata.msg_type=='link'"
+        >
+          <div
+            class="recommond"
+            v-if="chatDetail.msgdata.link_type == 'treatment_order_Submission'"
+          >
             <div class="recommond-content" @click="goRoute(chatDetail.msgdata.link_url)">
               <p class="recommond-subTitle">已提交预约订单，点击查看</p>
             </div>
           </div>
         </div>
-        <div
         <div class="reply-content ml16" v-if="chatDetail.msgdata.msg_type=='image'">
           <div class="imgMessage" @click="showImg">
-            <img :src="chatDetail.msgdata.img_url" alt >
+            <img
+              :src="chatDetail.msgdata.img_url"
+              :class="[{'img-loadH':chatDetail.imgLoadH},{'img-loadW':chatDetail.imgLoadW}]"
+            >
           </div>
         </div>
         <!-- <div
@@ -34,37 +49,62 @@
 <script>
 import imgMixins from "@/assets/js/imgMixins";
 export default {
-  mixins:[imgMixins],
-  props: ["chatDetail",'patientImg','patientSex'],
+  mixins: [imgMixins],
+  props: ["chatDetail", "patientImg", "patientSex"],
   data() {
     return {
-         color_list: [
+      color_list: [
         "color-4DBC89",
         "color-EDAB15",
         "color-08BAC6",
         "color-29BBFF"
       ],
-      imgDetail:''
+      imgDetail: "",
+      loadSuc: false
     };
   },
-  methods:{
-        // 路由跳转
-    goRoute (url) {
-      this.$router.push({name:'patientOrderPage',params:{orderSeqno:this.imgDetail.orderSeqno}})
+  methods: {
+    // 路由跳转
+    goRoute(url) {
+      this.$router.push({
+        name: "patientOrderPage",
+        params: { orderSeqno: this.imgDetail.orderSeqno }
+      });
     },
-          // 调用微信接口展示图片
-    showImg () {
-      WeixinJSBridge.invoke('imagePreview', {
-        'current': this.chatDetail.msgdata.img_url,
-        'urls': [this.chatDetail.msgdata.img_url]
-      })
+    // 调用微信接口展示图片
+    showImg() {
+      WeixinJSBridge.invoke("imagePreview", {
+        current: this.chatDetail.msgdata.img_url,
+        urls: [this.chatDetail.msgdata.img_url]
+      });
+    },
+    sucLoad() {
+      // 下面的方法放在里面 速度会比加载完的执行快 因为我只是想控制其类就可
+      let self = this;
+      let loadImg = new Image();
+      loadImg.src = self.chatDetail.msgdata.img_url;
+      loadImg.onload = function() {
+        let width = loadImg.width;
+        let height = loadImg.height;
+        // console.log(`width${width}**height${height}+${self.chatDetail.msgid}`);
+        if (width > height) {
+          self.chatDetail.imgLoadW = true;
+        } else {
+          self.chatDetail.imgLoadH = true;
+        }
+      };
     }
   },
-  created(){
-    if(this.chatDetail.msgdata.msg_type=='link'){
-          this.imgDetail=this.chatDetail.msgdata.link_desc ?JSON.parse(this.chatDetail.msgdata.link_desc):{};
+  created() {
+    if (this.chatDetail.msgdata.msg_type === "link") {
+      this.imgDetail = this.chatDetail.msgdata.link_desc
+        ? JSON.parse(this.chatDetail.msgdata.link_desc)
+        : {};
+    } else if (this.chatDetail.msgdata.msg_type === "image") {
+      this.$set(this.chatDetail, "imgLoadW", null);
+      this.$set(this.chatDetail, "imgLoadH", null);
+      this.sucLoad();
     }
-    
   }
 };
 </script>
@@ -99,8 +139,16 @@ p {
   }
   .imgMessage {
     img {
-      width: 100%;
-      height: 400px;
+      width: 300px;
+      height: 300px;
+    }
+    .img-loadH {
+      height: 300px;
+      width: auto;
+    }
+    .img-loadW {
+      width: 300px;
+      height: auto;
     }
   }
   .recommond {
@@ -120,7 +168,7 @@ p {
       span {
         min-width: 72px;
         height: 40px;
-        padding:0 8px;
+        padding: 0 8px;
         border-radius: 8px;
         line-height: 40px;
         text-align: center;
