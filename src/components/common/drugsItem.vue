@@ -20,11 +20,12 @@
 </template>
 <script>
 export default {
+  name: "blmyDrugsItem",
   data() {
-    return {};
+    return {}
   },
   methods: {}
-};
+}
 </script>
 <style lang="scss" scoped>
 .drugs {
@@ -37,7 +38,7 @@ export default {
   &-img {
     border: 1px solid $borderColor;
     @include sameWH(160px);
-     img {
+    img {
       padding: 7px;
       @include sameWH(160px);
     }
@@ -46,12 +47,11 @@ export default {
     margin-left: 20px;
   }
   &-desc {
-
     width: auto;
     // word-wrap:normal;
     font-size: 28px;
     @include textEllipsis(80px, 504px, 2);
-        color: $grayColor;
+    color: $grayColor;
   }
   &-bottom {
     color: $grayColor;

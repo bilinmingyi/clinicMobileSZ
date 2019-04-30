@@ -2,8 +2,14 @@
 <template>
   <div class="without-data">没有相关记录</div>
 </template>
+<script>
+export default {
+  name: 'blmyWithoutData'
+}
+</script>
+
 <style lang="scss" scoped>
-.without-data{
+.without-data {
   background: $bgwhite2;
   color: $gray2;
   height: 88px;

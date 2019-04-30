@@ -5,13 +5,12 @@
   <div class="mall">
     <div class="mall-item" @click="jumpTo">
       <p>
-        <span>{{itemName}}：{{itemNumber}}</span>
-        <span class="time">{{itemTime}}</span>
+        <span>{{itemName}}：{{itemNumber}}</span><span class="time">{{itemTime}}</span>
       </p>
       <p>
         <span>金额：￥{{itemMoney}}</span>
         <span>
-          <slot name="type"></slot>
+          <slot name="type"> </slot>
         </span>
       </p>
     </div>
@@ -19,33 +18,34 @@
 </template>
  <script>
 export default {
+  name: "blmyMallItem",
   props: {
     itemName: {
       type: String,
       default: ""
     },
-    itemNumber:{
-      type:[Number,String],
-      default:''
+    itemNumber: {
+      type: [Number, String],
+      default: ""
     },
     itemTime: {
       type: String,
       default: ""
     },
     itemMoney: {
-      type: [String,Number],
+      type: [String, Number],
       default: "0"
     }
   },
   data() {
-    return {};
+    return {}
   },
-  methods:{
-    jumpTo(){
-      this.$emit('jumpDetail')
+  methods: {
+    jumpTo() {
+      this.$emit("jumpDetail")
     }
   }
-};
+}
 </script>
  <style lang="scss" scoped>
 .mall {

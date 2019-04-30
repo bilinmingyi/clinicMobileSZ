@@ -16,18 +16,17 @@ export default {
   }
 }
 </script>
-
 <style lang="scss" scoped>
-  .title-text{
-    height: 96px;
-    color: $depthTextColor;
-    font-size: 32px;
-    border-bottom: 1px solid $lineColor;
-    @extend %aglinItem;
-  }
-  .greenBlock{
-    width: 8px;
-    height: 40px;
-    background: $greenColor;
-  }
+.title-text {
+  height: 96px;
+  color: $depthTextColor;
+  font-size: 32px;
+  border-bottom: 1px solid $lineColor;
+  @extend %aglinItem;
+}
+.greenBlock {
+  width: 8px;
+  height: 40px;
+  background: $greenColor;
+}
 </style>

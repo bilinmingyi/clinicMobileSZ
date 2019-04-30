@@ -6,15 +6,7 @@
 <template>
   <div class="select">
     <p>{{title}}</p>
-    <input
-      type="text"
-      name="makeupCo"
-      :placeholder="placeHolder"
-      v-model="inputValue"
-      @focus="inputFocus($event)"
-      @blur="inputBlur"
-      v-if="isShowInput"
-    >
+    <input type="text" name="makeupCo" :placeholder="placeHolder" v-model="inputValue" @focus="inputFocus($event)" @blur="inputBlur" v-if="isShowInput">
     <select name="makeupCoSe" v-model="select" @change="changeF()" @blur="selectBlur" v-if="isShowSelect" :selected="select">
       <option id="1" :value="'java'">java</option>
       <option id="2" :value="'c++'">c++</option>
@@ -25,30 +17,31 @@
 </template>
 <script>
 export default {
-  props:{
-    isShowSelect:{
-      type:Boolean,
-      default:true
+  name: "blmyInputSelect",
+  props: {
+    isShowSelect: {
+      type: Boolean,
+      default: true
     },
-    modelValue:{
-      type:String,
-      default:''
+    modelValue: {
+      type: String,
+      default: ""
     },
-    title:{
-      type:String,
-      default:'医生名称'
+    title: {
+      type: String,
+      default: "医生名称"
     },
-    selectList:{
-      type:Array,
-      default:()=>[]
+    selectList: {
+      type: Array,
+      default: () => []
     },
-    placeHolder:{
-      type:String,
-      default:'请选择或输入医生名称'
+    placeHolder: {
+      type: String,
+      default: "请选择或输入医生名称"
     },
-    isShowInput:{
-      type:Boolean,
-      default:true
+    isShowInput: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -56,43 +49,43 @@ export default {
       inputValue: "梁医生",
       select: "",
       bottomTimer: null
-    };
+    }
   },
   methods: {
     changeF() {
-      this.inputValue = this.select;
-      window.scrollTo(0, 0);
+      this.inputValue = this.select
+      window.scrollTo(0, 0)
       console.log(this.select)
-      this.$emit('selectChange')
+      this.$emit("selectChange")
     },
     inputFocus(e) {
       setTimeout(function() {
-        e.target.scrollIntoView(true);
-      }, 500);
-      let self = this;
+        e.target.scrollIntoView(true)
+      }, 500)
+      let self = this
       self.bottomTimer = setInterval(function() {
-        document.body.scrollTop = document.body.clientHeight;
-      }, 1000);
-      this.$emit("inputFocus");
+        document.body.scrollTop = document.body.clientHeight
+      }, 1000)
+      this.$emit("inputFocus")
     },
     inputBlur() {
-      let self = this;
-      clearInterval(self.bottomTimer);
+      let self = this
+      clearInterval(self.bottomTimer)
       setTimeout(() => {
-        window.scrollTo(0, 0);
-        self.$emit("inputBlur");
-      }, 64);
+        window.scrollTo(0, 0)
+        self.$emit("inputBlur")
+      }, 64)
     },
     selectBlur() {
-      window.scrollTo(0, 0);
+      window.scrollTo(0, 0)
     }
   },
   created() {
-    this.inputValue = this.modelValue;
-    this.select = this.modelValue;
-    console.log(  this.select )
+    this.inputValue = this.modelValue
+    this.select = this.modelValue
+    console.log(this.select)
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 [contenteditable="true"],
@@ -157,8 +150,8 @@ textarea {
     position: absolute;
     left: 182px;
     height: 100%;
-    width:400px;
-     @include commonBorder();
+    width: 400px;
+    @include commonBorder();
     @extend %normalTitle;
   }
 }

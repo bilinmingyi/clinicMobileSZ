@@ -5,33 +5,45 @@
      对于插槽 可以自主添加属性或文字 样式可自己在父组件调整
    -->
 <template>
-<div class="first-wrap">
-  <div class="first" v-show="firstTableList.length>0">
-    <div class="first-list" v-for="(item,index) in firstTableList" :key="index">
-      <span class="first-title">{{item.title}}</span>
-      <span class="first-content"><slot name="left" v-if="item.location=='left'" ></slot>{{item.value||0}}<span class="pl5"><slot name="right" v-if="item.location=='right'" ></slot></span></span>
+  <div class="first-wrap">
+    <div class="first"
+         v-show="firstTableList.length>0">
+      <div class="first-list"
+           v-for="(item,index) in firstTableList"
+           :key="index">
+        <span class="first-title">{{item.title}}</span>
+        <span class="first-content">
+          <slot name="left"
+                v-if="item.location=='left'"></slot>
+          {{item.value||0}}
+          <span class="pl5">
+            <slot name="right"
+                  v-if="item.location=='right'"></slot>
+          </span>
+        </span>
+      </div>
     </div>
   </div>
-</div>
 </template>
 <script>
 export default {
-  props:{
-    firstTableList:{
-      type:Array,
-      default:()=>[]
+  name: "blmyFirstTable",
+  props: {
+    firstTableList: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
-    return {};
+    return {}
   }
-};
+}
 </script>
 <style lang="scss" scoped>
-.first-wrap{
-    background: $bgwhite2;
-    padding:10px 0 ;
-    margin-top: 10px;
+.first-wrap {
+  background: $bgwhite2;
+  padding: 10px 0;
+  margin-top: 10px;
 }
 .first {
   background: $bgwhite2;
@@ -50,14 +62,14 @@ export default {
   &-title {
     width: 180px;
     text-align: center;
-        @include commonBorder(bottom, $greenColor);
+    @include commonBorder(bottom, $greenColor);
     @include commonBorder(right, $greenColor);
     font-size: 30px;
     background: rgba(235, 248, 249, 1);
     color: $backColor;
   }
   &-content {
-        @include commonBorder(bottom, $greenColor);
+    @include commonBorder(bottom, $greenColor);
     flex: 1;
     text-align: center;
     font-size: 30px;

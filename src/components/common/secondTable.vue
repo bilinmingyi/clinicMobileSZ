@@ -8,7 +8,7 @@
     {{tableValue.value}}
    -->
 <template>
-<div>
+  <div>
     <div class="second" v-show="titleArray.length>0">
       <section class="second-detail">
         <table>
@@ -19,11 +19,13 @@
           </tr>
           <tr v-for="(content,index) in contentArray">
             <td v-for="(value,key,index) in content">
-              <slot name="value" :value ="value" :objectKey="key">  {{value}}</slot>
+              <slot name="value" :value="value" :objectKey="key">{{value}}</slot>
             </td>
           </tr>
-          <tr  v-show="hasData">
-            <td colspan="4" style=" color: #7c7c7c;"><slot name="noData">没有相关记录</slot></td>
+          <tr v-show="hasData">
+            <td colspan="4" style=" color: #7c7c7c;">
+              <slot name="noData">没有相关记录</slot>
+            </td>
           </tr>
         </table>
       </section>
@@ -32,32 +34,31 @@
 </template>
 <script>
 export default {
-  props:{
-    titleArray:{
-      type:Array,
-      default:()=>[]
+  name: 'blmySecondTable',
+  props: {
+    titleArray: {
+      type: Array,
+      default: () => []
     },
-    contentArray:{
-      type:Array,
-      default:()=>[]
+    contentArray: {
+      type: Array,
+      default: () => []
     },
-    hasData:{
-      type:Boolean,
-      default:true
+    hasData: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
-    return {
-      
-    };
+    return {}
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .second {
   margin: 30px 30px 20px 30px;
-   &-detail {
-    margin-top:30px;
+  &-detail {
+    margin-top: 30px;
     table {
       border-collapse: separate;
       border-radius: 10px;

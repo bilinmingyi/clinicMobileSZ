@@ -2,49 +2,31 @@
   <div ref="allWrapper" class="allWrapper">
     <common-header :titleName="queryData.username"></common-header>
     <div class="clinic-chat">
-      <div class="wrapper" ref="wrapper" @click="hideFuc" >
-          <p v-show="isShowLoad" class="loadData">正在加载数据...</p>
-          <div class="content-detail">
-            <component
-              v-for="(item,index) in allMsgList"
-              v-if="allMsgList.length>0"
-              :key="item.msgid"
-              :is="RenderComponent(item.from)"
-              :chatDetail="item"
-              :patientSex="queryData.sex"
-              :patientImg="queryData.avatar"
-              @cancelMessage="cancelMessage"
-            ></component>
-          </div>
+      <div class="wrapper" ref="wrapper" @click="hideFuc">
+        <p v-show="isShowLoad" class="loadData">正在加载数据...</p>
+        <div class="content-detail">
+          <component v-for="(item,index) in allMsgList" v-if="allMsgList.length>0" :key="item.msgid" :is="RenderComponent(item.from)"
+            :chatDetail="item" :patientSex="queryData.sex" :patientImg="queryData.avatar" @cancelMessage="cancelMessage"></component>
         </div>
       </div>
-      <div class="mb88"></div>
-      <!-- <quick-reply v-show="isReply" @closeReply="closeReply" @quickReplyMsg="sendMessage"></quick-reply> -->
-      <chat-bottom
-        :showFuc="isShowFuc"
-        @addFunc="addFunc"
-        @hideFunc="foucs"
-        @sendMessage="sendTextMessage"
-        @sendImg="sendImgMessage"
-        @showReply="showReply"
-        @goDocRecommond="goDocRecommond"
-        @inputBlur="inputBlur"
-        ref="chatBottoms"
-      ></chat-bottom>
     </div>
-
+    <div class="mb88"></div>
+    <!-- <quick-reply v-show="isReply" @closeReply="closeReply" @quickReplyMsg="sendMessage"></quick-reply> -->
+    <chat-bottom :showFuc="isShowFuc" @addFunc="addFunc" @hideFunc="foucs" @sendMessage="sendTextMessage" @sendImg="sendImgMessage"
+      @showReply="showReply" @goDocRecommond="goDocRecommond" @inputBlur="inputBlur" ref="chatBottoms"></chat-bottom>
+  </div>
   </div>
 </template>
 <script>
-// import BScroll from "better-scroll";
 import { chatMsgList, msgSend, msgWithdraw } from "@/fetch/api";
 import { mapState } from "vuex";
-import {commonHeader} from "@/components/common";
+import { commonHeader } from "@/components/common";
 import chatBottom from "./clinicChatPart/chatBottom";
 import clinicMessage from "./clinicChatPart/clinicMessage";
 import patientMessage from "./clinicChatPart/patientMessage";
 import quickReply from "./clinicChatPart/quickReply";
 export default {
+  name: "clinicChat",
   data() {
     return {
       isShowFuc: false,
@@ -54,10 +36,10 @@ export default {
       isReply: false,
       dataInterval: "",
       isShowLoad: false,
-      unPullingUp:true,  //两个变量控制轮询的时候 是否滚到底部  若上拉到最顶层的时候 此页面不进行上拉加载
-      unfinalPulling:true,
-      first:'',
-      second:''
+      unPullingUp: true, //两个变量控制轮询的时候 是否滚到底部  若上拉到最顶层的时候 此页面不进行上拉加载
+      unfinalPulling: true,
+      first: "",
+      second: ""
     };
   },
   components: {
@@ -77,14 +59,14 @@ export default {
   methods: {
     foucs(e) {
       this.unPullingUp = true;
-      let self =this;
-      self.$refs.wrapper.scrollTo (0,self.$refs.wrapper.scrollHeight)
+      let self = this;
+      self.$refs.wrapper.scrollTo(0, self.$refs.wrapper.scrollHeight);
       this.isShowFuc = false;
     },
     hideFuc() {
-            this.isShowFuc = false;
+      this.isShowFuc = false;
       this.isReply = false;
-        //  this.$refs.chatBottoms.$refs.inputText.blur();
+      //  this.$refs.chatBottoms.$refs.inputText.blur();
     },
     addFunc() {
       this.isShowFuc = !this.isShowFuc;
@@ -111,8 +93,8 @@ export default {
       });
     },
     inputBlur() {
-    let self =this;
-    self.$refs.wrapper.scrollTo (0,self.$refs.wrapper.scrollHeight)
+      let self = this;
+      self.$refs.wrapper.scrollTo(0, self.$refs.wrapper.scrollHeight);
     },
     // 发送文本
     sendTextMessage(val) {
@@ -171,9 +153,9 @@ export default {
             }
           });
           this.isReply = false;
-             this.$nextTick(()=>{
-                 this.$refs.wrapper.scrollTo (0,this.$refs.wrapper.scrollHeight)
-          })
+          this.$nextTick(() => {
+            this.$refs.wrapper.scrollTo(0, this.$refs.wrapper.scrollHeight);
+          });
         } else {
           this.$Message.infor(res.msg);
         }
@@ -185,7 +167,7 @@ export default {
     },
     //撤销消息
     cancelMessage(val) {
-        // this.unPullingUp = true;
+      // this.unPullingUp = true;
       let params = {
         session_type: val.session_type,
         session_id: val.session_id,
@@ -247,13 +229,13 @@ export default {
             } else {
               //避免发送数据和轮巡时 数据加了两遍
               let noData = true;
-              for(let i=0;i<this.allMsgList.length;i++){
-                if(this.allMsgList[i].msgid===item.msgid){
-                  noData=false;
+              for (let i = 0; i < this.allMsgList.length; i++) {
+                if (this.allMsgList[i].msgid === item.msgid) {
+                  noData = false;
                   break;
                 }
               }
-              if(noData){
+              if (noData) {
                 this.allMsgList.push(item);
               }
             }
@@ -277,10 +259,10 @@ export default {
             }
           });
           this.isReply = false;
-          if(res.data.msg_list.length>1&&this.unPullingUp){
-          this.$nextTick(()=>{
-                 this.$refs.wrapper.scrollTo (0,this.$refs.wrapper.scrollHeight)
-          })
+          if (res.data.msg_list.length > 1 && this.unPullingUp) {
+            this.$nextTick(() => {
+              this.$refs.wrapper.scrollTo(0, this.$refs.wrapper.scrollHeight);
+            });
           }
         } else {
           this.$Message.infor(res.msg);
@@ -313,16 +295,20 @@ export default {
           });
           this.last_msgid =
             this.allMsgList.length > 0 ? this.allMsgList[0].msgid : null;
-                this.$nextTick(()=>{
-                  setTimeout(()=>{
-                  this.$refs.wrapper.scrollTo(0,this.$refs.wrapper.scrollHeight)
-                  },0)
-               this.$refs.wrapper.addEventListener('scroll', () => {
-            if(this.$refs.wrapper.scrollTop==0&&this.unfinalPulling){
-          this.getUpLoadData()
-           }
-          }, false)
-        })
+          this.$nextTick(() => {
+            setTimeout(() => {
+              this.$refs.wrapper.scrollTo(0, this.$refs.wrapper.scrollHeight);
+            }, 0);
+            this.$refs.wrapper.addEventListener(
+              "scroll",
+              () => {
+                if (this.$refs.wrapper.scrollTop === 0 && this.unfinalPulling) {
+                  this.getUpLoadData();
+                }
+              },
+              false
+            );
+          });
         } else {
           this.$Message.infor(res.msg);
         }
@@ -330,7 +316,7 @@ export default {
     },
     //向上加载的时候的操作数据
     getUpLoadData() {
-         this.first = this.$refs.wrapper.scrollHeight; //记录一开始得高度
+      this.first = this.$refs.wrapper.scrollHeight; //记录一开始得高度
       this.unPullingUp = false;
       this.isShowLoad = true;
       let params = {
@@ -343,36 +329,36 @@ export default {
       chatMsgList(params).then(res => {
         this.isShowLoad = false;
         if (res.code == 1000) {
-             this.$nextTick(()=>{
-          let newObject = [];
-          res.data.msg_list.forEach((item, index) => {
-            //第一个数据不要
-            if (index == res.data.msg_list.length - 1) {
-              return;
-            } else {
-              newObject.push(item);
-            }
+          this.$nextTick(() => {
+            let newObject = [];
+            res.data.msg_list.forEach((item, index) => {
+              //第一个数据不要
+              if (index == res.data.msg_list.length - 1) {
+                return;
+              } else {
+                newObject.push(item);
+              }
+            });
+            this.allMsgList.unshift(...newObject);
+            this.allMsgList.forEach((item, index) => {
+              if (index == 0) {
+                this.$set(item, "showTime", true);
+              } else if (
+                index != 0 &&
+                this.computedTime(this.allMsgList[index - 1].msgts, item.msgts)
+              ) {
+                this.$set(item, "showTime", true);
+              } else {
+                this.$set(item, "showTime", false);
+              }
+            });
+            this.last_msgid = this.allMsgList[0].msgid;
+            setTimeout(() => {
+              this.second = this.$refs.wrapper.scrollHeight;
+              let scroTo = Number(this.second - this.first);
+              this.$refs.wrapper.scrollTo(0, scroTo);
+            }, 0);
           });
-          this.allMsgList.unshift(...newObject);
-          this.allMsgList.forEach((item, index) => {
-            if (index == 0) {
-              this.$set(item, "showTime", true);
-            } else if (
-              index != 0 &&
-              this.computedTime(this.allMsgList[index - 1].msgts, item.msgts)
-            ) {
-              this.$set(item, "showTime", true);
-            } else {
-              this.$set(item, "showTime", false);
-            }
-          });
-          this.last_msgid = this.allMsgList[0].msgid; 
-          setTimeout(()=>{
-            this.second = this.$refs.wrapper.scrollHeight;
-            let scroTo = Number(this.second -  this.first);
-            this.$refs.wrapper.scrollTo(0,scroTo);
-          },0)
-        })
           if (res.data.msg_list.length != 10) {
             this.unfinalPulling = false;
           }
@@ -387,15 +373,6 @@ export default {
     this.dataInterval = setInterval(() => {
       this.setIntervalData();
     }, 3000);
-    //    // 检测浏览器路由改变页面不刷新问题,hash模式的工作原理是hashchange事件
-    // window.addEventListener('hashchange', () => {
-
-    //   let currentPath = window.location.hash.slice(1)
-    //   console.log(currentPath)
-    //   if (this.$route.path !== currentPath) {
-    //     this.$router.push(currentPath)
-    //   }
-    // }, false)
   },
   created() {
     this.queryData = this.$route.query;
@@ -403,18 +380,18 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.allWrapper{
-  position:fixed;
-  width:100vw;
-  height:100%;
+.allWrapper {
+  position: fixed;
+  width: 100vw;
+  height: 100%;
 }
 .clinic-chat {
-  position:relative;
-  height:100%;
-  width:100%;
+  position: relative;
+  height: 100%;
+  width: 100%;
   .chat-content {
     width: 100%;
-    margin-right:20px;
+    margin-right: 20px;
     overflow: hidden;
     .content-detail {
       width: 100%;
@@ -423,10 +400,10 @@ export default {
   }
 }
 .wrapper {
-   box-sizing: border-box;
-  overflow:hidden;
+  box-sizing: border-box;
+  overflow: hidden;
   height: calc(100vh - 200px);
-    overflow-y: scroll; 
+  overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
 .loadData {
