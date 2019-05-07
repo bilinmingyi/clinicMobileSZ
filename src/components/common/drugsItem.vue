@@ -8,11 +8,11 @@
       <img src="@/assets/images/banner-yun.png" alt>
     </div>
     <div class="drugs-title">
-      <p class="drugs-desc">葵花牌 葵花健儿消食口服液口服液10ml* 6支/10盒</p>
+      <p class="drugs-desc">{{drugName}}</p>
       <div class="drugs-bottom">
-        <p class="money">￥13232</p>
+        <p class="money">￥{{drugMoney}}</p>
         <p>
-          <slot name="rightBottom">数量：5</slot>
+          <slot name="rightBottom">数量：{{drugNum}}</slot>
         </p>
       </div>
     </div>
@@ -20,6 +20,24 @@
 </template>
 <script>
 export default {
+  props: {
+    drugName: {
+      type: String,
+      default: ''
+    },
+    drugImg: {
+      type: String,
+      default: ''
+    },
+    drugMoney: {
+      type: [String, Number],
+      default: '0'
+    },
+    drugNum: {
+      type: [String, Number],
+      default: '0'
+    }
+  },
   name: "blmyDrugsItem",
   data() {
     return {}

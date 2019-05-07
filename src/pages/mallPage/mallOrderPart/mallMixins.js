@@ -1,42 +1,29 @@
-import { mallItem, withoutData, loadMore } from "@/components/common";
+import { mallItem, withoutData, loadMore } from '@/components/common'
+
+// status_list:参数
+// UNKNOWN("UNKNOWN", "未知"),
+// AUDIT("AUDIT", "待审核"),
+// REFUSE("REFUSE", "审核拒绝"),
+// UNPAID4BUSINESS("UNPAID4BUSINESS", "待付款"),
+// UNPAID4CLIENT("UNPAID4CLIENT", "待收款"),
+// DELIVER("DELIVER", "待发货"),
+// WAIT_INSTOCK("WAIT_INSTOCK", "待收货"),
+// DONE("DONE", "完成"),
+// CANCEL("CANCEL", "取消"),
 export default {
   data() {
     return {
-      mallList: [
-        {
-          name: "李四",
-          time: "2019/4/24 10:36",
-          number: "13631780571",
-          money: "100"
-        },
-        {
-          name: "李四2",
-          time: "2019/4/24 10:36",
-          number: "13631780572",
-          money: "200"
-        },
-        {
-          name: "李四3",
-          time: "2019/4/24 10:36",
-          number: "13631780573",
-          money: "300"
-        },
-        {
-          name: "李四4",
-          time: "2019/4/24 10:36",
-          number: "13631780574",
-          money: "400"
-        }
-      ],
+      mallList: [],
       isShowLoad: true,
       isLoad: false,
-      page: "1",
-      pageSize: "10"
-    };
+      page: '1',
+      pageSize: '1',
+      copyval: ''
+    }
   },
   computed: {
     hasData() {
-      return this.mallList.length !== 0;
+      return this.mallList.length === 0
     }
   },
   components: {
@@ -46,9 +33,9 @@ export default {
   },
   methods: {
     loadMore() {
-      this.page++;
-      let self = this;
-      this.mallData(self.copyval); //加载数据的一个方法
+      this.page++
+      let self = this
+      this.mallData(self.copyval) //加载数据的一个方法
     }
   }
-};
+}

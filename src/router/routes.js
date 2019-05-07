@@ -244,28 +244,31 @@ const routes = [
         }
       },
       {
-        path: 'auditDetail',
+        path: 'auditDetail/:orderSeqno',
         name: 'auditDetailPage',
         component: () => auditDetail(),
         meta: {
           title: '订单审核'
-        }
+        },
+        props: true
       },
       {
-        path: 'shipmentDetail',
+        path: 'shipmentDetail/:orderSeqno',
         name: 'shipmentDetailPage',
         component: () => shipmentDetail(),
         meta: {
           title: '发货详情'
-        }
+        },
+        props: true
       },
       {
-        path: 'orderDetail',
+        path: 'orderDetail/:orderSeqno',
         name: 'orderDetailPage',
         component: () => orderDetail(),
         meta: {
           title: '订单详情'
-        }
+        },
+        props: true
       },
       {
         path: 'drugRecommond',

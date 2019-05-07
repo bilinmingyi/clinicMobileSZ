@@ -1,14 +1,25 @@
 <!--  
+  父组件通过ref获取子组件的值得例子 代码比较简洁和简单  父组件和子组件
   布局要规范 最外层的div要用relative布局  要不window.scrollTo(0,0)会去到头部 
-   兼容 输入框的情况 和  输入下拉框的情况
+  兼容 输入框的情况 和  输入下拉框的情况
+  涉及到input框的值的问题 子组件负责操作 切换也是子组件切换  父组件只需要其值即可
+  因为需要用到Input框里面的值 如果是blur失焦后父组件获取其值的话 父组件获取值有问题（已经验证过的--子组件用watch监听的话就没问题 但是太过于复杂） 或者onchange不断传值 也麻烦例如
+  console.log(this.$refs.mark.inputValue)
+  console.log(this.$refs.doctor.inputValue)
+  console.log(this.doctorName)
+  因为要兼容下拉选择框和输入框的值
+  父组件用下面的方法获取值和改变值就可以
+  console.log(this.$refs.mark.inputValue)
+  console.log(this.$refs.doctor.inputValue)
   输入和有下拉框的组件
  -->
 <template>
   <div class="select">
     <p>{{title}}</p>
-    <input type="text" name="makeupCo" :placeholder="placeHolder" v-model="inputValue" @focus="inputFocus($event)" @blur="inputBlur" v-if="isShowInput">
+    <input type="text" name="makeupCo" :placeholder="placeHolder" v-model="inputValue" @focus="inputFocus($event)"
+      @blur="inputBlur" v-if="isShowInput">
     <select name="makeupCoSe" v-model="select" @change="changeF()" @blur="selectBlur" v-if="isShowSelect" :selected="select">
-      <option id="1" :value="'java'">java</option>
+      <option id="1" :value="'梁伯亮'">梁伯亮</option>
       <option id="2" :value="'c++'">c++</option>
       <option id="3" :value="'python'">python22</option>
       <option id="4" :value="'热门'">热门</option>
@@ -55,15 +66,14 @@ export default {
     changeF() {
       this.inputValue = this.select
       window.scrollTo(0, 0)
-      console.log(this.select)
-      this.$emit("selectChange")
+      this.$emit("selectChange", this.select)
     },
     inputFocus(e) {
-      setTimeout(function() {
+      setTimeout(function () {
         e.target.scrollIntoView(true)
       }, 500)
       let self = this
-      self.bottomTimer = setInterval(function() {
+      self.bottomTimer = setInterval(function () {
         document.body.scrollTop = document.body.clientHeight
       }, 1000)
       this.$emit("inputFocus")
@@ -73,7 +83,7 @@ export default {
       clearInterval(self.bottomTimer)
       setTimeout(() => {
         window.scrollTo(0, 0)
-        self.$emit("inputBlur")
+        self.$emit("inputBlur", this.inputValue)
       }, 64)
     },
     selectBlur() {
@@ -83,7 +93,6 @@ export default {
   created() {
     this.inputValue = this.modelValue
     this.select = this.modelValue
-    console.log(this.select)
   }
 }
 </script>
