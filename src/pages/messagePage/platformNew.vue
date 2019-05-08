@@ -12,13 +12,13 @@
     <div class="comment">
       <div class="comment-title">
         <span>最新评论</span>
-         <span class="comment-add" @click="goAddComment"></span>
+        <span class="comment-add"></span>
         <!-- <span class="comment-add" @click="goAddComment">添加评论</span> -->
       </div>
       <div class="comment-content" v-for="(item,index) in commentList">
         <p class="comment-name">{{item.user_name}}</p>
         <p class="comment-detail">
-       {{item.content}}
+          {{item.content}}
         </p>
         <p class="comment-time">{{item.create_time|dateFormat}}</p>
       </div>
@@ -31,13 +31,13 @@
 </template>
 <script>
 import { getArticleDetail, getCommentList } from "@/fetch/api";
-import {commonHeader} from "@/components/common";
+import { commonHeader } from "@/components/common";
 export default {
   props: ["platformTitle", "id"],
   data() {
     return {
       detailData: {},
-      commentList:[]
+      commentList: []
     };
   },
   methods: {
@@ -50,7 +50,7 @@ export default {
         if (res.code == 1000) {
           this.detailData = res.data;
         } else {
-           this.$Message.infor('网络出错！')
+          this.$Message.infor('网络出错！')
           console.log(res);
         }
       });
@@ -60,10 +60,10 @@ export default {
         content_type: 1
       };
       getCommentList(params).then(res => {
-        if(res.code===1000){
+        if (res.code === 1000) {
           this.commentList = res.data;
-        }else{
-           this.$Message.infor(res.msg)
+        } else {
+          this.$Message.infor(res.msg)
         }
 
       });

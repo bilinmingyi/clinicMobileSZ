@@ -5,7 +5,7 @@
 <template>
   <div class="drugs">
     <div class="drugs-img">
-      <img src="@/assets/images/banner-yun.png" alt>
+      <img :src="drugImg||normalGoods" alt>
     </div>
     <div class="drugs-title">
       <p class="drugs-desc">{{drugName}}</p>
@@ -40,7 +40,9 @@ export default {
   },
   name: "blmyDrugsItem",
   data() {
-    return {}
+    return {
+      normalGoods: require('@/assets/images/normalGoods.png')
+    }
   },
   methods: {}
 }

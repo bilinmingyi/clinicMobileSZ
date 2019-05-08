@@ -4,8 +4,9 @@
  <template>
   <div class="mall">
     <div class="mall-item" @click="jumpTo">
+      <p class="title">诊所药房</p>
       <p>
-        <span>{{itemName}}：{{itemNumber}}</span><span class="time">{{itemTime}}</span>
+        <span>{{itemName}}：{{itemNumber}}</span><span class="time">{{toggleTime(itemTime)}}</span>
       </p>
       <p>
         <span>金额：￥{{itemMoney}}</span>
@@ -43,6 +44,18 @@ export default {
   methods: {
     jumpTo() {
       this.$emit("jumpDetail")
+    },
+    toggleTime(val) {
+      //今天的时间 不显示 年月日 
+      let today = new Date()
+      let todayTime = this.$options.filters.dateFormat(today, "yyyy/MM/dd")
+      if (todayTime === val.toString().substr(0, 10)) {
+        return val.toString().substr(11)
+      } else {
+        return val.toString().substr(2)
+      }
+
+      // return val.subString(2)
     }
   }
 }
@@ -50,7 +63,10 @@ export default {
  <style lang="scss" scoped>
 .mall {
   &-item {
-    height: 132px;
+    .title {
+      font-weight: 600;
+    }
+    // height: 132px;
     width: 100%;
     padding: 20px 30px;
     background: $bgwhite2;
@@ -61,7 +77,7 @@ export default {
       @extend %normalTitle;
       padding-bottom: 10px;
     }
-    time {
+    .time {
       font-size: 28px;
     }
   }

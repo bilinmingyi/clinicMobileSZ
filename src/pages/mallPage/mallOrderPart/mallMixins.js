@@ -17,7 +17,7 @@ export default {
       isShowLoad: true,
       isLoad: false,
       page: '1',
-      pageSize: '1',
+      pageSize: '10',
       copyval: ''
     }
   },

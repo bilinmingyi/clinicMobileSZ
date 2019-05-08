@@ -14,11 +14,11 @@
         </div>
         <div class="mb-8px">
           <span class="label-three">预约时间：</span>
-          <span class="label-two">{{orderInfo.appointDate|dateFormat('yyyy-MM-dd W ')}}{{orderInfo.startTime}}-{{orderInfo.endTime}}</span>
+          <span class="label-two">{{orderInfo.appoint_date|dateFormat('yyyy-MM-dd W ')}}{{orderInfo.start_time}}-{{orderInfo.end_time}}</span>
         </div>
         <div class="mb-8px">
           <span class="label-three">预约医生：</span>
-          <span class="label-two">{{orderInfo.doctorName}}</span>
+          <span class="label-two">{{orderInfo.doctor_name}}</span>
         </div>
         <div>
           <span class="label-three">挂号费用：</span>
@@ -33,22 +33,22 @@
       <div class="patient-infor">
         <div class="line-item">
           <label class="label-span mr-32px">手机号码</label>
-          <span class="label-span">{{orderInfo.patientMobile}}</span>
+          <span class="label-span">{{orderInfo.patient_mobile}}</span>
         </div>
         <hr class="line-hr">
         <div class="line-item">
           <label class="label-span mr-96px">姓名</label>
-          <span class="label-span">{{orderInfo.patientName}}</span>
+          <span class="label-span">{{orderInfo.patient_name}}</span>
         </div>
         <hr class="line-hr">
         <div class="line-item">
           <label class="label-span mr-96px">性别</label>
-          <span class="label-span">{{orderInfo.patientSex|parseSex}}</span>
+          <span class="label-span">{{orderInfo.patient_sex|parseSex}}</span>
         </div>
         <hr class="line-hr">
         <div class="line-item">
           <label class="label-span mr-96px">年龄</label>
-          <span class="label-span">{{orderInfo.patientAge}}</span>
+          <span class="label-span">{{orderInfo.patient_age}}</span>
         </div>
       </div>
     </div>
@@ -92,14 +92,14 @@ export default {
       })
         .then(res => {
           if (res.code === 1000) {
-            this.orderInfo = res.data.order_info
-            let time = this.orderInfo.appointDate
-            this.orderInfo.appointDate = new Date(
+            this.orderInfo = res.data
+            let time = this.orderInfo.appoint_date
+            this.orderInfo.appoint_date = new Date(
               time.substr(0, 4) +
-                "-" +
-                time.substr(4, 2) +
-                "-" +
-                time.substr(6, 2)
+              "-" +
+              time.substr(4, 2) +
+              "-" +
+              time.substr(6, 2)
             )
           } else {
             this.$Message.infor(res.msg)

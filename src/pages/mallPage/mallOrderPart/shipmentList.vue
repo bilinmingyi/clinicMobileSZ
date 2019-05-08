@@ -1,8 +1,8 @@
 <template>
   <!-- 待发货组件 -->
   <div class="mall-type">
-    <mall-item v-for="(item,index) in mallList" :itemName="item.contact" :itemTime="item.create_time|dateFormat"
-      :itemMoney="item.goods_price" :itemNumber="item.phone_num" :key="index" @jumpDetail="jumpDetail">
+    <mall-item v-for="(item,index) in mallList" :itemName="item.contact" :itemTime="item.create_time|dateFormat('yyyy/MM/dd hh:mm:ss')" :itemMoney="item.price"
+      :itemNumber="item.phone_num" :key="index" @jumpDetail="jumpDetail(item)">
       <template slot="type">
         <span class="type">待发货</span>
       </template>
@@ -20,8 +20,8 @@ export default {
     return {};
   },
   methods: {
-    jumpDetail() {
-      this.$router.push({ name: "shipmentDetailPage" });
+    jumpDetail(item) {
+      this.$router.push({ name: "shipmentDetailPage", params: { orderSeqno: item.order_seqno } });
     },
     mallData() {
       let auditParams = {
@@ -47,7 +47,6 @@ export default {
   },
   created() {
     this.mallData()
-    console.log('更新了待发货列表')
   }
 };
 </script>

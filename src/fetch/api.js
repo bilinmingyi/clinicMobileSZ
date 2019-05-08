@@ -29,7 +29,7 @@ const msgSend = params => fetch('/chat/msg/send', params)
 const msgWithdraw = params => fetch('/chat/msg/withdraw', params)
 const msgRecent = params => fetch('/chat/msg/recent', params)
 const patientList = params => fetch('/chat/user/list', params)
-const doctorList = params => fetch('clinicmng/user/list ', params)
+const doctorList = params => fetch('/doctreat/doctor/list', params)
 const orderDetail = params => fetch('/treatmng/appoint/detail', params)
 // 图片生成链接
 const imgUpLoad = params => fetch('/chat/img/upload', params)

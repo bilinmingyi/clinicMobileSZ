@@ -1,8 +1,8 @@
 <template>
   <!-- 待审核商品组件 -->
   <div class="mall-type">
-    <mall-item v-for="(item,index) in mallList" :itemName="item.contact" :itemTime="item.create_time|dateFormat"
-      :itemMoney="item.goods_price" :itemNumber="item.phone_num" :key="index" @jumpDetail="jumpDetail(item)">
+    <mall-item v-for="(item,index) in mallList" :itemName="item.contact" :itemTime="item.create_time|dateFormat('yyyy/MM/dd hh:mm:ss')" :itemMoney="item.price"
+      :itemNumber="item.phone_num" :key="index" @jumpDetail="jumpDetail(item)">
       <template slot="type">
         <span class="type">待审核</span>
       </template>

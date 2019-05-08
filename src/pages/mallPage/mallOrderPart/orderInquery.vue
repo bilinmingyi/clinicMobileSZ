@@ -3,14 +3,14 @@
   <div class="mall-type">
     <div class="order-top">
       <input-search :isShowButton="false" ref="inputSearch"></input-search>
-      <date-select @selectToday="selectToday" @selectYesterday="selectYesterday" @selectThisMonth="selectThisMonth"
-        @selectLastMonth="selectLastMonth" @selectQuery="selectQuery"></date-select>
+      <date-select @selectToday="selectToday" @selectYesterday="selectYesterday" @selectThisMonth="selectThisMonth" @selectLastMonth="selectLastMonth"
+        @selectQuery="selectQuery"></date-select>
     </div>
     <div class="pt200"></div>
-    <mall-item v-for="(item,index) in mallList" :itemName="item.contact" :itemTime="item.create_time|dateFormat"
-      :itemMoney="item.goods_price" :itemNumber="item.phone_num" :key="index" @jumpDetail="jumpDetail">
+    <mall-item v-for="(item,index) in mallList" :itemName="item.contact" :itemTime="item.create_time|dateFormat('yyyy/MM/dd hh:mm:ss')" :itemMoney="item.price"
+      :itemNumber="item.phone_num" :key="index" @jumpDetail="jumpDetail(item)">
       <template slot="type">
-        <span class="type">诊所药房</span>
+        <span class="type">{{item.status|orderStatus}}</span>
       </template>
     </mall-item>
     <without-data v-show="hasData&&isLoad"></without-data>
@@ -31,8 +31,8 @@ export default {
     dateSelect
   },
   methods: {
-    jumpDetail() {
-      this.$router.push({ name: 'orderDetailPage' })
+    jumpDetail(item) {
+      this.$router.push({ name: 'orderDetailPage', params: { orderSeqno: item.order_seqno } })
     },
     mallData(val) {
       let self = this
@@ -91,7 +91,7 @@ export default {
     },
     _initData() {
       this.page = 1
-      this.pageSize = 1
+      this.pageSize = 10
       this.mallList = []
       this.isShowLoad = true
       this.isLoad = false
@@ -118,7 +118,7 @@ export default {
     z-index: 999;
   }
   .type {
-    color: $simpleGray;
+    color: $redColor;
     font-size: 30px;
   }
 }

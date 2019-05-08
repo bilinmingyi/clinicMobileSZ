@@ -12,6 +12,7 @@
   console.log(this.$refs.mark.inputValue)
   console.log(this.$refs.doctor.inputValue)
   输入和有下拉框的组件
+  下拉框组件数组的数据格式[{key:'xx',value:'xx'}]
  -->
 <template>
   <div class="select">
@@ -19,10 +20,7 @@
     <input type="text" name="makeupCo" :placeholder="placeHolder" v-model="inputValue" @focus="inputFocus($event)"
       @blur="inputBlur" v-if="isShowInput">
     <select name="makeupCoSe" v-model="select" @change="changeF()" @blur="selectBlur" v-if="isShowSelect" :selected="select">
-      <option id="1" :value="'梁伯亮'">梁伯亮</option>
-      <option id="2" :value="'c++'">c++</option>
-      <option id="3" :value="'python'">python22</option>
-      <option id="4" :value="'热门'">热门</option>
+      <option v-for="(item,index) in selectArray" :key="index" :id="index" :value="item.value">{{item.value}}</option>
     </select>
   </div>
 </template>
@@ -42,10 +40,6 @@ export default {
       type: String,
       default: "医生名称"
     },
-    selectList: {
-      type: Array,
-      default: () => []
-    },
     placeHolder: {
       type: String,
       default: "请选择或输入医生名称"
@@ -53,6 +47,10 @@ export default {
     isShowInput: {
       type: Boolean,
       default: true
+    },
+    selectArray: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
@@ -65,8 +63,11 @@ export default {
   methods: {
     changeF() {
       this.inputValue = this.select
-      window.scrollTo(0, 0)
       this.$emit("selectChange", this.select)
+      setTimeout(() => {
+        window.scrollTo(0, 0)
+      }, 64)
+
     },
     inputFocus(e) {
       setTimeout(function () {
@@ -140,8 +141,8 @@ textarea {
     background: url("../../assets/images/xiangshang@2x.png") no-repeat scroll
       right center;
     background-size: 56px 56px;
-    flex: 1;
     height: 56px;
+    width: 530px;
     font-size: 32px;
   }
   option {
@@ -151,6 +152,8 @@ textarea {
     display: none;
   }
   p {
+    // width: 182px;
+
     margin-right: 24px;
     font-size: 32px;
     color: $grayColor;

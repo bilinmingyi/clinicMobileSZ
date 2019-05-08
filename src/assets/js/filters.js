@@ -41,6 +41,13 @@ const articleType = val => {
 const clinicType = function(val) {
   return clinicDict.clinicType.codeToName(val)
 }
+//商品状态
+const orderStatus = function(val) {
+  return clinicDict.orderStatus.codeToName(val)
+}
+const logisticsFilter = function(val) {
+  return clinicDict.logisticsFilter.codeToName(val)
+}
 
 /**
  * @desc: Date format
@@ -146,5 +153,7 @@ export default {
   pharmacyCategory,
   parseWesternCategory,
   articleType,
-  clinicType
+  clinicType,
+  orderStatus,
+  logisticsFilter
 }
