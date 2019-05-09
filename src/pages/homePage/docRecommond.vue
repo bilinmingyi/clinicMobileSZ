@@ -5,12 +5,7 @@
       <input-search :placeholder="'医生姓名'" @onInput="getSearchList"></input-search>
     </div>
     <div class="mt88"></div>
-    <div
-      class="doc-content"
-      @click="recommend(item)"
-      v-for="(item,index) in allDoctor"
-      :key="index"
-    >
+    <div class="doc-content" @click="recommend(item)" v-for="(item,index) in allDoctor" :key="index">
       <div class="doc">
         <img :src="imgNormalToggle(item.avatar,item.sex)" alt @error="error(item.sex,$event)">
         <div class="doc-detail">
@@ -34,7 +29,7 @@
 <script>
 import withoutData from "@/components/common//withoutData";
 import imgMixins from "@/assets/js/imgMixins";
-import {commonHeader,inputSearch} from "@/components/common";
+import { commonHeader, inputSearch } from "@/components/common";
 import { doctorList } from "@/fetch/api";
 import { msgSend } from "@/fetch/api";
 export default {
@@ -50,8 +45,8 @@ export default {
       ],
       queryData: {},
       allDoctor: [],
-      copyAllDoctor:[],
-      isLoad:false
+      copyAllDoctor: [],
+      isLoad: false
     };
   },
   components: {
@@ -59,9 +54,9 @@ export default {
     inputSearch,
     withoutData
   },
-  computed:{
-    hasData(){
-      return this.allDoctor.length===0;
+  computed: {
+    hasData() {
+      return this.allDoctor.length === 0;
     }
   },
   methods: {
@@ -89,7 +84,7 @@ export default {
             if (
               item.name
                 .toLowerCase()
-                .indexOf(val.toLowerCase()) !== -1 
+                .indexOf(val.toLowerCase()) !== -1
             ) {
               newList.push(item);
             }

@@ -40,7 +40,6 @@ export default {
           this.isShowLoad = false
           this.$Message.infor("获取待审核列表错误" + res.msg);
         }
-
         this.isLoad = true
       })
     }

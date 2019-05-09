@@ -2,7 +2,7 @@
   <div class="patient-info">
     <common-header :titleName="'患者信息'"></common-header>
     <div class="fixtop">
-      <input-search @query="inquery"  ></input-search>
+      <input-search @query="inquery"></input-search>
       <section class="patient-bar">
         <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==0}]" @click="changeIndex(0)">最新消息</div>
         <div :class="['flex-mid-center',{'nt-bar':navtiveIndex==1}]" @click="changeIndex(1)">患者列表</div>
@@ -10,35 +10,21 @@
     </div>
     <div class="pt150">
       <div v-show="navtiveIndex==0">
-        <div
-          class="patient-infolist"
-          v-for="(item,index) in chatList"
-          @click="goClinicChat(item,1)"
-          :key="index"
-        >
+        <div class="patient-infolist" v-for="(item,index) in chatList" @click="goClinicChat(item,1)" :key="index">
           <div class="infolist-item">
             <img :src="imgNormalToggle(item.avatar,item.sex)" alt @error="error(item.sex,$event)">
             <div class="item-mid ml24">
               <p class="item-name">{{item.username}}/{{item.sex|parseSex}}/{{item.birthday==0?'未知':item.age+'岁'}}</p>
-              <p
-                class="item-content"
-                v-if="item.recent_msg"
-              >{{msgDataType(item.recent_msg.msgdata)}}</p>
-              <span
-                class="item-time"
-                v-if="item.recent_msg"
-              >{{item.recent_msg.msgts|dateFormat('yyyy-MM-dd hh:mm')|detailDate}}</span>
+              <p class="item-content" v-if="item.recent_msg">{{msgDataType(item.recent_msg.msgdata)}}</p>
+              <span class="item-time" v-if="item.recent_msg">{{item.recent_msg.msgts|dateFormat('yyyy-MM-dd hh:mm')|detailDate}}</span>
               <span class="info-nums" v-show="item.unread!=0">{{item.unread}}</span>
             </div>
           </div>
         </div>
+        <without-data v-show="haschatList&&isLoadChat" :withoutContent="'没有最近消息'"></without-data>
       </div>
       <div v-show="navtiveIndex==1">
-        <div
-          class="patient-infolist"
-          @click="goClinicChat(item,2)"
-          v-for="(item,index) in patientList"
-        >
+        <div class="patient-infolist" @click="goClinicChat(item,2)" v-for="(item,index) in patientList">
           <div class="infolist-item">
             <img :src="imgNormalToggle(item.avatar,item.sex)" alt @error="error(item.sex,$event)">
             <div class="item-mid ml24">
@@ -46,7 +32,7 @@
             </div>
           </div>
         </div>
-            <without-data v-show="hasData&&isLoad"></without-data>
+        <without-data v-show="hasData&&isLoad"></without-data>
         <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
       </div>
     </div>
@@ -54,7 +40,7 @@
 </template>
 <script>
 import { chatSessionList, patientList } from "@/fetch/api";
-import { commonHeader,inputSearch,loadMore,withoutData} from "@/components/common";
+import { commonHeader, inputSearch, loadMore, withoutData } from "@/components/common";
 //添加公共的混入 里面有图片的默认图和错误处理
 import imgMixins from "@/assets/js/imgMixins";
 export default {
@@ -62,27 +48,31 @@ export default {
   data() {
     return {
       navtiveIndex: 0,
-      chatList: {}, // 聊天列表
+      chatList: [], // 聊天列表
       isLoad: false, // 加载是否完成
+      isLoadChat: false,
       isShowLoad: true, //是否有更多加载
       patientList: [],
       page: 1,
       pageSize: 10,
       copyVal: "",
-      timeout:null
+      timeout: null,
     };
   },
-      computed: {
-        hasData() {
-            return this.patientList.length === 0;
-        }
+  computed: {
+    hasData() {
+      return this.patientList.length === 0;
     },
+    haschatList() {
+      return this.chatList.length === 0;
+    }
+  },
   methods: {
     leftToggle() {
       this.$router.go(-1);
     },
-    ageFilter(item){
-      return item.birthday==0?'未知':item.age+'岁'
+    ageFilter(item) {
+      return item.birthday == 0 ? '未知' : item.age + '岁'
     },
     changeIndex(index) {
       this.navtiveIndex = index;
@@ -97,7 +87,7 @@ export default {
             session_type: "CLINIC_PATIENT",
             userId: item.userId,
             avatar: item.avatar,
-            sex:item.sex
+            sex: item.sex
           }
         });
       } else {
@@ -109,7 +99,7 @@ export default {
             session_type: "CLINIC_PATIENT",
             userId: item.id,
             avatar: item.avatar,
-            sex:item.sex
+            sex: item.sex
           }
         });
       }
@@ -122,6 +112,7 @@ export default {
         } else {
           this.$Message.infor("网络出错！");
         }
+        this.isLoadChat = true
       });
       this.getPatientList("");
     },
@@ -134,12 +125,12 @@ export default {
       patientList(params).then(res => {
         if (res.code === 1000) {
           res.data.forEach(item => {
-             this.patientList.push(item)
+            this.patientList.push(item)
           });
         } else {
           this.$Message.infor(res.msg);
         }
-        if (res.data.length !==10) {
+        if (res.data.length !== 10) {
           this.isShowLoad = false;
         }
         //  this.$Message.infor("网络出错！");

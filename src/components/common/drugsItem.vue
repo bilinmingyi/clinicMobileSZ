@@ -5,7 +5,7 @@
 <template>
   <div class="drugs">
     <div class="drugs-img">
-      <img :src="drugImg||normalGoods" alt>
+      <img :src="drugImg||defaultGoods" alt @error="toggleEeeor($event)">
     </div>
     <div class="drugs-title">
       <p class="drugs-desc">{{drugName}}</p>
@@ -19,6 +19,7 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex';
 export default {
   props: {
     drugName: {
@@ -39,12 +40,18 @@ export default {
     }
   },
   name: "blmyDrugsItem",
+  computed: {
+    ...mapState(['defaultGoods'])
+  },
   data() {
     return {
-      normalGoods: require('@/assets/images/normalGoods.png')
     }
   },
-  methods: {}
+  methods: {
+    toggleEeeor(e) {
+      e.target.src = this.defaultGoods
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

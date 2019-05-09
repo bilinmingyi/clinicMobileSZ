@@ -1,16 +1,9 @@
 <template>
   <div>
     <div class="right-chat mb24">
-      <p
-        class="chat-time mb24"
-        v-if="chatDetail.showTime"
-      >{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
+      <p class="chat-time mb24" v-if="chatDetail.showTime">{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
       <div class="chat-content">
-        <div
-          class="cancelButton"
-          v-if="chatDetail.msgdata.msg_type !== 'withdraw_msg'&&userInfoState.id===chatDetail.from_userid"
-          @click="cancelThis"
-        >
+        <div class="cancelButton" v-if="chatDetail.msgdata.msg_type !== 'withdraw_msg'&&userInfoState.id===chatDetail.from_userid" @click="cancelThis">
           <span>撤回</span>
         </div>
         <!-- messagetype  text-->
@@ -18,47 +11,39 @@
           <p class="reply-text">{{chatDetail.msgdata.text}}</p>
         </div>
         <div class="reply-content" v-if="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='link'">
-          <div class="recommond">
-            <img
-              :src="imgNormalToggle(imgDetail.avatar,imgDetail.sex)"
-              alt
-              @error="error(imgDetail.sex,$event)"
-              class="iconImg"
-            >
+          <div class="recommond" v-if="chatDetail.msgdata.link_type ==  'treatment_order_create'">
+            <img :src="imgNormalToggle(imgDetail.avatar,imgDetail.sex)" alt @error="error(imgDetail.sex,$event)" class="iconImg">
             <div class="recommond-content">
               <p class="recommond-title">
                 {{imgDetail.name}}
-                <span
-                  :class="color_list[imgDetail.title-1]"
-                >{{imgDetail.title|doctorTypes}}</span>
+                <span :class="color_list[imgDetail.title-1]">{{imgDetail.title|doctorTypes}}</span>
               </p>
               <p class="recommond-subTitle">请点击进行预约</p>
+            </div>
+          </div>
+          <div class="recommond recommond2" v-if="chatDetail.msgdata.link_type ==  'goods_recommond'">
+            <img :src="imgDetail.avatar||defaultGoods" class="iconImg2">
+            <div class="recommond-content">
+              <p class="grayText">
+                发送了
+              </p>
+              <p class="recommond-subTitle2">{{imgDetail.name}} {{imgDetail.spec}} </p>
             </div>
           </div>
         </div>
         <div class="reply-content" v-if="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='image'">
           <div class="imgMessage" @click="showImg">
-            <img
-              :src="chatDetail.msgdata.img_url"
-              :class="[{'img-loadH':chatDetail.imgLoadH},{'img-loadW':chatDetail.imgLoadW}]"
-            >
+            <img :src="chatDetail.msgdata.img_url" :class="[{'img-loadH':chatDetail.imgLoadH},{'img-loadW':chatDetail.imgLoadW}]">
           </div>
         </div>
         <div class="cancel" v-if="chatDetail.msgdata&&chatDetail.msgdata.msg_type=='withdraw_msg'">
-          <p
-            v-show="userInfoState.id!==chatDetail.from_userid"
-          >"{{chatDetail.from_username}}" 撤销了一条消息</p>
+          <p v-show="userInfoState.id!==chatDetail.from_userid">"{{chatDetail.from_username}}" 撤销了一条消息</p>
           <p v-show="userInfoState.id===chatDetail.from_userid">你撤回了一条消息</p>
         </div>
         <!-- <div
               class="reply-content"
         >医生，我想要咨询鼻炎之类的问题呢，最近不舒服医<a href="www.baidu.com">打开</a></div>-->
-        <img
-          :src="imgNormalToggle(chatDetail.from_userimg,userInfoState.sex)"
-          alt
-          class="ml20 iconImg"
-          @error="error(userInfoState.sex,$event)"
-        >
+        <img :src="imgNormalToggle(chatDetail.from_userimg,userInfoState.sex)" alt class="ml20 iconImg" @error="error(userInfoState.sex,$event)">
       </div>
     </div>
   </div>
@@ -84,7 +69,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['userInfoState'])
+    ...mapState(['userInfoState', 'defaultGoods'])
   },
   methods: {
     cancelThis() {
@@ -104,7 +89,7 @@ export default {
       let self = this
       let loadImg = new Image()
       loadImg.src = self.chatDetail.msgdata.img_url
-      loadImg.onload = function() {
+      loadImg.onload = function () {
         let width = loadImg.width
         let height = loadImg.height
         if (width > height) {
@@ -179,6 +164,14 @@ p {
     @extend %minICon;
     border-radius: 100px;
   }
+  .grayText {
+    font-size: 26px;
+    padding-bottom: 6px;
+    color: $simpleGray;
+  }
+  .recommond2 {
+    align-items: stretch;
+  }
   .recommond {
     @extend %aglinItem;
     img {
@@ -212,6 +205,10 @@ p {
       font-size: 28px;
       color: $simpleGray;
     }
+    &-subTitle2 {
+      padding-top: 6px;
+      @include textEllipsis(90px, 256px, 2, 28px, #3f3f3f);
+    }
   }
 }
 .imgMessage {
@@ -244,6 +241,10 @@ p {
     height: 28px;
     line-height: 28px;
   }
+}
+.iconImg2 {
+  @include sameWH(120px);
+  border-radius: 0;
 }
 .color-29BBFF {
   background: #29bbff;

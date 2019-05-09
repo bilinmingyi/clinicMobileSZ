@@ -2,22 +2,9 @@
   <div class="chat-bottom">
     <div class="reply">
       <!-- <div @click="showReply"><span class="leftIcon iconfont">&#xe612;</span></div> -->
-      <input
-        class="serach-input"
-        type="text"
-        @focus="hideFunc($event)"
-        v-model="sendContent"
-        @blur="inputBlur($event)"
-        ref="inputText"
-      >
+      <input class="serach-input" type="text" @focus="hideFunc($event)" v-model="sendContent" @blur="inputBlur($event)" ref="inputText">
       <div class="ml24 pr16">
-        <img
-          src="@/assets/images/tianjia@2x.png"
-          alt
-          @click="addFunc"
-          :class="{'translateImg':showFuc}"
-          v-show="showIcon"
-        >
+        <img src="@/assets/images/tianjia@2x.png" alt @click="addFunc" :class="{'translateImg':showFuc}" v-show="showIcon">
         <div class="send" v-show="!showIcon" @click="sendMessage">发送</div>
       </div>
     </div>
@@ -25,28 +12,13 @@
       <div class="function-content mr64" @click.stop="fileClick('get')">
         <img src="@/assets/images/zhaopian@2x.png" alt>
         <p>照片</p>
-        <input
-          accept="image/*"
-          style="display: none;"
-          name="img-get"
-          type="file"
-          id="img-get"
-          @change="fileChange($event, 'get')"
-        >
+        <input accept="image/*" style="display: none;" name="img-get" type="file" id="img-get" @change="fileChange($event, 'get')">
       </div>
 
       <div class="function-content mr64" @click.stop="fileClick('set')">
         <img src="@/assets/images/paizhao@2x.png" alt>
         <p>拍照</p>
-        <input
-          accept="image/*"
-          style="display: none;"
-          name="img-set"
-          capture="camera"
-          type="file"
-          id="img-set"
-          @change="fileChange($event, 'set')"
-        >
+        <input accept="image/*" style="display: none;" name="img-set" capture="camera" type="file" id="img-set" @change="fileChange($event, 'set')">
       </div>
       <div class="function-content mr64">
         <img src="@/assets/images/liangjie@2x.png" alt @click="goDocRecommond">
@@ -94,18 +66,18 @@ export default {
         self.$emit("inputBlur");
       }, 64);
     },
-    jumpToDrug(){
-           this.$router.push({name:"drugRecommondPage"});
+    jumpToDrug() {
+      this.$emit("goDocRecommond", 'goodsRecommond')
     },
     addFunc() {
       this.$emit("addFunc");
     },
     hideFunc(e) {
-      setTimeout(function() {
+      setTimeout(function () {
         e.target.scrollIntoView(true);
       }, 500);
       let self = this;
-      self.bottomTimer = setInterval(function() {
+      self.bottomTimer = setInterval(function () {
         document.body.scrollTop = document.body.clientHeight;
       }, 200);
       this.$emit("hideFunc", e);
@@ -114,7 +86,7 @@ export default {
       this.$emit("showReply");
     },
     goDocRecommond() {
-      this.$emit("goDocRecommond");
+      this.$emit("goDocRecommond", "doctorRecommond");
     },
     sendMessage() {
       // alert(this.sendContent)
@@ -170,7 +142,7 @@ export default {
         this.showLoad = false;
       }
       let img = new Image();
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         img.src = e.target.result;
       };
       let imgP = new Promise((resolve, reject) => {

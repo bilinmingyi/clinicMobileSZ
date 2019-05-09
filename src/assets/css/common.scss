@@ -1,171 +1,173 @@
 /* 变量定义 */
 
 $bgWhite: rgba(250, 250, 250, 1);
-$bgwhite2:rgba(255, 255, 255, 1);
-$grayColor:#3f3f3f;
-$simpleGray:#7c7c7c;
-$borderColor:#d9d9d9;
-$redColor:#EB6262;
-$greenColor:#08BAC6;
-$yellowColor:#EDAB15;
-$blueColor:#5096E0;
-$gray2:#6c6c6c;
-$gray3:#8c8c8c;
-$backColor:#333333;
-$deepBlue:#08BAC6;
-$lineColor:#d9d9d9;
-$depthTextColor: #3F3F3F;
+$bgwhite2: rgba(255, 255, 255, 1);
+$grayColor: #3f3f3f;
+$simpleGray: #7c7c7c;
+$borderColor: #d9d9d9;
+$redColor: #eb6262;
+$greenColor: #08bac6;
+$yellowColor: #edab15;
+$blueColor: #5096e0;
+$gray2: #6c6c6c;
+$gray3: #8c8c8c;
+$backColor: #333333;
+$deepBlue: #08bac6;
+$lineColor: #d9d9d9;
+$depthTextColor: #3f3f3f;
 
 /* 继承公共类*/
 
 %displayFlex {
-    display: flex;
+  display: flex;
 }
 
 %flexMidCenter {
-    @extend %displayFlex;
-    justify-content: center;
-    align-items: center;
+  @extend %displayFlex;
+  justify-content: center;
+  align-items: center;
 }
 
 %columnFlex {
-    @extend %displayFlex;
-    flex-direction: column;
+  @extend %displayFlex;
+  flex-direction: column;
 }
 
 %aglinItem {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 //flex为垂直方向 样式垂直居中
 %columnMC {
-    @extend %columnFlex;
-    align-items: center;
-    justify-content: center;
+  @extend %columnFlex;
+  align-items: center;
+  justify-content: center;
 }
 
 %lineHr {
-    width: 100%;
-    margin: 0;
-    border: 1px solid $lineColor;
-    -webkit-transform: scaleY(.5);
-    transform: scaleY(.5);
+  width: 100%;
+  margin: 0;
+  border: 1px solid $lineColor;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
 }
 
 %normalTitle {
-    font-size: 32px;
-    font-weight: 500;
-    color: $grayColor;
+  font-size: 32px;
+  font-weight: 500;
+  color: $grayColor;
 }
 
 %searchIcon {
-    width: 40px;
-    height: 40px;
+  width: 40px;
+  height: 40px;
 }
 
 %minICon {
-    height: 88px;
-    width: 88px;
+  height: 88px;
+  width: 88px;
 }
 
 %mediumIcon {
-    height: 112px;
-    width: 112px;
+  height: 112px;
+  width: 112px;
 }
-
 
 /* 混合宏 */
 
 //position:fixed 固定的位置
-@mixin psFixed($fixSeat, $fixHeight:88px) {
-    position: fixed;
-    left: 0;
-    z-index: 99;
-    width: 100%;
-    min-height: $fixHeight;
-    @if $fixSeat==top {
-        top: 0;
-    }
-    @else {
-        bottom: 0;
-    }
+@mixin psFixed($fixSeat, $fixHeight: 88px) {
+  position: fixed;
+  left: 0;
+  z-index: 99;
+  width: 100%;
+  min-height: $fixHeight;
+  @if $fixSeat==top {
+    top: 0;
+  } @else {
+    bottom: 0;
+  }
 }
 
 @mixin textLineHeight($height) {
-    height: $height;
-    line-height: $height;
+  height: $height;
+  line-height: $height;
 }
 
 //浅颜色的button 默认24px
-@mixin simpleButton($height, $width, $font-size:24px) {
-    width: $width;
-    height: $height;
-    background: rgba(235, 248, 249, 1);
-    border-radius: 8px;
-    border: 2px solid rgba(8, 186, 198, 1);
-    font-size: $font-size;
-    line-height: $height;
-    text-align: center;
+@mixin simpleButton($height, $width, $font-size: 24px) {
+  width: $width;
+  height: $height;
+  background: rgba(235, 248, 249, 1);
+  border-radius: 8px;
+  border: 2px solid rgba(8, 186, 198, 1);
+  font-size: $font-size;
+  line-height: $height;
+  text-align: center;
 }
 
 //深色的按钮
-@mixin deepButton($height, $width, $font-size:28px) {
-    width: $width;
-    height: $height;
-    line-height: $height;
-    background: rgba(8, 186, 198, 1);
-    border-radius: 8px;
-    color: rgba(255, 255, 255, 1);
-    text-align: center;
-    font-size: $font-size;
+@mixin deepButton($height, $width, $font-size: 28px) {
+  width: $width;
+  height: $height;
+  line-height: $height;
+  background: rgba(8, 186, 198, 1);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 1);
+  text-align: center;
+  font-size: $font-size;
 }
 
 //第三种按钮 消息的按钮
-@mixin newsButton($height, $width, $font-size:28px) {
-    width: $width;
-    height: $height;
-    line-height: $height;
-    text-align: center;
-    font-size: $font-size;
-    color: rgba(8, 186, 198, 1);
-    font-weight: 500;
-    border-radius: 8px;
-    border: 2px solid rgba(8, 186, 198, 1);
+@mixin newsButton($height, $width, $font-size: 28px) {
+  width: $width;
+  height: $height;
+  line-height: $height;
+  text-align: center;
+  font-size: $font-size;
+  color: rgba(8, 186, 198, 1);
+  font-weight: 500;
+  border-radius: 8px;
+  border: 2px solid rgba(8, 186, 198, 1);
 }
 
 //文本省略。。。
-@mixin textEllipsis($height, $width, $clamp:1, $font-size:28px) {
-    width: $width;
-    height: $height;
-    color: $simpleGray;
-    font-size: $font-size;
-    //$clamp 默认为1 超过单行就换行 2的话 第二行换行
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-box-orient: vertical;
-    @if $clamp==1 {
-      white-space: nowrap; //不换行
-    }
-    @else {
-      display:-webkit-box; 
-      display: box;
-      line-clamp:$clamp;
-      -webkit-line-clamp: $clamp; //块元素显示的文本行数
-
-    }
+@mixin textEllipsis(
+  $height,
+  $width,
+  $clamp: 1,
+  $font-size: 28px,
+  $textColor: $simpleGray
+) {
+  width: $width;
+  height: $height;
+  color: $textColor;
+  font-size: $font-size;
+  //$clamp 默认为1 超过单行就换行 2的话 第二行换行
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  @if $clamp==1 {
+    white-space: nowrap; //不换行
+  } @else {
+    display: -webkit-box;
+    display: box;
+    line-clamp: $clamp;
+    -webkit-line-clamp: $clamp; //块元素显示的文本行数
+  }
 }
 
-@mixin commonBorder( $borerSeat:bottom, $color:$borderColor, $px:1px) {
-    border-#{$borerSeat}: $px solid $color;
+@mixin commonBorder($borerSeat: bottom, $color: $borderColor, $px: 1px) {
+  border-#{$borerSeat}: $px solid $color;
 }
 @mixin sameWH($val) {
-    width: $val;
-    height: $val;
+  width: $val !important;
+  height: $val !important;
 }
 
 .no-platform {
-    @include textLineHeight(80px);
-    text-align: center;
-    @extend %normalTitle;
+  @include textLineHeight(80px);
+  text-align: center;
+  @extend %normalTitle;
 }

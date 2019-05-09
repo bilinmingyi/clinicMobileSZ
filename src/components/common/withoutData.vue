@@ -1,9 +1,15 @@
 <!-- 组件 没有数据的组件 -->
 <template>
-  <div class="without-data">没有相关记录</div>
+  <div class="without-data">{{withoutContent}}</div>
 </template>
 <script>
 export default {
+  props: {
+    withoutContent: {
+      type: String,
+      default: "没有相关记录"
+    }
+  },
   name: 'blmyWithoutData'
 }
 </script>

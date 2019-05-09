@@ -115,13 +115,17 @@ export default {
           }
         })
       })
-
     },
     goodsOperation(type) {
+      let selectDoctor = this.allDoctor.find(item => {
+        return item.value === this.doctorName
+      })
       let operationParams = {
         order_seqno: this.orderSeqno,
         doctor_memo: this.$refs.mark.inputValue,
-        pass: type === 'pass' ? 1 : 0
+        pass: type === 'pass' ? 1 : 0,
+        doctor_name: selectDoctor.value,
+        doctor_id: selectDoctor.key
       }
       let tips = type === 'pass' ? '该订单通过审核？' : '该订单不通过审核？'
       this.$Message.confirm(tips, () => {
@@ -135,6 +139,8 @@ export default {
           }
         })
       })
+      console.log(operationParams)
+      console.log(selectDoctor)
     },
     async getData() {
       await this.getDetail();

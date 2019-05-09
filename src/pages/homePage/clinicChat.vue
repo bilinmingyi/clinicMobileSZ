@@ -5,15 +5,15 @@
       <div class="wrapper" ref="wrapper" @click="hideFuc">
         <p v-show="isShowLoad" class="loadData">正在加载数据...</p>
         <div class="content-detail">
-          <component v-for="(item,index) in allMsgList" v-if="allMsgList.length>0" :key="item.msgid" :is="RenderComponent(item.from)"
-            :chatDetail="item" :patientSex="queryData.sex" :patientImg="queryData.avatar" @cancelMessage="cancelMessage"></component>
+          <component v-for="(item,index) in allMsgList" v-if="allMsgList.length>0" :key="item.msgid" :is="RenderComponent(item.from)" :chatDetail="item"
+            :patientSex="queryData.sex" :patientImg="queryData.avatar" @cancelMessage="cancelMessage"></component>
         </div>
       </div>
     </div>
     <div class="mb88"></div>
     <!-- <quick-reply v-show="isReply" @closeReply="closeReply" @quickReplyMsg="sendMessage"></quick-reply> -->
-    <chat-bottom :showFuc="isShowFuc" @addFunc="addFunc" @hideFunc="foucs" @sendMessage="sendTextMessage" @sendImg="sendImgMessage"
-      @showReply="showReply" @goDocRecommond="goDocRecommond" @inputBlur="inputBlur" ref="chatBottoms"></chat-bottom>
+    <chat-bottom :showFuc="isShowFuc" @addFunc="addFunc" @hideFunc="foucs" @sendMessage="sendTextMessage" @sendImg="sendImgMessage" @showReply="showReply"
+      @goDocRecommond="goDocRecommond" @inputBlur="inputBlur" ref="chatBottoms"></chat-bottom>
   </div>
   </div>
 </template>
@@ -76,12 +76,18 @@ export default {
       /* 1 诊所 2 患者 */
       return from === 1 ? clinicMessage : patientMessage;
     },
-    goDocRecommond() {
+    /**
+     * @param val 医生推荐类型
+     * 'doctorRecommond' 推荐医生给病人
+     * 'goodsRecommond'   推荐商品给病人
+     */
+    goDocRecommond(val) {
       let index = this.allMsgList.length - 1;
       let msgid =
         this.allMsgList.length > 0 ? this.allMsgList[index].msgid : null;
+      let jumpPath = val === 'doctorRecommond' ? 'docRecommond' : '/mallPage/drugRecommond'
       this.$router.push({
-        path: "docRecommond",
+        path: jumpPath,
         query: {
           last_msgid: msgid,
           to_userid: this.queryData.userId,

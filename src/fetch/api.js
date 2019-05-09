@@ -73,6 +73,7 @@ const goodsOrderLists = params => fetch('/treatmng/goodsorder/list', params)
 const goodsOrderDetail = params => fetch('/treatmng/goodsorder/detail', params)
 const goodsCheck = params => fetch('/treatmng/goodsorder/check', params)
 const goodsDeliver = params => fetch('/treatmng/goodsorder/deliver', params)
+const getGoodsList = params => fetch('/clinicmng/goods/list', params)
 
 export {
   fetch,
@@ -110,5 +111,6 @@ export {
   goodsOrderLists,
   goodsOrderDetail,
   goodsCheck,
-  goodsDeliver
+  goodsDeliver,
+  getGoodsList
 }

@@ -1,28 +1,14 @@
 <template>
   <div>
     <div class="left-chat mb50">
-      <p
-        class="chat-time mb24"
-        v-if="chatDetail.showTime"
-      >{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
+      <p class="chat-time mb24" v-if="chatDetail.showTime">{{chatDetail.msgts|dateFormat('MM月dd日 hh:mm')}}</p>
       <div class="chat-content">
-        <img
-          :src="imgNormalToggle(patientImg,patientSex,'patient')"
-          alt
-          @error="error(patientSex,$event,'paitent')"
-          class="iconImg"
-        >
+        <img :src="imgNormalToggle(patientImg,patientSex,'patient')" alt @error="error(patientSex,$event,'paitent')" class="iconImg">
         <div class="reply-content ml16" v-if="chatDetail.msgdata.msg_type=='text'">
           <span>{{chatDetail.msgdata.text}}</span>
         </div>
-        <div
-          class="reply-content ml16"
-          v-if="chatDetail.msgdata && chatDetail.msgdata.msg_type=='link'"
-        >
-          <div
-            class="recommond"
-            v-if="chatDetail.msgdata.link_type == 'treatment_order_Submission'"
-          >
+        <div class="reply-content ml16" v-if="chatDetail.msgdata && chatDetail.msgdata.msg_type=='link'">
+          <div class="recommond" v-if="chatDetail.msgdata.link_type == 'treatment_order_Submission'">
             <div class="recommond-content" @click="goRoute(chatDetail.msgdata.link_url)">
               <p class="recommond-subTitle">已提交预约订单，点击查看</p>
             </div>
@@ -30,10 +16,7 @@
         </div>
         <div class="reply-content ml16" v-if="chatDetail.msgdata.msg_type=='image'">
           <div class="imgMessage" @click="showImg">
-            <img
-              :src="chatDetail.msgdata.img_url"
-              :class="[{'img-loadH':chatDetail.imgLoadH},{'img-loadW':chatDetail.imgLoadW}]"
-            >
+            <img :src="chatDetail.msgdata.img_url" :class="[{'img-loadH':chatDetail.imgLoadH},{'img-loadW':chatDetail.imgLoadW}]">
           </div>
         </div>
         <!-- <div
@@ -83,7 +66,7 @@ export default {
       let self = this
       let loadImg = new Image()
       loadImg.src = self.chatDetail.msgdata.img_url
-      loadImg.onload = function() {
+      loadImg.onload = function () {
         let width = loadImg.width
         let height = loadImg.height
         // console.log(`width${width}**height${height}+${self.chatDetail.msgid}`);
