@@ -28,7 +28,8 @@
       </div>
       <common-title :titleName="titleName2"></common-title>
       <!-- 订单的产品列表 -->
-      <drugs-item v-for="(item,index) in shipmentDetail.goods_order_items" :key="index" :drugMoney="item.price" :drugNum="item.num" :drugName="getDrugName(item)" :drugImg="item.img"></drugs-item>
+      <drugs-item v-for="(item,index) in shipmentDetail.goods_order_items" :key="index" :drugMoney="item.price" :drugNum="item.num" :drugName="getDrugName(item)"
+        :drugImg="item.img"></drugs-item>
       <div class="auditDetail-desc adress">
         <p>
           <span class="left">收件人：</span>
@@ -58,7 +59,7 @@
 </template>
 <script>
 import { commonTitle, drugsItem, inputSelect } from "@/components/common";
-import { goodsOrderDetail, goodsDeliver } from "@/fetch/api"
+import { goodsOrderDetail, goodsDeliver, goodsOrderCancel } from "@/fetch/api"
 import { mapState } from 'vuex';
 export default {
   props: ['orderSeqno'],
@@ -96,29 +97,43 @@ export default {
       this.selectLogistics = this.logisticsCompany.find((item) => {
         return item.value == val
       })
-
-      console.log(this.selectLogistics)
     },
     goodsOperation(type) {
-      let operationParams = {
-        order_seqno: this.orderSeqno,
-        deliver_code: this.selectLogistics.key,
-        deliver_seqno: this.$refs.mark.inputValue
-      }
       let tips = type === 'pass' ? '提交发货订单？' : '确定取消订单？'
-      this.$Message.confirm(tips, () => {
-        goodsDeliver(operationParams).then(res => {
-          if (res.code === 1000) {
-            this.$Message.infor("操作成功", () => {
-              this.$router.go(-1)
-            })
-          } else {
-            this.$Message.infor("操作失败")
-          }
+      if (type === 'pass') {
+        let operationParams = {
+          order_seqno: this.orderSeqno,
+          deliver_code: this.selectLogistics.key,
+          deliver_seqno: this.$refs.mark.inputValue
+        }
+        this.$Message.confirm(tips, () => {
+          goodsDeliver(operationParams).then(res => {
+            if (res.code === 1000) {
+              this.$Message.infor("操作成功!", () => {
+                this.$router.go(-1)
+              })
+            } else {
+              this.$Message.infor("操作失败!" + res.msg)
+            }
+          })
         })
-        console.log(this.selectLogistics.key)
-        console.log(this.$refs.mark.inputValue)
-      })
+      } else {
+        let orderCancel = {
+          order_seqno: this.orderSeqno
+        }
+        this.$Message.confirm(tips, () => {
+          goodsOrderCancel(orderCancel).then(res => {
+            if (res.code === 1000) {
+              this.$Message.infor("操作成功!", () => {
+                this.$router.go(-1)
+              })
+            } else {
+              this.$Message.infor("操作失败!" + res.msg)
+            }
+          })
+        })
+      }
+
     },
     getDetail() {
       let detailParams = {
@@ -132,8 +147,6 @@ export default {
         } else {
           this.$Message.infor("获取待审核详情内容错误" + res.msg);
         }
-
-        console.log(res)
       })
     }
   },

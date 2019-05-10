@@ -18,7 +18,7 @@
   </div>
 </template>
 <script>
-import {loadMore} from "@/components/common";
+import { loadMore } from "@/components/common";
 import { getPlatformList } from "@/fetch/api";
 export default {
   data() {
@@ -28,8 +28,8 @@ export default {
       platformList: [],
       normalPic: require("@/assets/images/banner-yun.png"),
       isShowLoad: true,
-      isLoad:false,
-      type:''
+      isLoad: false,
+      type: ''
     };
   },
   components: {
@@ -47,7 +47,7 @@ export default {
     goPlatform(item) {
       this.$router.push({
         name: "platformNewPage",
-        params: { platformTitle: item.title,id:item.id }
+        params: { platformTitle: item.title, id: item.id }
       });
     },
     getPlatformData() {
@@ -57,7 +57,7 @@ export default {
       };
       getPlatformList(params).then(res => {
         if (res.code === 1000) {
-          this.type=res.data.type;
+          this.type = res.data.type;
           res.data.forEach(item => {
             this.platformList.push(item);
           });
@@ -66,11 +66,10 @@ export default {
           } else {
             this.isShowLoad = false;
           }
-          this.isLoad=true;
+          this.isLoad = true;
         } else {
-           this.$Message.infor('网络出错！')
-           this.isLoad=true;
-          console.log(res);
+          this.$Message.infor('网络出错！')
+          this.isLoad = true;
         }
       });
     },

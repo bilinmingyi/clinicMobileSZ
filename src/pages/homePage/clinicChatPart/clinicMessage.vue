@@ -121,7 +121,6 @@ export default {
   margin-bottom: 24px;
 }
 .cancelButton {
-  // background: yellow;
   width: 88px;
   line-height: 50px;
   text-align: center;
@@ -243,7 +242,7 @@ p {
   }
 }
 .iconImg2 {
-  @include sameWH(120px);
+  @include sameWH(140px);
   border-radius: 0;
 }
 .color-29BBFF {

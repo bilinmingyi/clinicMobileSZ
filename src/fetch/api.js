@@ -46,6 +46,7 @@ const userInfo = params => fetch('/user/info', params)
 const updateUserInfo = params => fetch('/user/update', params)
 const getMessageCode = params => fetch('/sms/chkCode/mobileBind', params)
 const updateMoblie = params => fetch('/user/mobile/update', params)
+const personPermission = params => fetch('/permissions', params)
 
 /* 常用功能模块 */
 //挂号统计
@@ -74,6 +75,7 @@ const goodsOrderDetail = params => fetch('/treatmng/goodsorder/detail', params)
 const goodsCheck = params => fetch('/treatmng/goodsorder/check', params)
 const goodsDeliver = params => fetch('/treatmng/goodsorder/deliver', params)
 const getGoodsList = params => fetch('/clinicmng/goods/list', params)
+const goodsOrderCancel = params => fetch('/treatmng/goodsorder/cancel', params)
 
 export {
   fetch,
@@ -95,6 +97,7 @@ export {
   updateUserInfo,
   getMessageCode,
   updateMoblie,
+  personPermission,
   registerDoctor,
   registerStream,
   medicalDoctor,
@@ -112,5 +115,6 @@ export {
   goodsOrderDetail,
   goodsCheck,
   goodsDeliver,
-  getGoodsList
+  getGoodsList,
+  goodsOrderCancel
 }

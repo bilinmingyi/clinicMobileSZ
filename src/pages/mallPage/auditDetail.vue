@@ -139,8 +139,6 @@ export default {
           }
         })
       })
-      console.log(operationParams)
-      console.log(selectDoctor)
     },
     async getData() {
       await this.getDetail();

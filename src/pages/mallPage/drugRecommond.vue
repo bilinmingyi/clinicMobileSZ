@@ -77,7 +77,6 @@ export default {
         page_size: this.pageSize
       }
       getGoodsList(listParams).then(res => {
-        console.log(res)
         if (res.code === 1000) {
           res.data.forEach((item) => {
             this.recommondList.push(item)
@@ -112,7 +111,6 @@ export default {
       let selectVal = this.goodsTypeList.find((item) => {
         return item.value === val
       })
-      console.log(selectVal)
       switch (val) {
         case '全部':
           this.queryType = ''

@@ -4,7 +4,7 @@
     <div class="clinic-chat">
       <div class="wrapper" ref="wrapper" @click="hideFuc">
         <p v-show="isShowLoad" class="loadData">正在加载数据...</p>
-        <div class="content-detail">
+        <div class="content-detail" v-if="isShowChat">
           <component v-for="(item,index) in allMsgList" v-if="allMsgList.length>0" :key="item.msgid" :is="RenderComponent(item.from)" :chatDetail="item"
             :patientSex="queryData.sex" :patientImg="queryData.avatar" @cancelMessage="cancelMessage"></component>
         </div>
@@ -39,7 +39,8 @@ export default {
       unPullingUp: true, //两个变量控制轮询的时候 是否滚到底部  若上拉到最顶层的时候 此页面不进行上拉加载
       unfinalPulling: true,
       first: "",
-      second: ""
+      second: "",
+      isShowChat: false // 兼容安卓机第一次进行的时候 图片自适应的抖动问题
     };
   },
   components: {
@@ -302,6 +303,7 @@ export default {
           this.last_msgid =
             this.allMsgList.length > 0 ? this.allMsgList[0].msgid : null;
           this.$nextTick(() => {
+            this.isShowChat = true //解决安卓机子第一次进来的抖动问题
             setTimeout(() => {
               this.$refs.wrapper.scrollTo(0, this.$refs.wrapper.scrollHeight);
             }, 0);
@@ -314,6 +316,7 @@ export default {
               },
               false
             );
+
           });
         } else {
           this.$Message.infor(res.msg);

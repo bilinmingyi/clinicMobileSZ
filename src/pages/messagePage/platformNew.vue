@@ -51,7 +51,6 @@ export default {
           this.detailData = res.data;
         } else {
           this.$Message.infor('网络出错！')
-          console.log(res);
         }
       });
       //获取评论的内容
