@@ -8,27 +8,29 @@
         <div class="send" v-show="!showIcon" @click="sendMessage">发送</div>
       </div>
     </div>
-    <div class="function" v-show="showFuc">
-      <div class="function-content mr64" @click.stop="fileClick('get')">
-        <img src="@/assets/images/zhaopian@2x.png" alt>
-        <p>照片</p>
-        <input accept="image/*" style="display: none;" name="img-get" type="file" id="img-get" @change="fileChange($event, 'get')">
-      </div>
+    <transition name="swtichBT">
+      <div class="function" v-show="showFuc">
+        <div class="function-content mr64" @click.stop="fileClick('get')">
+          <img src="@/assets/images/zhaopian@2x.png" alt>
+          <p>照片</p>
+          <input accept="image/*" style="display: none;" name="img-get" type="file" id="img-get" @change="fileChange($event, 'get')">
+        </div>
 
-      <div class="function-content mr64" @click.stop="fileClick('set')">
-        <img src="@/assets/images/paizhao@2x.png" alt>
-        <p>拍照</p>
-        <input accept="image/*" style="display: none;" name="img-set" capture="camera" type="file" id="img-set" @change="fileChange($event, 'set')">
+        <div class="function-content mr64" @click.stop="fileClick('set')">
+          <img src="@/assets/images/paizhao@2x.png" alt>
+          <p>拍照</p>
+          <input accept="image/*" style="display: none;" name="img-set" capture="camera" type="file" id="img-set" @change="fileChange($event, 'set')">
+        </div>
+        <div class="function-content mr64">
+          <img src="@/assets/images/liangjie@2x.png" alt @click="goDocRecommond">
+          <p>预约链接</p>
+        </div>
+        <div class="function-content">
+          <img src="@/assets/images/tuijiang@2x.png" alt @click="jumpToDrug">
+          <p>商品推荐</p>
+        </div>
       </div>
-      <div class="function-content mr64">
-        <img src="@/assets/images/liangjie@2x.png" alt @click="goDocRecommond">
-        <p>预约链接</p>
-      </div>
-      <div class="function-content">
-        <img src="@/assets/images/tuijiang@2x.png" alt @click="jumpToDrug">
-        <p>商品推荐</p>
-      </div>
-    </div>
+    </transition>
 
     <img-preview :imgUrl="imgUrl" v-if="imgUrl!=''" @send="sendImgMessage" @cancel="cancelSendImg"></img-preview>
     <Loading v-if="showLoad"></Loading>
@@ -245,6 +247,7 @@ input {
     background: $bgwhite2;
     @extend %aglinItem;
     padding: 28px 56px;
+    overflow: hidden;
     &-content {
       p {
         padding-top: 16px;
@@ -267,6 +270,20 @@ input {
   font-size: 64px;
   color: $gray3;
   padding-right: 20px;
+}
+.swtichBT-enter-active {
+  animation: swtichBT-in 0.1s;
+}
+.swtichBT-leave-active {
+  animation: swtichBT-in 0.1s reverse;
+}
+@keyframes swtichBT-in {
+  0% {
+    height: 0px;
+  }
+  100% {
+    height: 224px;
+  }
 }
 </style>
 
