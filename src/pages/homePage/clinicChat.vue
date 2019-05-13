@@ -4,7 +4,7 @@
     <div class="clinic-chat">
       <div class="wrapper" ref="wrapper" @click="hideFuc">
         <p v-show="isShowLoad" class="loadData">正在加载数据...</p>
-        <div class="content-detail" v-if="isShowChat">
+        <div class="content-detail">
           <component v-for="(item,index) in allMsgList" v-if="allMsgList.length>0" :key="item.msgid" :is="RenderComponent(item.from)" :chatDetail="item"
             :patientSex="queryData.sex" :patientImg="queryData.avatar" @cancelMessage="cancelMessage"></component>
         </div>
@@ -40,7 +40,8 @@ export default {
       unfinalPulling: true,
       first: "",
       second: "",
-      isShowChat: false // 兼容安卓机第一次进行的时候 图片自适应的抖动问题
+      isShowChat: false, // 兼容安卓机第一次进行的时候 图片自适应的抖动问题
+      getDataSet: ''
     };
   },
   components: {
@@ -303,16 +304,19 @@ export default {
           this.last_msgid =
             this.allMsgList.length > 0 ? this.allMsgList[0].msgid : null;
           this.$nextTick(() => {
-            this.isShowChat = true //解决安卓机子第一次进来的抖动问题
+            // this.isShowChat = true //解决安卓机子第一次进来的抖动问题
             setTimeout(() => {
               this.$refs.wrapper.scrollTo(0, this.$refs.wrapper.scrollHeight);
             }, 0);
             this.$refs.wrapper.addEventListener(
               "scroll",
               () => {
-                if (this.$refs.wrapper.scrollTop === 0 && this.unfinalPulling) {
-                  this.getUpLoadData();
-                }
+                clearTimeout(this.getDataSet)
+                this.getDataSet = setTimeout(() => {
+                  if (this.$refs.wrapper.scrollTop === 0 && this.unfinalPulling) {
+                    this.getUpLoadData();
+                  }
+                }, 500)
               },
               false
             );
