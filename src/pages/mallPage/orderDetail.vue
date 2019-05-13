@@ -17,7 +17,6 @@
           <span class="left">订单号：</span>
           <span>{{orderDetail.order_seqno}}</span>
         </p>
-
         <p>
           <span class="left">收件人：</span>
           <span>{{orderDetail.contact}}</span>
@@ -49,7 +48,7 @@
       <common-title :titleName="titleName2"></common-title>
       <!-- 订单的产品列表 -->
       <div class="drug-list">
-        <drugs-item v-for="(item,index) in orderDetail.goods_order_items" :key="index" :drugMoney="item.price" :drugNum="item.num" :drugName="getDrugName(item)" :drugImg="item.img"></drugs-item>
+        <drugs-item v-for="(item,index) in orderDetail.goods_order_items" :key="index" :drugMoney="item.price" :drugNum="item.num" :drugName="item.name" :drugImg="item.img" :drugSpec="item.spec"></drugs-item>
       </div>
       <div class="detail-bottom" v-if="orderDetail.pay_time>0">
         <p><span>订单金额</span><span class="money">￥{{orderDetail.price}}</span></p>
@@ -82,9 +81,6 @@ export default {
     inputSelect
   },
   methods: {
-    getDrugName(item) {
-      return item.name + item.spec
-    },
     /**
      * 是否显示发货方式以及订单金额等内容
      * 枚举值可以在state.js看

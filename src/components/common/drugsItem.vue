@@ -8,7 +8,7 @@
       <img :src="drugImg||defaultGoods" alt @error="toggleEeeor($event)">
     </div>
     <div class="drugs-title">
-      <p class="drugs-desc">{{drugName}}</p>
+      <p class="drugs-desc">{{drugName}}<span class="pl5">{{drugSpec}}</span></p>
       <div class="drugs-bottom">
         <p class="money">￥{{drugMoney}}</p>
         <p>
@@ -23,6 +23,10 @@ import { mapState } from 'vuex';
 export default {
   props: {
     drugName: {
+      type: String,
+      default: ''
+    },
+    drugSpec: {
       type: String,
       default: ''
     },

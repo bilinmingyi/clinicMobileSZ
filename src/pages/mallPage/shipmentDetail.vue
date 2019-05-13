@@ -28,7 +28,7 @@
       </div>
       <common-title :titleName="titleName2"></common-title>
       <!-- 订单的产品列表 -->
-      <drugs-item v-for="(item,index) in shipmentDetail.goods_order_items" :key="index" :drugMoney="item.price" :drugNum="item.num" :drugName="getDrugName(item)"
+      <drugs-item v-for="(item,index) in shipmentDetail.goods_order_items" :key="index" :drugMoney="item.price" :drugNum="item.num" :drugName="item.name" :drugSpec="item.spec"
         :drugImg="item.img"></drugs-item>
       <div class="auditDetail-desc adress">
         <p>

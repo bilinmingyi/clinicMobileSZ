@@ -8,7 +8,8 @@
       <input-select :isShowInput="false" :title="'商品类别'" :modelValue="selectValue" :selectArray="goodsTypeList" @selectChange="selectChange"></input-select>
     </div>
     <div class="recommond-list">
-      <drugs-item v-for="(item,index) in recommondList" :key="index" :drugMoney="item.price" :drugNum="item.num" :drugName="getDrugName(item)" :drugImg="item.img">
+      <drugs-item v-for="(item,index) in recommondList" :key="index" :drugMoney="item.price" :drugNum="item.num" :drugName="item.name" :drugImg="item.img"
+        :drugSpec="item.spec">
         <template slot="rightBottom">
           <div class="button" @click="recommondGoods(item)">推荐</div>
         </template>
@@ -57,9 +58,6 @@ export default {
     inputSelect
   },
   methods: {
-    getDrugName(item) {
-      return item.name + item.spec
-    },
     loadMore() {
       this.page++
       this.getData();
