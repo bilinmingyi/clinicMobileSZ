@@ -155,9 +155,6 @@ $depthTextColor: #3f3f3f;
     white-space: nowrap; //不换行
   } @else {
     display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -o-box;
     display: box;
     line-clamp: $clamp;
     /* autoprefixer: off */
