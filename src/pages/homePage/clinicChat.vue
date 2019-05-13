@@ -6,10 +6,11 @@
         <p v-show="isShowLoad" class="loadData">正在加载数据...</p>
         <div class="content-detail">
           <component v-for="(item,index) in allMsgList" v-if="allMsgList.length>0" :key="item.msgid" :is="RenderComponent(item.from)" :chatDetail="item"
-            :patientSex="queryData.sex" :patientImg="queryData.avatar" @cancelMessage="cancelMessage"></component>
+            :patientSex="queryData.sex" :patientImg="queryData.avatar" @cancelMessage="cancelMessage" @showOrder="showOrder"></component>
         </div>
       </div>
     </div>
+    <patient-order v-if="isShowOrder" :orderSeqno="orderDetail " @leftToggle="leftToggle"></patient-order>
     <div class="mb88"></div>
     <!-- <quick-reply v-show="isReply" @closeReply="closeReply" @quickReplyMsg="sendMessage"></quick-reply> -->
     <chat-bottom :showFuc="isShowFuc" @addFunc="addFunc" @hideFunc="foucs" @sendMessage="sendTextMessage" @sendImg="sendImgMessage" @showReply="showReply"
@@ -25,6 +26,7 @@ import chatBottom from "./clinicChatPart/chatBottom";
 import clinicMessage from "./clinicChatPart/clinicMessage";
 import patientMessage from "./clinicChatPart/patientMessage";
 import quickReply from "./clinicChatPart/quickReply";
+import patientOrder from "./patientOrder"
 export default {
   name: "clinicChat",
   data() {
@@ -41,7 +43,9 @@ export default {
       first: "",
       second: "",
       isShowChat: false, // 兼容安卓机第一次进行的时候 图片自适应的抖动问题
-      getDataSet: ''
+      getDataSet: '',
+      isShowOrder: false,
+      orderDetail: {}
     };
   },
   components: {
@@ -49,7 +53,8 @@ export default {
     chatBottom,
     clinicMessage,
     patientMessage,
-    quickReply
+    quickReply,
+    patientOrder
   },
   computed: {
     ...mapState(["userInfoState"])
@@ -64,6 +69,13 @@ export default {
       let self = this;
       self.$refs.wrapper.scrollTo(0, self.$refs.wrapper.scrollHeight);
       this.isShowFuc = false;
+    },
+    leftToggle() {
+      this.isShowOrder = false
+    },
+    showOrder(val) {
+      this.orderDetail = val
+      this.isShowOrder = true
     },
     hideFuc() {
       this.isShowFuc = false;

@@ -26,7 +26,9 @@
           <p>对方撤回了一条消息</p>
         </div>
       </div>
+
     </div>
+
   </div>
 </template>
 <script>
@@ -49,10 +51,14 @@ export default {
   methods: {
     // 路由跳转
     goRoute(url) {
-      this.$router.push({
-        name: 'patientOrderPage',
-        params: { orderSeqno: this.imgDetail.orderSeqno }
-      })
+      // this.$router.push({
+      //   name: 'patientOrderPage',
+      //   params: { orderSeqno: this.imgDetail.orderSeqno }
+      // })
+      this.$emit("showOrder", this.imgDetail.orderSeqno)
+    },
+    leftToggle() {
+      this.$emit("closeOrder")
     },
     // 调用微信接口展示图片
     showImg() {

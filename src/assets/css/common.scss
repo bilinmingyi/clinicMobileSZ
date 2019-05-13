@@ -80,7 +80,7 @@ $depthTextColor: #3f3f3f;
 @mixin psFixed($fixSeat, $fixHeight: 88px) {
   position: fixed;
   left: 0;
-  z-index: 99;
+  z-index: 98;
   width: 100%;
   min-height: $fixHeight;
   @if $fixSeat==top {

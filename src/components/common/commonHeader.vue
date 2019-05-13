@@ -2,7 +2,7 @@
   <div class="common">
     <div class="common-header">
       <div class="header-content">
-        <img src="@/assets/images/fanghui@3x.png" class="header-left" v-show="isShowLeft" @click="leftToggle">
+        <img src="@/assets/images/fanghui@3x.png" class="header-left" v-show="isShowLeft" @click="leftToggle()">
         <span class="header-title">{{titleName}}</span>
       </div>
     </div>
@@ -21,6 +21,10 @@ export default {
     titleName: {
       type: String,
       default: "工作台"
+    },
+    hasLeft: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -28,8 +32,12 @@ export default {
   },
   methods: {
     leftToggle() {
-      this.$emit("leftToggle")
-      this.$router.go(-1)
+      if (this.hasLeft) {
+        this.$emit("leftToggle")
+      } else {
+        this.$emit("leftToggle")
+        this.$router.go(-1)
+      }
     }
   }
 }
