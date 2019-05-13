@@ -96,6 +96,13 @@ export default {
       })
     },
     goodsOperation(type) {
+      if (this.selectLogistics.key === '') {
+        this.$Message.infor("请选择物流公司!")
+        return
+      } else if (this.selectLogistics.key !== 'ZT' && this.$refs.mark.inputValue === '') {
+        this.$Message.infor("请输入物流单号!")
+        return
+      }
       let tips = type === 'pass' ? '提交发货订单？' : '确定取消订单？'
       if (type === 'pass') {
         let operationParams = {

@@ -115,6 +115,10 @@ export default {
       })
     },
     goodsOperation(type) {
+      if (this.doctorName === '') {
+        this.$Message.infor("请选择订单审核医生!");
+        return
+      }
       let selectDoctor = this.allDoctor.find(item => {
         return item.value === this.doctorName
       })
