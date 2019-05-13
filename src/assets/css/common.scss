@@ -147,10 +147,9 @@ $depthTextColor: #3f3f3f;
   //$clamp 默认为1 超过单行就换行 2的话 第二行换行
   overflow: hidden;
   text-overflow: ellipsis;
+  /* autoprefixer: off */
   -webkit-box-orient: vertical;
-  -moz-box-orient: vertical;
-  -ms-flex-direction: column;
-  -o-box-orient: vertical;
+  /* autoprefixer: on */
   box-orient: vertical;
   @if $clamp==1 {
     white-space: nowrap; //不换行
