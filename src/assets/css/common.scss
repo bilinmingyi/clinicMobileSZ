@@ -160,7 +160,9 @@ $depthTextColor: #3f3f3f;
     display: -o-box;
     display: box;
     line-clamp: $clamp;
+    /* autoprefixer: off */
     -webkit-line-clamp: $clamp; //块元素显示的文本行数
+    /* autoprefixer: on */
   }
 }
 

@@ -32,7 +32,6 @@
         <img src="@/assets/images/mall_logo.png" alt="库存统计">
         <span>商城订单</span>
       </div>
-
     </div>
 
   </div>
@@ -117,9 +116,9 @@ export default {
     }
   }
   .function-list {
-    overflow: auto;
+    // overflow: auto;
     width: 100%;
-    height: calc(100vh - 600px);
+    min-height: calc(100vh - 600px);
     background: $bgwhite2;
     float: left;
     .function-item {
