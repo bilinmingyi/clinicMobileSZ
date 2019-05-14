@@ -4,7 +4,7 @@
     <div class="clinic-chat">
       <div class="wrapper" ref="wrapper" @click="hideFuc">
         <p v-show="isShowLoad" class="loadData">正在加载数据...</p>
-        <div class="content-detail">
+        <div class="content-detail" v-if="isShowChat">
           <component v-for="(item,index) in allMsgList" v-if="allMsgList.length>0" :key="item.msgid" :is="RenderComponent(item.from)" :chatDetail="item"
             :patientSex="queryData.sex" :patientImg="queryData.avatar" @cancelMessage="cancelMessage" @showOrder="showOrder"></component>
         </div>
@@ -322,7 +322,7 @@ export default {
           this.last_msgid =
             this.allMsgList.length > 0 ? this.allMsgList[0].msgid : null;
           this.$nextTick(() => {
-            // this.isShowChat = true //解决安卓机子第一次进来的抖动问题
+            this.isShowChat = true //解决安卓机子第一次进来的抖动问题
             setTimeout(() => {
               this.$refs.wrapper.scrollTo(0, this.$refs.wrapper.scrollHeight);
             }, 0);
