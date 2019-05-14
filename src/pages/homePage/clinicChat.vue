@@ -70,10 +70,16 @@ export default {
       self.$refs.wrapper.scrollTo(0, self.$refs.wrapper.scrollHeight);
       this.isShowFuc = false;
     },
+    headerLeft() {
+      console.log(now)
+    },
     leftToggle() {
       this.isShowOrder = false
+      this.$router.go(-1)
+
     },
     showOrder(val) {
+      location.hash = "orderDetail"
       this.orderDetail = val
       this.isShowOrder = true
     },
@@ -328,7 +334,7 @@ export default {
                   if (this.$refs.wrapper.scrollTop === 0 && this.unfinalPulling) {
                     this.getUpLoadData();
                   }
-                }, 500)
+                }, 100)
               },
               false
             );
@@ -401,6 +407,23 @@ export default {
   },
   created() {
     this.queryData = this.$route.query;
+    let self = this
+    let firstHash = location.hash && location.hash.substring(1);
+    window.addEventListener(
+      "hashchange",
+      function (e) {
+        var now = location.hash && location.hash.substring(1);
+        switch (now) {
+          case "/orderDetail":
+            break;
+          case firstHash:
+            //如果是一开始的页面 关闭弹窗（兼容IOS） 防止点击下方的回退的时候 回退到患者列表
+            self.isShowOrder = false
+            break
+        }
+      },
+      false
+    );
   }
 };
 </script>

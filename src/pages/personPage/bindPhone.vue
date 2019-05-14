@@ -8,7 +8,7 @@
         <div class="phoneBlock">
           <div class="NumberBlock">
             <input type="text" placeholder="请输入手机号码" v-model="tel">
-            <button  v-bind:disabled="checkSubmitFlg">
+            <button v-bind:disabled="checkSubmitFlg" :class="[{'disableButton':sendMsgDisabled}]">
               <span v-if="sendMsgDisabled">{{time+'秒后获取'}}</span>
               <span v-if="!sendMsgDisabled" @click="sendCode()">获取验证码</span>
             </button>
@@ -27,7 +27,7 @@
 </template>
 <script>
 import { getMessageCode, updateMoblie } from "@/fetch/api";
-import {mapActions} from "vuex"
+import { mapActions } from "vuex"
 export default {
   data() {
     return {
@@ -64,7 +64,7 @@ export default {
       }
       self.checkSubmitFlg = true;
       if ((self.sendMsgDisabled = true)) {
-        let interval = window.setInterval(function() {
+        let interval = window.setInterval(function () {
           if (self.time-- <= 0) {
             self.time = 60;
             self.sendMsgDisabled = false;
@@ -74,8 +74,8 @@ export default {
         }, 1000);
       }
       getMessageCode({ mobile: self.tel }).then(res => {
-        if(res.code===1000){
-        }else{
+        if (res.code === 1000) {
+        } else {
           this.$Message.infor(res.msg);
         }
         // console.log(res);
@@ -103,11 +103,11 @@ export default {
       };
       updateMoblie(params).then(res => {
         if (res.code == 1000) {
-           this.$Message.infor('保存成功！');
+          this.$Message.infor('保存成功！');
           //更新vuex数据
           this.getUserInfo();
         } else if (res.code == 300002) {
-            this.$Message.infor('手机号已占用');
+          this.$Message.infor('手机号已占用');
         } else {
           this.$Message.infor('系统错误');
         }
@@ -153,6 +153,9 @@ input:-ms-input-placeholder {
     background: $yellowColor;
     color: $bgwhite2;
     font-size: 28px;
+  }
+  .disableButton {
+    background: $gray3;
   }
   input {
     flex: 1;

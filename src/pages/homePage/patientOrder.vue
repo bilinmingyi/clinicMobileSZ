@@ -1,5 +1,5 @@
 <template>
-  <div v-show="isLoad">
+  <div v-show="isLoad" @touchmove.prevent>
     <div class="order2">
       <!-- <Header :canReturn="true" titleText="预约订单详情"></Header> -->
       <div class="mt888"></div>
