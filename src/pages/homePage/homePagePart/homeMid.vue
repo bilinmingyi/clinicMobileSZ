@@ -32,6 +32,10 @@
         <img src="@/assets/images/mall_logo.png" alt="库存统计">
         <span>商城订单</span>
       </div>
+      <div class="function-item" @click="goFunctionPage(8)" v-if="isShowReport">
+        <img src="@/assets/images/xmzx@2x.png" alt="库存统计">
+        <span>云处方开方</span>
+      </div>
     </div>
 
   </div>
@@ -87,6 +91,8 @@ export default {
         case 7:
           this.$router.push({ path: "/mallPage" });
           break;
+        case 8:
+          this.$router.push({ name: "cloundPrescriptionPage" });
       }
     }
   },

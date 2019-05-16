@@ -71,6 +71,12 @@ const orderDetail = () =>
 const drugRecommond = () =>
   import(/* webpackChunkName: "mallOrderFunction" */ '@/pages/mallPage/drugRecommond')
 
+/* 云处方开方模块 核心功能 */
+const cloundIndex = () =>
+  import(/* webpackChunkName: "SquareRootFunction" */ '@/pages/cloundPage/index')
+const cloundPrescription = () =>
+  import(/* webpackChunkName: "SquareRootFunction" */ '@/pages/cloundPage/cloundPrescription')
+
 const routes = [
   {
     path: '/',
@@ -276,6 +282,20 @@ const routes = [
         component: () => drugRecommond(),
         meta: {
           title: '药品推荐'
+        }
+      }
+    ]
+  },
+  {
+    path: '/cloundPage',
+    component: () => cloundIndex(),
+    children: [
+      {
+        path: '',
+        name: 'cloundPrescriptionPage',
+        component: () => cloundPrescription(),
+        meta: {
+          title: '患者接诊'
         }
       }
     ]
