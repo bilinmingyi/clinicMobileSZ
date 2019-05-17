@@ -1,3 +1,3 @@
-import cloundBar from './cloundBar'
-
-export { cloundBar }
+import cloundTar from './cloundTar'
+import Pharmacy from './Pharmacy'
+export { cloundTar, Pharmacy }

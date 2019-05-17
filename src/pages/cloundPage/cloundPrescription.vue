@@ -1,16 +1,18 @@
 <template>
   <div class="clound">
-    <clound-bar></clound-bar>
+    <clound-tar></clound-tar>
+    <pharmacy></pharmacy>
   </div>
 </template>
 <script>
-import { cloundBar } from "./cloundPart"
+import { cloundTar, Pharmacy } from "./cloundPart"
 export default {
   data() {
     return {}
   },
   components: {
-    cloundBar
+    cloundTar,
+    Pharmacy
   }
 }
 </script>
