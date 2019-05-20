@@ -44,7 +44,10 @@ $depthTextColor: #3f3f3f;
   align-items: center;
   justify-content: center;
 }
-
+%flexM {
+  display: flex;
+  justify-content: center;
+}
 %lineHr {
   width: 100%;
   margin: 0;

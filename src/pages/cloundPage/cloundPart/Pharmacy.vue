@@ -4,9 +4,9 @@
     <div class="info-item">
       <div class="radio-group">
         <input type="radio" name="choose-drug" id="choose-drug-clinic" :checked="drugs_statues==1" @click="changeStatue(1)">
-        <label for="choose-drug-clinic" :class="[{'no-ative':drugs_statues==2}]">诊所药房</label>
+        <label for="choose-drug-clinic" :class="[{'no-ative':drugs_statues===2}]">诊所药房</label>
         <input type="radio" id="choose-drug-clound" name="choose-drug" :checked="drugs_statues==2" @click="changeStatue(2)">
-        <label for="choose-drug-clound" :class="[{'no-ative':drugs_statues==1}]">国大药房</label>
+        <label for="choose-drug-clound" :class="[{'no-ative':drugs_statues===1}]">国大药房</label>
       </div>
       <div class="delte-btn">
         删除处方
@@ -23,10 +23,11 @@ export default {
   },
   methods: {
     changeStatue(index) {
-      if (this.drugs_statues == index) {
+      let self = this
+      if (self.drugs_statues === index) {
         return;
       }
-      this.drugs_statues = index;
+      self.drugs_statues = index;
     }
   }
 
@@ -34,6 +35,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .info-item {
+  // margin-top: 184px;
+  margin-bottom: 24px;
   display: flex;
   justify-content: space-between;
   padding-right: 30px;
