@@ -1,6 +1,6 @@
 <!-- 药的用法  -->
 <template>
-  <div>
+  <div class="usage">
     123
   </div>
 </template>
