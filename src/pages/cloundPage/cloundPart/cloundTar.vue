@@ -74,8 +74,8 @@ export default {
 .tab {
   width: 100%;
   height: 96px;
-  position: fixed;
-  top: 88px;
+  position: absolute;
+  top: 0px;
   z-index: 99;
   background: #fafafa;
   @include commonBorder();
@@ -139,7 +139,7 @@ export default {
   }
 }
 .mt-184 {
-  margin-top: 184px;
+  // margin-top: 184px;
 }
 </style>
 

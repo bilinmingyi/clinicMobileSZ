@@ -27,7 +27,7 @@
         </div>
         <div class="selected-item">
           <img src="@/assets/images/sc@2x.png" alt="">
-          <span>盐女贞子/15克</span>
+          <span>盐女贞子盐女贞子盐女贞子盐女贞子盐女贞子/15克</span>
         </div>
         <div class="selected-item">
           <img src="@/assets/images/sc@2x.png" alt="">

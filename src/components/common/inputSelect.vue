@@ -15,13 +15,16 @@
   下拉框组件数组的数据格式[{key:'xx',value:'xx'}]
  -->
 <template>
-  <div class="select">
-    <p>{{title}}</p>
-    <input type="text" name="makeupCo" :placeholder="placeHolder" v-model="inputValue" @focus="inputFocus($event)"
-      @blur="inputBlur" v-if="isShowInput">
+  <div class="select" :class="[{'no-padding':isNopadding}]">
+    <slot name="leftTitle">
+      <p>{{title}}</p>
+    </slot>
+
+    <input type="text" name="makeupCo" :placeholder="placeHolder" v-model="inputValue" @focus="inputFocus($event)" @blur="inputBlur" v-if="isShowInput">
     <select name="makeupCoSe" v-model="select" @change="changeF()" @blur="selectBlur" v-if="isShowSelect" :selected="select">
       <option v-for="(item,index) in selectArray" :key="index" :id="index" :value="item.value">{{item.value}}</option>
     </select>
+    <slot name="rightValue"></slot>
   </div>
 </template>
 <script>
@@ -48,9 +51,18 @@ export default {
       type: Boolean,
       default: true
     },
+    isNopadding: {
+      type: Boolean,
+      default: false
+    },
     selectArray: {
       type: Array,
       default: () => []
+    },
+    //控制是否滚到头部还是底部两种情况 之前的话 默认是头部
+    isPullTop: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -88,7 +100,13 @@ export default {
       }, 64)
     },
     selectBlur() {
-      window.scrollTo(0, 0)
+      //布局合理的话 window.scrollTo(0,0)就可以解决了 relative布局
+      if (this.isPullTop) {
+        window.scrollTo(0, 0)
+      } else {
+        let bottom = document.body.clientHeight;
+        window.scrollTo(0, bottom)
+      }
     }
   },
   created() {
@@ -125,6 +143,7 @@ textarea {
   /* Firefox 18- */
   font-size: 32px;
 }
+
 .select {
   position: relative;
   width: 100%;
@@ -165,6 +184,17 @@ textarea {
     width: 400px;
     @include commonBorder();
     @extend %normalTitle;
+  }
+}
+// 兼容左右两边没用下横线的样式
+.no-padding {
+  padding: 0 !important;
+  select {
+    padding-left: 18px;
+    flex: 1;
+  }
+  input {
+    border: 0px;
   }
 }
 </style>
