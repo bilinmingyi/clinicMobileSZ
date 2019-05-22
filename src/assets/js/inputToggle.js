@@ -1,5 +1,5 @@
 /**
- * @author blleung
+ * @author boliangleung
  * @desc 兼容IOS和安卓Input框输入和失焦的时候的操作
  * @param focusName 在组件里  入焦$emit出去的函数名字
  * @param blurName 在组件里 失焦的$emit出去的函数名字

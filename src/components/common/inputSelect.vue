@@ -15,7 +15,7 @@
   下拉框组件数组的数据格式[{key:'xx',value:'xx'}]
  -->
 <template>
-  <div class="select" :class="[{'no-padding':isNopadding}]">
+  <div class="select" :class="[{'no-padding':isNopadding,'no-border':noBorder}]">
     <slot name="leftTitle">
       <p>{{title}}</p>
     </slot>
@@ -38,6 +38,10 @@ export default {
     modelValue: {
       type: String,
       default: ""
+    },
+    noBorder: {
+      type: Boolean,
+      default: false
     },
     title: {
       type: String,
@@ -190,11 +194,18 @@ textarea {
 .no-padding {
   padding: 0 !important;
   select {
-    padding-left: 18px;
+    // padding-left: 18px;
     flex: 1;
   }
   input {
+    left: 152px;
     border: 0px;
+  }
+}
+.no-border {
+  border: 0px !important;
+  input {
+    border: 0px !important;
   }
 }
 </style>

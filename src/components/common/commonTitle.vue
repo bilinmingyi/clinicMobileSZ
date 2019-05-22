@@ -2,7 +2,7 @@
 <template>
   <div class="title">
     <div class="title-content">
-      <p :class="{'leftIcon':haveLeft}">{{titleName}}</p>
+      <p :class="{'leftIcon':haveLeft,'is-bold':isBold}">{{titleName}}</p>
       <slot name="rightContent"></slot>
     </div>
   </div>
@@ -14,6 +14,10 @@ export default {
     haveLeft: {
       type: Boolean,
       default: true
+    },
+    isBold: {
+      type: Boolean,
+      default: false
     },
     titleName: {
       type: String,
@@ -44,12 +48,15 @@ export default {
     }
     .leftIcon::after {
       position: absolute;
-      content: '';
+      content: "";
       left: -20px;
       top: 2px;
       height: 40px;
       width: 8px;
       background: $greenColor;
+    }
+    .is-bold {
+      font-weight: 600;
     }
   }
 }

@@ -20,9 +20,7 @@
         </div>
       </div>
       <div class="dosage-second">
-        <div class="temp-btn">7剂</div>
-        <div class="temp-btn">14剂</div>
-        <div class="temp-btn">30剂</div>
+        <div class="temp-btn" v-for="(item,index) in dosageList" :key="index" @click="changeDosage(item)">{{item}}剂</div>
       </div>
     </section>
     <input-select :isShowInput="false" :isNopadding="true" :title="'频次'"></input-select>
@@ -35,7 +33,7 @@
         </div>
       </template>
     </input-select>
-    <input-select :isShowSelect="false" :title="'医嘱'" :isNopadding="true" :placeHolder="'请输入医嘱'"></input-select>
+    <input-select :isShowSelect="false" :title="'医嘱'" :isNopadding="true" :placeHolder="'请输入医嘱'" :noBorder="true"></input-select>
   </div>
 </template>
 <script>
@@ -46,7 +44,8 @@ export default {
   data() {
     return {
       dosage: 1,
-      drugWeight: 0
+      drugWeight: 0,
+      dosageList: [7, 14, 30]
     }
   },
   components: {
@@ -61,6 +60,12 @@ export default {
     },
     addDosage() {
       this.dosage++
+    },
+    changeDosage(item) {
+      if (this.dosage == item) {
+        return
+      }
+      this.dosage = item
     }
   }
 }

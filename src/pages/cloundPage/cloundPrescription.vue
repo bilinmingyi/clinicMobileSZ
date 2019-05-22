@@ -2,25 +2,25 @@
   <div class="clound">
     <clound-tar></clound-tar>
     <div class="clound-content">
-      <pharmacy></pharmacy>
-      <selected-drug></selected-drug>
-      <usage-drug></usage-drug>
+      <!-- <clound-grain></clound-grain> -->
+      <clound-patient></clound-patient>
     </div>
     <clound-bottom></clound-bottom>
   </div>
 </template>
 <script>
-import { cloundTar, Pharmacy, selectedDrug, usageDrug, cloundBottom } from "./cloundPart"
+import { cloundTar, cloundBottom } from "./cloundPart"
+import cloundGrain from "./cloundGrain"
+import cloundPatient from "./cloundPatient"
 export default {
   data() {
     return {}
   },
   components: {
     cloundTar,
-    Pharmacy,
-    selectedDrug,
-    usageDrug,
-    cloundBottom
+    cloundBottom,
+    cloundGrain,
+    cloundPatient
   }
 }
 </script>
@@ -33,7 +33,7 @@ export default {
 .clound-content {
   overflow: auto;
   padding-top: 96px;
-  max-height: calc(100vh - 90px);
+  height: calc(100vh - 90px);
   width: 100%;
   left: 0;
   padding-bottom: 140px;
