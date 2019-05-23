@@ -71,6 +71,11 @@ const orderDetail = () =>
 const drugRecommond = () =>
   import(/* webpackChunkName: "mallOrderFunction" */ '@/pages/mallPage/drugRecommond')
 
+/* chain_clinic 连锁诊所*/
+const chainIndex = () =>
+  import(/* webpackChunkName: "chainClinicFunction" */ '@/pages/chainClinicPage/index')
+const myChainClinic = () =>
+  import(/* webpackChunkName: "chainClinicFunction" */ '@/pages/chainClinicPage/myChainClinic')
 const routes = [
   {
     path: '/',
@@ -276,6 +281,20 @@ const routes = [
         component: () => drugRecommond(),
         meta: {
           title: '药品推荐'
+        }
+      }
+    ]
+  },
+  {
+    path: '/chainClinicPage',
+    component: () => chainIndex(),
+    children: [
+      {
+        path: '',
+        name: 'myChainClinicPage',
+        component: () => myChainClinic(),
+        meta: {
+          title: '我的诊所'
         }
       }
     ]
