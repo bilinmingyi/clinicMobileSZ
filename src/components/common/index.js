@@ -1,19 +1,19 @@
-export {default as commonBottom} from './commonBottom'
-export {default as commonHeader} from './commonHeader'
-export {default as commonTitle} from './commonTitle'
-export {default as dateSelect} from './dateSelect'
-export {default as firstTable} from './firstTable'
-export {default as imgPreview} from './imgPreview'
-export {default as inputSearch} from './inputSearch'
-export {default as Loading} from './Loading'
-export {default as loadMore} from './loadMore'
-export {default as secondTable} from './secondTable'
-export {default as SmallTitle} from './SmallTitle'
-export {default as withoutData} from './withoutData'
-export {default as mallItem} from './mallItem'
-export {default as drugsItem} from './drugsItem'
-export {default as inputSelect} from './inputSelect'
-
+export { default as commonBottom } from './commonBottom'
+export { default as commonHeader } from './commonHeader'
+export { default as commonTitle } from './commonTitle'
+export { default as dateSelect } from './dateSelect'
+export { default as firstTable } from './firstTable'
+export { default as imgPreview } from './imgPreview'
+export { default as inputSearch } from './inputSearch'
+export { default as Loading } from './Loading'
+export { default as loadMore } from './loadMore'
+export { default as secondTable } from './secondTable'
+export { default as SmallTitle } from './SmallTitle'
+export { default as withoutData } from './withoutData'
+export { default as mallItem } from './mallItem'
+export { default as drugsItem } from './drugsItem'
+export { default as inputSelect } from './inputSelect'
+export { default as commonTar } from './commonTar'
 
 // import commonBottom from "./commonBottom"
 // import commonHeader from "./commonHeader"
@@ -44,4 +44,3 @@ export {default as inputSelect} from './inputSelect'
 //   SmallTitle,
 //   withoutData
 // }
-

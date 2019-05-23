@@ -1,5 +1,17 @@
 <template>
   <div>
-    222
+    <common-tar></common-tar>
   </div>
 </template>
+<script>
+import { commonTar } from "@/components/common";
+export default {
+  data() {
+    return {
+    };
+  },
+  components: {
+    commonTar
+  }
+};
+</script>
