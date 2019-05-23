@@ -6,8 +6,8 @@
     </div>
     <div class="top-mid">
       <p class="black-title pb16">{{clinic.name}}</p>
-      <p class="gray-font">服务剩余时间：{{clinic.rest}}</p>
-      <!-- <p class="gray-font">诊所类型：{{clinic.type|clinicType}}</p> -->
+      <!-- <p class="gray-font">服务剩余时间：{{clinic.rest}}</p> -->
+      <p class="gray-font">诊所类型：{{clinic.type|clinicType}}</p>
     </div>
     <!-- <div class="top-right">服务详情</div> -->
   </div>

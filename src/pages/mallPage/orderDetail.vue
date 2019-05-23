@@ -33,7 +33,7 @@
           <span class="left">收货地址：</span>
           <span class="right">{{orderDetail.address}}</span>
         </p>
-        <div v-if="orderDetail.pay_time>0">
+        <div v-if="orderDetail.pay_time>0&&orderDetail.deliver_code!=''">
           <p>
             <span class="left">发货方式：</span>
             <span>{{orderDetail.deliver_code==='ZT'?'自提':'邮寄'}}</span>
@@ -48,7 +48,8 @@
       <common-title :titleName="titleName2"></common-title>
       <!-- 订单的产品列表 -->
       <div class="drug-list">
-        <drugs-item v-for="(item,index) in orderDetail.goods_order_items" :key="index" :drugMoney="item.price" :drugNum="item.num" :drugName="item.name" :drugImg="item.img" :drugSpec="item.spec"></drugs-item>
+        <drugs-item v-for="(item,index) in orderDetail.goods_order_items" :key="index" :drugMoney="item.price" :drugNum="item.num" :drugName="item.name"
+          :drugImg="item.img" :drugSpec="item.spec"></drugs-item>
       </div>
       <div class="detail-bottom" v-if="orderDetail.pay_time>0">
         <p><span>订单金额</span><span class="money">￥{{orderDetail.price}}</span></p>
