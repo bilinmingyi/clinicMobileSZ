@@ -74,8 +74,13 @@ const drugRecommond = () =>
 /* chain_clinic 连锁诊所*/
 const chainIndex = () =>
   import(/* webpackChunkName: "chainClinicFunction" */ '@/pages/chainClinicPage/index')
+//我的诊所
 const myChainClinic = () =>
   import(/* webpackChunkName: "chainClinicFunction" */ '@/pages/chainClinicPage/myChainClinic')
+// 统计数据的4个功能
+const myStaticData = () =>
+  import(/* webpackChunkName: "chainClinicFunction" */ '@/pages/chainClinicPage/myStaticData')
+
 const routes = [
   {
     path: '/',
@@ -296,6 +301,15 @@ const routes = [
         meta: {
           title: '我的诊所'
         }
+      },
+      {
+        path: 'myStaticData',
+        name: 'myStaticDataPage',
+        component: () => myStaticData(),
+        meta: {
+          title: '11'
+        },
+        props: true
       }
     ]
   }
