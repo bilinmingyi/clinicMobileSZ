@@ -1,15 +1,23 @@
 <template>
   <div>
+    <common-header :titleName="showDifTitle"></common-header>
     <component :is="showDifFunc"></component>
   </div>
 </template>
 
 <script>
+import { commonHeader } from "@/components/common";
 import clinicEnter from "./chainClinicPart/clinicEnter"
 import clinicCharge from "./chainClinicPart/clinicCharge"
 import clinicMedical from "./chainClinicPart/clinicMedical"
 import clinicRegister from "./chainClinicPart/clinicRegister"
 export default {
+  beforeRouteLeave(to, from, next) {
+    if (to.name === 'myChainClinicPage') {
+      to.meta.tarIndex = 2
+    }
+    next()
+  },
   data() {
     return {
       fromFuc: ''
@@ -19,7 +27,8 @@ export default {
     clinicEnter,
     clinicCharge,
     clinicMedical,
-    clinicRegister
+    clinicRegister,
+    commonHeader
   },
   computed: {
     showDifFunc() {
@@ -32,6 +41,18 @@ export default {
           return clinicMedical;
         case "CHARGE":
           return clinicCharge;
+      }
+    },
+    showDifTitle() {
+      switch (this.fromFuc) {
+        case "ENTER":
+          return '入库统计';
+        case "REGISTER":
+          return '挂号统计';
+        case "MEDICAL":
+          return '就诊统计';
+        case "CHARGE":
+          return '收费统计';
       }
     }
   },

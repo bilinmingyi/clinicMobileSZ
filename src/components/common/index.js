@@ -14,6 +14,7 @@ export { default as mallItem } from './mallItem'
 export { default as drugsItem } from './drugsItem'
 export { default as inputSelect } from './inputSelect'
 export { default as commonTar } from './commonTar'
+export { default as listItem } from './listItem'
 
 // import commonBottom from "./commonBottom"
 // import commonHeader from "./commonHeader"

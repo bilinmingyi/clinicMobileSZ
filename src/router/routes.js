@@ -84,11 +84,15 @@ const myStaticData = () =>
 const routes = [
   {
     path: '/',
-    redirect: '/homePage'
+    name: '',
+    redirect: 'homePage'
   },
   {
     path: '/homePage',
     component: () => homePageIndex(),
+    meta: {
+      isGetClinic: true
+    },
     children: [
       {
         path: '',
@@ -299,17 +303,14 @@ const routes = [
         name: 'myChainClinicPage',
         component: () => myChainClinic(),
         meta: {
-          title: '我的诊所'
+          title: '我的诊所',
+          tarIndex: 1
         }
       },
       {
         path: 'myStaticData',
         name: 'myStaticDataPage',
-        component: () => myStaticData(),
-        meta: {
-          title: '11'
-        },
-        props: true
+        component: () => myStaticData()
       }
     ]
   }

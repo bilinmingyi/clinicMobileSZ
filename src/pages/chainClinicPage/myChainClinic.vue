@@ -4,43 +4,28 @@
  id为2 跳转到数据统计的页面 
 -->
 <template>
-  <div class="chain-clinc">
-    <div class="fixed-tar">
-      <common-tar :tabList="clinicTar" @changeTar="changeTar"></common-tar>
+  <div>
+    <common-header :titleName="$route.meta.title" @leftToggle="leftToggle" :hasLeft="true"></common-header>
+    <div class="chain-clinc">
+      <div class="fixed-tar">
+        <common-tar :tabList="clinicTar" @changeTar="changeTar" :navtiveIndex="showIndex"></common-tar>
+      </div>
+      <div class="mt-184px"></div>
+      <component :is="showDifFunc"></component>
     </div>
-    <div class="mt-184px"></div>
-    <component :is="showDifFunc"></component>
-    <!-- <my-clinic></my-clinic> -->
   </div>
 </template>
 <script>
-import { commonTar } from "@/components/common";
+import { commonTar, commonHeader } from "@/components/common";
 import myClinic from "./chainClinicPart/myClinic"
 import staticData from "./chainClinicPart/staticData"
 export default {
-  beforeRouteEnter(to, from, next) {
-    console.log(from)
-    next();
-  },
   beforeRouteLeave(to, from, next) {
-    //一个页面控制4个功能 控制不同功能的标题
-    if (to.name === 'myStaticDataPage') {
-      switch (to.query.func) {
-        case "ENTER":
-          to.meta.title = "入库统计";
-          break
-        case "REGISTER":
-          to.meta.title = "挂号统计";
-          break
-        case "MEDICAL":
-          to.meta.title = "就诊统计";
-          break
-        case "CHARGE":
-          to.meta.title = "收费统计";
-          break
-      }
+    //如果不是进入统计数据 默认tar栏显示在我的诊所上
+    if (to.name !== 'myStaticDataPage') {
+      from.meta.tarIndex = 1
     }
-    next();
+    next()
   },
   data() {
     return {
@@ -48,13 +33,14 @@ export default {
         { key: 'MY_CLINIC', value: "我的诊所", id: 1 },
         { key: 'STATIC_DATA', value: "统计数据", id: 2 },
       ],
-      showIndex: 1 //默认展示id为1的组件
+      showIndex: '' //默认展示id为1的组件
     };
   },
   components: {
     commonTar,
     myClinic,
-    staticData
+    staticData,
+    commonHeader
   },
   computed: {
     showDifFunc() {
@@ -71,10 +57,13 @@ export default {
           this.showIndex = 2;
           break;
       }
+    },
+    leftToggle() {
+      this.$router.push({ name: 'homePage' })
     }
   },
   created() {
-
+    this.showIndex = this.$route.meta.tarIndex
   }
 };
 </script>

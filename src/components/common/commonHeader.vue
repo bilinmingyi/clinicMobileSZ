@@ -32,6 +32,8 @@ export default {
   },
   methods: {
     leftToggle() {
+      // 兜底 防止刷新的时候 点击两次左边点击按钮 19-5-27
+      this.$router.options.routes[1].meta.isGetClinic = false
       if (this.hasLeft) {
         this.$emit("leftToggle")
       } else {

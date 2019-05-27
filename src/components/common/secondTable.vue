@@ -3,9 +3,13 @@
   desc:需要传入两个数组
       titleArray:标题的数组 按页面的标题顺序
       contentArray:内容的数组 注意数组里面的对象需要是处理过（顺序）且必要的数据
-    可参考入库统计的 chineseMedical组件
+    可参考入库统计的 functionPage/enterBoundPart/chineseMedical组件
     {{tableValue.objectKey}} 
     {{tableValue.value}}
+  
+  19-05-27 对于第二种表格进行拓展样式  
+  * 标题有深浅之分
+  isTitleLight:true  // 标题是不是浅色的标题
    -->
 <template>
   <div>
@@ -13,7 +17,10 @@
       <section class="second-detail">
         <table>
           <tr>
-            <th v-for="(item,index) in titleArray" :key="index">
+            <!-- <th v-for="(item,index) in titleArray" :key="index">
+              <div>{{item}}</div>
+            </th> -->
+            <th v-for="(item,index) in titleArray" :key="index" :class="[{'light-color':isTitleLight}]">
               <div>{{item}}</div>
             </th>
           </tr>
@@ -47,6 +54,10 @@ export default {
     hasData: {
       type: Boolean,
       default: true
+    },
+    isTitleLight: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -88,6 +99,15 @@ export default {
         text-align: center;
         @include commonBorder(bottom, $greenColor);
         @include commonBorder(right, $greenColor);
+      }
+      .light-color {
+        background: $lightColor;
+        color: $grayColor;
+        @include commonBorder(bottom, $greenColor);
+        @include commonBorder(right, $greenColor);
+        div {
+          border-right: $greenColor !important;
+        }
       }
     }
   }
