@@ -37,7 +37,8 @@ export default {
         }
         changeClinic(params).then(res => {
           if (res.code === 1000) {
-            this.$router.push({ name: "homePage" })
+            // this.$router.push({ name: "homePage" })
+            window.location.href = "/yzshis/weixin/homePage#/homePage/"
           } else {
             this.$Message.infor("切换机构失败！！！" + res.msg);
           }

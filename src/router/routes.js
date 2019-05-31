@@ -85,7 +85,7 @@ const routes = [
   {
     path: '/',
     name: '',
-    redirect: 'homePage'
+    redirect: 'chainClinicPage'
   },
   {
     path: '/homePage',
