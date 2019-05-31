@@ -13,22 +13,10 @@
       <div class="info-item">
         <span>性别</span>
         <div class="radio-group">
-          <input
-            type="radio"
-            name="patient-sex"
-            id="patient-sex-male"
-            :checked="sex_statues==1"
-            @click="changeStatue(1)"
-          >
+          <input type="radio" name="patient-sex" id="patient-sex-male" :checked="sex_statues==1" @click="changeStatue(1)">
           <label for="patient-sex-male">男</label>
 
-          <input
-            type="radio"
-            id="patient-sex-female"
-            name="patient-sex"
-            :checked="sex_statues==2"
-            @click="changeStatue(2)"
-          >
+          <input type="radio" id="patient-sex-female" name="patient-sex" :checked="sex_statues==2" @click="changeStatue(2)">
           <label for="patient-sex-female">女</label>
         </div>
       </div>
@@ -47,10 +35,10 @@
   </div>
 </template>
 <script>
-import { updateUserInfo} from "@/fetch/api";
+import { updateUserInfo } from "@/fetch/api";
 import { dateFormat } from "@/assets/js/filters";
-import { mapState,mapActions} from "vuex";
-import {commonTitle}from "@/components/common";
+import { mapState, mapActions } from "vuex";
+import { commonTitle } from "@/components/common";
 export default {
   props: ["userData"],
   data() {
@@ -87,7 +75,7 @@ export default {
           this.$router.push({ name: "bindPhonePage" });
           break;
         case "cancel":
-        this.$router.push({ name: "personPage" });
+          this.$router.push({ name: "personPage" });
       }
     },
     changeStatue(index) {
@@ -113,12 +101,13 @@ export default {
         sex: this.sex_statues,
         city: this.userInfoState.city
       };
-      updateUserInfo(params).then(res=>{
-        if(res.code==1000){
+      updateUserInfo(params).then(res => {
+        if (res.code == 1000) {
           this.$Message.infor('保存成功');
           this.getUserInfo();
-        }else{
-          this.$Message.infor('更新失败'+res.code)
+          this.$router.go(-1)
+        } else {
+          this.$Message.infor('更新失败' + res.code)
         }
       });
     }
