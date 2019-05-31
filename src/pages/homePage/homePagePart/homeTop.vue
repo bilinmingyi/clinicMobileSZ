@@ -61,7 +61,7 @@ export default {
       this.$router.push({ name: 'patientInfoPage' })
     },
     toggleClinic() {
-      window.location.href = "/yzshis/weixin/homePage#/chainClinicPage"
+      window.location.href = "/yzshis/user/clinic/change"
     },
     getUnRead() {
       let params = {
