@@ -30,7 +30,7 @@ export default {
   methods: {
     goFunctionPage(val) {
       this.nextTitle = val
-      this.$router.push({ path: 'myStaticData', query: { func: val } })
+      this.$router.push({ path: '/chainClinicPage/myStaticData', query: { func: val } })
     }
   }
 }

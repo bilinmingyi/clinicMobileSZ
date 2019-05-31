@@ -4,7 +4,7 @@
  id为2 跳转到数据统计的页面 
 -->
 <template>
-  <div>
+  <div v-if="isComplete">
     <common-header :titleName="$route.meta.title" :isShowLeft="false"></common-header>
     <div class="chain-clinc">
       <div class="fixed-tar">
@@ -19,6 +19,7 @@
 import { commonTar, commonHeader } from "@/components/common";
 import myClinic from "./chainClinicPart/myClinic"
 import staticData from "./chainClinicPart/staticData"
+import { mapState, mapActions } from 'vuex';
 export default {
   beforeRouteLeave(to, from, next) {
     //如果不是进入统计数据 默认tar栏显示在我的诊所上
@@ -33,7 +34,8 @@ export default {
         { key: 'MY_CLINIC', value: "我的机构", id: 1 },
         { key: 'STATIC_DATA', value: "统计数据", id: 2 },
       ],
-      showIndex: '' //默认展示id为1的组件
+      showIndex: '', //默认展示id为1的组件
+      isComplete: false
     };
   },
   components: {
@@ -43,11 +45,13 @@ export default {
     commonHeader
   },
   computed: {
+    ...mapState(['clinicsList']),
     showDifFunc() {
       return this.showIndex === 1 ? "myClinic" : "staticData";
     }
   },
   methods: {
+    ...mapActions(['getActClinic']),
     changeTar(val) {
       switch (val) {
         case 'MY_CLINIC':
@@ -59,8 +63,19 @@ export default {
       }
     }
   },
-  created() {
+  async created() {
     this.showIndex = this.$route.meta.tarIndex
+    //   //兜底 防止某些手机有刷新功能 不刷新不会请求
+    if (this.clinicsList.length === 0) {
+      await this.getActClinic()
+    }
+    if (this.clinicsList.length === 1) {
+      window.location.href = "/yzshis/weixin/homePage#/homePage/"
+      this.isComplete = false
+    } else {
+      this.isComplete = true
+    }
+
   }
 };
 </script>

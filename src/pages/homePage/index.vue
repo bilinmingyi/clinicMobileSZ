@@ -1,5 +1,5 @@
 <template>
-  <div v-show="isComplete">
+  <div>
     <router-view />
   </div>
 </template>
@@ -23,21 +23,7 @@ export default {
   methods: {
     ...mapActions(['getActClinic'])
   },
-  async created() {
-    try {
-      await this.getActClinic()
-      if (this.$route.matched[0].meta.isGetClinic) {
-        if (this.clinicsList.length > 1) {
-          this.$router.push({ name: 'myChainClinicPage' })
-        } else {
-          this.isComplete = true
-        }
-      } else {
-        this.isComplete = true
-      }
-    } catch (error) {
-      this.isComplete = true
-    }
+  created() {
   }
 }
 </script>

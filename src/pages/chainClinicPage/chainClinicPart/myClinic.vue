@@ -1,5 +1,5 @@
 <template>
-  <div class="clinic">
+  <div class="clinic" v-if="isComplete">
     <div v-for="(item,index) in clinicsList" :key="index" :class="['clinic-item',{'has-rihgt-margin':(index%2)==0}]">
       <img :src="item.clinic_logo!==''?item.clinic_logo:defaultClinic" alt="">
       <p>{{item.clinic_name}}</p>
@@ -28,7 +28,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getActClinic']),
+
     toggleClinic(item) {
       this.$Message.confirm('确认进入到该机构么？', () => {
         let params = {
@@ -46,12 +46,10 @@ export default {
       })
     }
   },
-  async created() {
-    //   //兜底 防止某些手机有刷新功能 不刷新不会请求
-    if (this.clinicsList.length === 0) {
-      await this.getActClinic()
-    }
+  created() {
+
     this.isComplete = true
+
   }
 }
 </script>
