@@ -5,7 +5,7 @@
 -->
 <template>
   <div>
-    <common-header :titleName="$route.meta.title" @leftToggle="leftToggle" :hasLeft="true"></common-header>
+    <common-header :titleName="$route.meta.title" :isShowLeft="false"></common-header>
     <div class="chain-clinc">
       <div class="fixed-tar">
         <common-tar :tabList="clinicTar" @changeTar="changeTar" :navtiveIndex="showIndex"></common-tar>
@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       clinicTar: [
-        { key: 'MY_CLINIC', value: "我的诊所", id: 1 },
+        { key: 'MY_CLINIC', value: "我的机构", id: 1 },
         { key: 'STATIC_DATA', value: "统计数据", id: 2 },
       ],
       showIndex: '' //默认展示id为1的组件
@@ -57,9 +57,6 @@ export default {
           this.showIndex = 2;
           break;
       }
-    },
-    leftToggle() {
-      this.$router.push({ name: 'homePage' })
     }
   },
   created() {

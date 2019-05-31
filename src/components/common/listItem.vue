@@ -78,7 +78,7 @@ export default {
     }
   }
   &-content {
-    padding: 0 20px;
+    padding: 0 25px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -86,7 +86,7 @@ export default {
   &-obj {
     font-size: 28px;
     padding: 12px 0px;
-    min-width: 236px;
+    min-width: 216px;
     text-align: left;
     box-sizing: border-box;
     -moz-box-sizing: border-box; /* Firefox */

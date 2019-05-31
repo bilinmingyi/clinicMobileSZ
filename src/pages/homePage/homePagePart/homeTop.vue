@@ -9,7 +9,7 @@
         <!-- <p class="gray-font">服务剩余时间：{{clinic.rest}}</p> -->
         <p class="gray-font">诊所类型：{{clinic.type|clinicType}}</p>
       </div>
-      <div class="top-right" @click="toggleClinic">切换诊所 <img src="@/assets/images/xiayibu@2x.png" alt=""></div>
+      <div class="top-right" @click="toggleClinic" v-if="clinicsList.length>1">切换机构 <img src="@/assets/images/xiayibu@2x.png" alt=""></div>
     </div>
     <hr class="full-screen-hr">
     </hr>
@@ -45,7 +45,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['clinic']),
+    ...mapState(['clinic', 'clinicsList']),
     patientLogo() {
       return this.haveInfo == false ? this.imglogo1 : this.imglogo2;
     },

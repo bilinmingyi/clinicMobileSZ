@@ -303,7 +303,7 @@ const routes = [
         name: 'myChainClinicPage',
         component: () => myChainClinic(),
         meta: {
-          title: '我的诊所',
+          title: '我的机构',
           tarIndex: 1
         }
       },

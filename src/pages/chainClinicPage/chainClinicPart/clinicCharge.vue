@@ -1,7 +1,8 @@
-<!-- 入库统计-->
+<!-- 收费统计-->
 <template>
   <div class="clinic-enter">
-    <date-select></date-select>
+    <date-select @selectToday="selectToday" @selectYesterday="selectYesterday" @selectThisMonth="selectThisMonth" @selectLastMonth="selectLastMonth"
+      @selectQuery="selectQuery"></date-select>
     <div class="mt-200px"></div>
     <div class="enter-content" v-show="isLoad">
       <second-table :titleArray="titleArray" :contentArray="clinicData" :hasData="hasData&&isLoad" :isTitleLight="true">
@@ -15,25 +16,18 @@
 </template>
 
 <script>
-import { dateSelect, secondTable, Loading } from "@/components/common"
+import { secondTable } from "@/components/common"
+import chainMixins from "./chainMixins"
+import { getClinicCharge } from "@/fetch/api"
 export default {
+  mixins: [chainMixins],
   data() {
     return {
-      titleArray: ['诊所名称', '收费次数', '收费金额'],
-      isLoad: false,
-      isShowLoading: true,
-      clinicData: [{ clinicName: '广州天河门诊', num: 2543222321312, money: 12421 }, { clinicName: '淳道中医门诊', num: 8974, money: 32142 }, { clinicName: '佛山中医门诊', num: 1232, money: 6754 }]
+      titleArray: ['机构名称', '收费次数', '收费金额']
     };
   },
-  computed: {
-    hasData() {
-      return this.clinicData.length === 0
-    }
-  },
   components: {
-    dateSelect,
     secondTable,
-    Loading
   },
   methods: {
     filterValue(key, value) {
@@ -45,15 +39,31 @@ export default {
           return value;
           break;
       }
+    },
+    getChainData(val) {
+      let params = {
+        page: this.page,
+        page_size: this.pageSize,
+        end_time: val.endTime,
+        start_time: val.startTime
+      }
+      getClinicCharge(params).then(res => {
+        if (res.code === 1000) {
+          res.data.forEach((item) => {
+            let params = {
+              clinicName: item.clinic_name,
+              num: item.charge_times,
+              money: item.charge_amount
+            }
+            this.clinicData.push(params)
+          })
+        } else {
+          this.$Message.infor("获取数据失败！！！" + res.msg);
+        }
+        this.isLoad = true
+        this.isShowLoading = false
+      })
     }
-  },
-  created() {
-
-    setTimeout((
-    ) => {
-      this.isLoad = true //放在请求完接口后变
-      this.isShowLoading = false
-    }, 1000)
   }
 }
 </script>
