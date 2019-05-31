@@ -61,7 +61,7 @@ export default {
       this.$router.push({ name: 'patientInfoPage' })
     },
     toggleClinic() {
-      this.$router.push({ name: 'myChainClinicPage' })
+      window.location.href = "/yzshis/weixin/homePage#/chainClinicPage"
     },
     getUnRead() {
       let params = {

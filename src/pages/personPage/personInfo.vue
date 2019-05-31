@@ -103,9 +103,11 @@ export default {
       };
       updateUserInfo(params).then(res => {
         if (res.code == 1000) {
-          this.$Message.infor('保存成功');
-          this.getUserInfo();
-          this.$router.go(-1)
+          this.$Message.infor('保存成功', () => {
+            this.getUserInfo();
+            this.$router.go(-1)
+          })
+
         } else {
           this.$Message.infor('更新失败' + res.code)
         }

@@ -101,11 +101,14 @@ export default {
         mobile: self.tel,
         code: self.code
       };
+
       updateMoblie(params).then(res => {
         if (res.code == 1000) {
-          this.$Message.infor('保存成功！');
+          this.$Message.infor('保存成功！', () => {
+            this.getUserInfo();
+            this.$router.go(-1)
+          })
           //更新vuex数据
-          this.getUserInfo();
         } else if (res.code == 300002) {
           this.$Message.infor('手机号已占用');
         } else {
