@@ -24,6 +24,7 @@ export default {
     ...mapActions(['getActClinic'])
   },
   created() {
+    this.getActClinic()
   }
 }
 </script>
