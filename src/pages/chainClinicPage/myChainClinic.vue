@@ -20,6 +20,7 @@ import { commonTar, commonHeader } from "@/components/common";
 import myClinic from "./chainClinicPart/myClinic"
 import staticData from "./chainClinicPart/staticData"
 import { mapState, mapActions } from 'vuex';
+import { changeClinic } from "@/fetch/api"
 export default {
   beforeRouteLeave(to, from, next) {
     //如果不是进入统计数据 默认tar栏显示在我的诊所上
@@ -70,8 +71,20 @@ export default {
       await this.getActClinic()
     }
     if (this.clinicsList.length === 1) {
-      window.location.href = "/yzshis/weixin/homePage#/homePage/"
-      this.isComplete = false
+      console.log(this.clinicsList)
+      let params = {
+        user_id: this.clinicsList[0].user_id,
+        clinic_id: this.clinicsList[0].clinic_id
+      }
+      changeClinic(params).then(res => {
+        if (res.code === 1000) {
+          // this.$router.push({ name: "homePage" })
+          window.location.href = "/yzshis/weixin/homePage#/homePage/"
+        } else {
+          this.$Message.infor("进去机构失败！！！" + res.msg);
+        }
+        this.isComplete = false
+      })
     } else {
       this.isComplete = true
     }
