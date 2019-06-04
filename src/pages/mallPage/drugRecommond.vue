@@ -1,22 +1,26 @@
 <template>
   <!-- 药品推荐页面 -->
-  <div class="recommond">
-    <div class="recommond-input">
-      <input-search :placeholder="'商品名称'" @query="query" ref="input"></input-search>
-    </div>
-    <div class="recommond-select">
-      <input-select :isShowInput="false" :title="'商品类别'" :modelValue="selectValue" :selectArray="goodsTypeList" @selectChange="selectChange"></input-select>
-    </div>
-    <div class="recommond-list">
-      <drugs-item v-for="(item,index) in recommondList" :key="index" :drugMoney="item.price" :drugNum="item.num" :drugName="item.name" :drugImg="item.img"
-        :drugSpec="item.spec">
-        <template slot="rightBottom">
-          <div class="button" @click="recommondGoods(item)">推荐</div>
-        </template>
-      </drugs-item>
+  <div>
+    <common-header :titleName="$route.meta.title"></common-header>
 
-      <without-data v-show="hasData&&isLoad"></without-data>
-      <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
+    <div class="recommond">
+      <div class="recommond-input">
+        <input-search :placeholder="'商品名称'" @query="query" ref="input"></input-search>
+      </div>
+      <div class="recommond-select">
+        <input-select :isShowInput="false" :title="'商品类别'" :modelValue="selectValue" :selectArray="goodsTypeList" @selectChange="selectChange"></input-select>
+      </div>
+      <div class="recommond-list">
+        <drugs-item v-for="(item,index) in recommondList" :key="index" :drugMoney="item.price" :drugNum="item.num" :drugName="item.name" :drugImg="item.img"
+          :drugSpec="item.spec">
+          <template slot="rightBottom">
+            <div class="button" @click="recommondGoods(item)">推荐</div>
+          </template>
+        </drugs-item>
+
+        <without-data v-show="hasData&&isLoad"></without-data>
+        <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
+      </div>
     </div>
   </div>
 </template>
@@ -26,7 +30,8 @@ import {
   withoutData,
   loadMore,
   inputSearch,
-  inputSelect
+  inputSelect,
+  commonHeader
 } from "@/components/common";
 import { getGoodsList, msgSend } from "@/fetch/api"
 import { mapState } from 'vuex';
@@ -55,7 +60,8 @@ export default {
     withoutData,
     loadMore,
     inputSearch,
-    inputSelect
+    inputSelect,
+    commonHeader
   },
   methods: {
     loadMore() {

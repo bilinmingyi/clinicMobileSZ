@@ -1,36 +1,42 @@
 <template>
   <!--挂号统计页面 -->
-  <div class="medical">
-    <section class="medical-bar">
-      <div :class="['flex-mid-center',{'nt-bar':navtiveIndex===0}]" @click="changeIndex(0)">待审核</div>
-      <div :class="['flex-mid-center',{'nt-bar':navtiveIndex===1}]" @click="changeIndex(1)">待发货</div>
-      <div :class="['flex-mid-center',{'nt-bar':navtiveIndex===2}]" @click="changeIndex(2)">订单查询</div>
-    </section>
-      <component :is="mallComponent" ></component> 
+  <div>
+    <common-header :titleName="$route.meta.title" :hasLeft="true" @leftToggle="leftToggle"></common-header>
+
+    <div class="medical">
+      <section class="medical-bar">
+        <div :class="['flex-mid-center',{'nt-bar':navtiveIndex===0}]" @click="changeIndex(0)">待审核</div>
+        <div :class="['flex-mid-center',{'nt-bar':navtiveIndex===1}]" @click="changeIndex(1)">待发货</div>
+        <div :class="['flex-mid-center',{'nt-bar':navtiveIndex===2}]" @click="changeIndex(2)">订单查询</div>
+      </section>
+      <component :is="mallComponent"></component>
+    </div>
   </div>
 </template>
 <script>
+import { commonHeader } from "@/components/common";
 import auditGoods from "./mallOrderPart/auditGoods";
 import orderInquery from "./mallOrderPart/orderInquery";
 import shipmentList from "./mallOrderPart/shipmentList";
 export default {
   beforeRouteLeave(to, from, next) {
-         if(to.name==="homePage"){
-            from.meta.nativeIndex = 0;  // 跳回到首页的话,nativeIndex初始化为0
-         }
-        next();
-    },
+    if (to.name === "homePage") {
+      from.meta.nativeIndex = 0;  // 跳回到首页的话,nativeIndex初始化为0
+    }
+    next();
+  },
   data() {
     return {
       navtiveIndex: 0
     };
   },
-  components:{
+  components: {
     auditGoods,
     orderInquery,
-    shipmentList
+    shipmentList,
+    commonHeader
   },
-  computed:{
+  computed: {
     mallComponent() {
       switch (this.navtiveIndex) {
         case 0:
@@ -43,11 +49,14 @@ export default {
     }
   },
   methods: {
+    leftToggle() {
+      this.$router.replace({ name: 'homePage' })
+    },
     changeIndex(index) {
       this.navtiveIndex = index;
     }
   },
-  created(){
+  created() {
     this.navtiveIndex = this.$route.meta.nativeIndex
   }
 };

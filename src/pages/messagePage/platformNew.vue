@@ -1,32 +1,36 @@
 <template>
   <div class="platformNew">
     <common-header :titleName="'平台动态'"></common-header>
-    <div class="platform">
-      <div class="platform-title">{{platformTitle}}</div>
-      <p>{{detailData.type|articleType}}</p>
-      <p>{{detailData.create_time |dateFormat('yyyy-MM-dd')}}</p>
-      <div class="platform-content" v-html="detailData.content"></div>
-      <div class="full-screen-hr mt188"></div>
-      <p class="platform-font">你把我读完了</p>
+    <div v-if="isComplete">
+      <div class="platform">
+        <div class="platform-title">{{platformTitle}}</div>
+        <p>{{detailData.type|articleType}}</p>
+        <p>{{detailData.create_time |dateFormat('yyyy-MM-dd')}}</p>
+        <div class="platform-content" v-html="detailData.content"></div>
+        <div class="full-screen-hr mt188"></div>
+        <p class="platform-font">你把我读完了</p>
+      </div>
+
+      <div class="comment">
+        <div class="comment-title">
+          <span>最新评论</span>
+          <span class="comment-add"></span>
+          <!-- <span class="comment-add" @click="goAddComment">添加评论</span> -->
+        </div>
+        <div class="comment-content" v-for="(item,index) in commentList">
+          <p class="comment-name">{{item.user_name}}</p>
+          <p class="comment-detail">
+            {{item.content}}
+          </p>
+          <p class="comment-time">{{item.create_time|dateFormat}}</p>
+        </div>
+        <div class="no-comment">
+          <span class="left"></span>没有更多评论
+          <span class="right"></span>
+        </div>
+      </div>
     </div>
-    <div class="comment">
-      <div class="comment-title">
-        <span>最新评论</span>
-        <span class="comment-add"></span>
-        <!-- <span class="comment-add" @click="goAddComment">添加评论</span> -->
-      </div>
-      <div class="comment-content" v-for="(item,index) in commentList">
-        <p class="comment-name">{{item.user_name}}</p>
-        <p class="comment-detail">
-          {{item.content}}
-        </p>
-        <p class="comment-time">{{item.create_time|dateFormat}}</p>
-      </div>
-      <div class="no-comment">
-        <span class="left"></span>没有更多评论
-        <span class="right"></span>
-      </div>
-    </div>
+
   </div>
 </template>
 <script>
@@ -37,7 +41,8 @@ export default {
   data() {
     return {
       detailData: {},
-      commentList: []
+      commentList: [],
+      isComplete: false
     };
   },
   methods: {
@@ -52,6 +57,7 @@ export default {
         } else {
           this.$Message.infor('网络出错！')
         }
+        this.isComplete = true
       });
       //获取评论的内容
       let params = {
