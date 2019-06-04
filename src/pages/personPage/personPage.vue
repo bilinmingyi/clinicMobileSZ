@@ -28,9 +28,9 @@
 import imgMixins from "@/assets/js/imgMixins";
 import { userInfo } from "@/fetch/api";
 import { mapState } from "vuex";
-import {commonHeader,commonBottom} from "@/components/common";
+import { commonHeader, commonBottom } from "@/components/common";
 export default {
-  mixins:[imgMixins],
+  mixins: [imgMixins],
   data() {
     return {
       navtiveIndex: 3,
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     goPersonInfo() {
-      this.$router.push({name: "personInfoPage"});
+      this.$router.push({ name: "personInfoPage" });
     }
   }
 };
