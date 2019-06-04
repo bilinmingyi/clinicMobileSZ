@@ -1,6 +1,6 @@
 <template>
   <div>
-    <common-header :titleName="showDifTitle" :hasLeft="true" @leftToggle="leftToggle"></common-header>
+    <common-header :titleName="showDifTitle"></common-header>
     <component :is="showDifFunc"></component>
   </div>
 </template>
@@ -54,11 +54,6 @@ export default {
         case "CHARGE":
           return '收费统计';
       }
-    }
-  },
-  methods: {
-    leftToggle() {
-      this.$router.replace({ name: 'myChainClinicPage' })
     }
   },
   created() {
