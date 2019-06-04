@@ -1,6 +1,6 @@
 <template>
   <div>
-    <common-header :titleName="showDifTitle"></common-header>
+    <common-header :titleName="showDifTitle" :hasLeft="true" @leftToggle="leftToggle"></common-header>
     <component :is="showDifFunc"></component>
   </div>
 </template>
@@ -57,6 +57,9 @@ export default {
     }
   },
   methods: {
+    leftToggle() {
+      this.$router.replace({ name: 'myChainClinicPage' })
+    }
   },
   created() {
     this.fromFuc = this.$route.query.func

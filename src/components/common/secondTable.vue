@@ -16,7 +16,7 @@
     <div class="second" v-show="titleArray.length>0">
       <section class="second-detail">
         <table>
-          <tr>
+          <tr class="top">
             <!-- <th v-for="(item,index) in titleArray" :key="index">
               <div>{{item}}</div>
             </th> -->
@@ -89,6 +89,13 @@ export default {
             border: 0;
           }
         }
+      }
+      th {
+        border: 1px solid $greenColor;
+      }
+      th:nth-child(2) {
+        border-right: 0px;
+        border-left: 0px;
       }
       tr {
         color: $grayColor;
