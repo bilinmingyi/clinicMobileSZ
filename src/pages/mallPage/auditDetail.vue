@@ -1,51 +1,54 @@
 <template>
   <!-- 待审核详情页面 -->
-  <div class="auditDetail" ref="auditDetail" v-if="uploadData">
-    <div class="auditDetail-content">
-      <common-title :titleName="titleName">
-        <template slot="rightContent">
-          <span class="rightIcon">待审核</span>
-        </template>
-      </common-title>
-      <!-- 订单审核的描述 -->
-      <div class="auditDetail-desc">
-        <p>
-          <span class="left">下单时间：</span>
-          <span>{{auditDetail.create_time|dateFormat}}</span>
-        </p>
-        <p>
-          <span class="left">订单号：</span>
-          <span>{{auditDetail.order_seqno}}</span>
-        </p>
-        <p>
-          <span class="left">{{auditDetail.contact}}：</span>
-          <span>{{auditDetail.phone_num}}</span>
-        </p>
-        <p>
-          <span class="left">患者备注：</span>
-          <span>{{auditDetail.memo||'无'}}</span>
-        </p>
-      </div>
-      <common-title :titleName="titleName2"></common-title>
-      <!-- 订单的产品列表 -->
-      <div class="drug-list">
-        <drugs-item v-for="(item,index) in auditDetail.goods_order_items" :key="index" :drugMoney="item.price" :drugNum="item.num" :drugName="item.name"
-          :drugImg="item.img" :drugSpec="item.spec"></drugs-item>
-      </div>
+  <div>
+    <common-header :titleName="$route.meta.title" :hasLeft="true" @leftToggle="leftToggle"></common-header>
+    <div class="auditDetail" ref="auditDetail" v-if="uploadData">
+      <div class="auditDetail-content">
+        <common-title :titleName="titleName">
+          <template slot="rightContent">
+            <span class="rightIcon">待审核</span>
+          </template>
+        </common-title>
+        <!-- 订单审核的描述 -->
+        <div class="auditDetail-desc">
+          <p>
+            <span class="left">下单时间：</span>
+            <span>{{auditDetail.create_time|dateFormat}}</span>
+          </p>
+          <p>
+            <span class="left">订单号：</span>
+            <span>{{auditDetail.order_seqno}}</span>
+          </p>
+          <p>
+            <span class="left">{{auditDetail.contact}}：</span>
+            <span>{{auditDetail.phone_num}}</span>
+          </p>
+          <p>
+            <span class="left">患者备注：</span>
+            <span>{{auditDetail.memo||'无'}}</span>
+          </p>
+        </div>
+        <common-title :titleName="titleName2"></common-title>
+        <!-- 订单的产品列表 -->
+        <div class="drug-list">
+          <drugs-item v-for="(item,index) in auditDetail.goods_order_items" :key="index" :drugMoney="item.price" :drugNum="item.num" :drugName="item.name"
+            :drugImg="item.img" :drugSpec="item.spec"></drugs-item>
+        </div>
 
-      <input-select :modelValue="doctorName" ref="doctor" :isShowInput="false" @selectChange="selectChange" :selectArray="allDoctor"></input-select>
-      <input-select :isShowSelect="false" :title="'备注'" :placeHolder="'请输入备注'" ref="mark" :modelValue="auditMemo"></input-select>
+        <input-select :modelValue="doctorName" ref="doctor" :isShowInput="false" @selectChange="selectChange" :selectArray="allDoctor"></input-select>
+        <input-select :isShowSelect="false" :title="'备注'" :placeHolder="'请输入备注'" ref="mark" :modelValue="auditMemo"></input-select>
 
-      <div class="pb150"></div>
+        <div class="pb150"></div>
+      </div>
+      <section class="auditDetail-bottom">
+        <div class="cancel" @click="goodsOperation('reject')">拒绝</div>
+        <div class="pass" @click="goodsOperation('pass')">通过</div>
+      </section>
     </div>
-    <section class="auditDetail-bottom">
-      <div class="cancel" @click="goodsOperation('reject')">拒绝</div>
-      <div class="pass" @click="goodsOperation('pass')">通过</div>
-    </section>
   </div>
 </template>
 <script>
-import { commonTitle, drugsItem, inputSelect } from "@/components/common";
+import { commonTitle, drugsItem, inputSelect, commonHeader } from "@/components/common";
 import { goodsOrderDetail, goodsCheck, doctorList } from "@/fetch/api"
 import { mapState } from 'vuex';
 export default {
@@ -72,9 +75,13 @@ export default {
   components: {
     commonTitle,
     drugsItem,
-    inputSelect
+    inputSelect,
+    commonHeader
   },
   methods: {
+    leftToggle() {
+      this.$router.replace({ name: 'mallOrderPage' })
+    },
     selectChange(val) {
       this.doctorName = val
     },

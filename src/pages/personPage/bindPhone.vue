@@ -57,10 +57,10 @@ export default {
         this.$Message.infor("手机号不能为空！");
         return false;
       }
-      var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
-      if (!reg.test(self.tel)) {
-        this.$Message.infor("请输入正确的手机号");
-        return false;
+      if (!/^\d{11}$/.test(self.tel)) {
+        this.$Message.infor('请填写正确的手机号码!')
+        // this.$refs.phoneNum.focus()
+        return false
       }
       self.checkSubmitFlg = true;
       if ((self.sendMsgDisabled = true)) {
@@ -88,10 +88,10 @@ export default {
         this.$Message.infor("手机号不能为空");
         return false;
       }
-      var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
-      if (!reg.test(self.tel)) {
-        this.$Message.infor("请输入正确的手机号");
-        return false;
+      if (!/^\d{11}$/.test(self.tel)) {
+        this.$Message.infor('请填写正确的手机号码!')
+        // this.$refs.phoneNum.focus()
+        return false
       }
       if (self.code == "") {
         this.$Message.infor("验证码不能为为空");
@@ -101,11 +101,14 @@ export default {
         mobile: self.tel,
         code: self.code
       };
+
       updateMoblie(params).then(res => {
         if (res.code == 1000) {
-          this.$Message.infor('保存成功！');
+          this.$Message.infor('保存成功！', () => {
+            this.getUserInfo();
+            this.$router.go(-1)
+          })
           //更新vuex数据
-          this.getUserInfo();
         } else if (res.code == 300002) {
           this.$Message.infor('手机号已占用');
         } else {

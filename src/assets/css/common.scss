@@ -15,7 +15,7 @@ $backColor: #333333;
 $deepBlue: #08bac6;
 $lineColor: #d9d9d9;
 $depthTextColor: #3f3f3f;
-
+$lightColor: #ebf8f9;
 /* 继承公共类*/
 
 %displayFlex {
@@ -175,4 +175,12 @@ $depthTextColor: #3f3f3f;
   @include textLineHeight(80px);
   text-align: center;
   @extend %normalTitle;
+}
+.mt-88px {
+  margin-top: 88px;
+  content: '';
+}
+.mt-184px {
+  margin-top: 184px;
+  content: '';
 }

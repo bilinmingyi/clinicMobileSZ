@@ -13,7 +13,6 @@ export default {
     ...mapActions(["set_clinic_info", "getUserInfo"]),
     getData() {
       getClinc().then(res => {
-        // console.log(res);
         if (res.code === 1000) {
           this.set_clinic_info({
             id: res.data.id,

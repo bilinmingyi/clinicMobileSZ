@@ -77,6 +77,17 @@ const goodsDeliver = params => fetch('/treatmng/goodsorder/deliver', params)
 const getGoodsList = params => fetch('/clinicmng/goods/list', params)
 const goodsOrderCancel = params => fetch('/treatmng/goodsorder/cancel', params)
 
+/* 连锁诊所功能 */
+const changeClinic = params => fetch('/wechat/clinic/change', params)
+const getClinicList = params => fetch('/clinics/list', params)
+const getClinicRegister = params => fetch('/clinics/appointStatList', params)
+const getClinicMedical = params => fetch('/clinics/treatStatList', params)
+const getClinicEnter = params => fetch('/clinics/inStatList', params)
+const getClinicCharge = params => fetch('/clinics/payStreamStatList', params)
+// const goodsCheck = params => fetch('/treatmng/goodsorder/check', params)
+// const goodsDeliver = params => fetch('/treatmng/goodsorder/deliver', params)
+// const getGoodsList = params => fetch('/clinicmng/goods/list', params)
+
 export {
   fetch,
   getClinc,
@@ -116,5 +127,11 @@ export {
   goodsCheck,
   goodsDeliver,
   getGoodsList,
-  goodsOrderCancel
+  goodsOrderCancel,
+  changeClinic,
+  getClinicList,
+  getClinicRegister,
+  getClinicMedical,
+  getClinicEnter,
+  getClinicCharge
 }

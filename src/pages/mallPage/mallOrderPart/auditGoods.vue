@@ -7,6 +7,7 @@
         <span class="type">待审核</span>
       </template>
     </mall-item>
+    <loading v-if="isShowLoading"></loading>
     <without-data v-show="hasData&&isLoad"></without-data>
     <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
   </div>
@@ -40,6 +41,7 @@ export default {
           this.isShowLoad = false
           this.$Message.infor("获取待审核列表错误" + res.msg);
         }
+        this.isShowLoading = false
         this.isLoad = true
       })
     }

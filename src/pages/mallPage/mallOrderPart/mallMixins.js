@@ -1,4 +1,4 @@
-import { mallItem, withoutData, loadMore } from '@/components/common'
+import { mallItem, withoutData, loadMore, Loading } from '@/components/common'
 
 // status_list:参数
 // UNKNOWN("UNKNOWN", "未知"),
@@ -18,7 +18,8 @@ export default {
       isLoad: false,
       page: '1',
       pageSize: '10',
-      copyval: ''
+      copyval: '',
+      isShowLoading: true
     }
   },
   computed: {
@@ -29,7 +30,8 @@ export default {
   components: {
     mallItem,
     withoutData,
-    loadMore
+    loadMore,
+    Loading
   },
   methods: {
     loadMore() {

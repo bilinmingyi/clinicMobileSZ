@@ -57,6 +57,7 @@ const state = {
   userInfoState: {}, //客户信息
   chatSessionList: [], //session的聊天室数据
   defaultReply,
-  defaultKey
+  defaultKey,
+  clinicsList: []
 }
 export default state
