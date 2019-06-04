@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <common-header :titleName="$route.meta.title"></common-header> -->
+    <common-header :titleName="$route.meta.title"></common-header>
     <router-view />
   </div>
 </template>
