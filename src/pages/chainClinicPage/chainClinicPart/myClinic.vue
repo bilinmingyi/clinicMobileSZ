@@ -1,11 +1,12 @@
 <template>
-  <div class="clinic" v-if="isComplete">
+  <div class="clinic">
     <div v-for="(item,index) in clinicsList" :key="index" :class="['clinic-item',{'has-rihgt-margin':(index%2)==0}]">
       <img :src="item.clinic_logo!==''?item.clinic_logo:defaultClinic" alt="">
       <p>{{item.clinic_name}}</p>
       <div class="clinic-toggle" @click="toggleClinic(item)">进入机构</div>
     </div>
-    <div class="no-data" v-if="noData&&isComplete">
+
+    <div class="no-data" v-if="noData">
       <img src="@/assets/images/Rectangle@2x.png" alt="">
     </div>
   </div>
@@ -16,9 +17,7 @@ import { changeClinic } from "@/fetch/api"
 export default {
   data() {
     return {
-      clinicList: [1, 2, 3, 4, 5, 6, 7],
       defaultClinic: require('@/assets/images/menzhen@2x.png'),
-      isComplete: false
     }
   },
   computed: {
@@ -28,7 +27,6 @@ export default {
     }
   },
   methods: {
-
     toggleClinic(item) {
       this.$Message.confirm('确认进入到该机构么？', () => {
         let params = {
@@ -45,11 +43,6 @@ export default {
         })
       })
     }
-  },
-  created() {
-
-    this.isComplete = true
-
   }
 }
 </script>
@@ -59,16 +52,14 @@ export default {
   padding: 0px 30px;
   width: 100vw;
   height: 100%;
-  display: flex;
-  flex-wrap: wrap;
   padding-bottom: 150px;
   &-item {
+    float: left;
     width: 336px;
     z-index: 98;
     height: 360px;
     background: $bgwhite2;
     display: flex;
-
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -88,6 +79,7 @@ export default {
       color: $grayColor;
     }
   }
+
   &-toggle {
     @include deepButton(64px, 240px);
     border-radius: 32px;
@@ -106,5 +98,8 @@ export default {
       @include sameWH(420px);
     }
   }
+}
+.clinic::after {
+  clear: both;
 }
 </style>
