@@ -295,7 +295,8 @@ const routes = [
         name: 'cloundPrescriptionPage',
         component: () => cloundPrescription(),
         meta: {
-          title: '患者接诊'
+          title: '患者接诊',
+          isInit: true
         }
       }
     ]

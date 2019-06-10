@@ -1,26 +1,42 @@
 <template>
   <div class="clound">
-    <clound-tar></clound-tar>
+    <clound-tab></clound-tab>
     <div class="clound-content">
-      <!-- <clound-grain></clound-grain> -->
-      <clound-patient></clound-patient>
+      <!-- {{cloundTab}} -->
+      <!--
+        key值一定要有 区分不同的组件
+       -->
+      <keep-alive>
+        <component :is="variousClound" :key="cloundTab.id"></component>
+      </keep-alive>
+
     </div>
     <clound-bottom></clound-bottom>
   </div>
 </template>
 <script>
-import { cloundTar, cloundBottom } from "./cloundPart"
+import { cloundTab, cloundBottom } from "./cloundPart"
 import cloundGrain from "./cloundGrain"
 import cloundPatient from "./cloundPatient"
+import { mapState } from 'vuex';
 export default {
   data() {
     return {}
   },
+  computed: {
+    ...mapState(["cloundTab"]),
+    variousClound() {
+      return this.cloundTab.key === "PATIENT" ? cloundPatient : cloundGrain
+    }
+  },
   components: {
-    cloundTar,
+    cloundTab,
     cloundBottom,
     cloundGrain,
     cloundPatient
+  },
+  methods: {
+
   }
 }
 </script>

@@ -36,7 +36,10 @@ export default {
         this.$emit("leftToggle")
       } else {
         this.$emit("leftToggle")
-        this.$router.go(-1)
+        this.$nextTick(() => {
+          this.$router.go(-1)
+        })
+
       }
     }
   }

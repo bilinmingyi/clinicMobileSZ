@@ -1,6 +1,7 @@
 <!-- 药房选择栏 -->
 <template>
-  <div>
+  <!-- key值需要加的 让component辨别不一样的组件 -->
+  <div v-if="!isNoShowPharamcy" :key="cloundTab.id">
     <div class="info-item">
       <div class="radio-group">
         <input type="radio" name="choose-drug" id="choose-drug-clinic" :checked="drugs_statues==1" @click="changeStatue(1)">
@@ -8,26 +9,40 @@
         <input type="radio" id="choose-drug-clound" name="choose-drug" :checked="drugs_statues==2" @click="changeStatue(2)">
         <label for="choose-drug-clound" :class="[{'no-ative':drugs_statues===1}]">国大药房</label>
       </div>
-      <div class="delte-btn">
+      <div class="delte-btn" @click="deleteTab">
         删除处方
       </div>
     </div>
   </div>
 </template>
 <script>
+import { mapState, mapMutations } from 'vuex';
 export default {
   data() {
     return {
-      drugs_statues: 1
+      drugs_statues: 1,
+      noShowPharmacy: ["PROJECT", "METERIAL"]
+    }
+  },
+  computed: {
+    ...mapState(["cloundTab"]),
+    isNoShowPharamcy() {
+      return this.noShowPharmacy.includes(this.cloundTab.key)
     }
   },
   methods: {
+    ...mapMutations(["deleteCloundTab"]),
     changeStatue(index) {
       let self = this
       if (self.drugs_statues === index) {
         return;
       }
       self.drugs_statues = index;
+    },
+    deleteTab() {
+      this.$Message.confirm('确认删除处方么？', () => {
+        this.deleteCloundTab(this.cloundTab)
+      })
     }
   }
 

@@ -57,6 +57,71 @@ const state = {
   userInfoState: {}, //客户信息
   chatSessionList: [], //session的聊天室数据
   defaultReply,
-  defaultKey
+  defaultKey,
+  cloundTab: { key: 'PATIENT', value: '患者病历', id: 0 },
+  cloundTabList: [
+    { key: 'PATIENT', value: '患者病历', id: 0 },
+    { key: 'GRAIN', value: '配方颗粒', id: 1 },
+    { key: 'CHINA_MEDICINE', value: '中药饮片', id: 2 },
+    { key: 'PRODUCT', value: '成药处方', id: 3 }
+  ],
+  //模拟数据
+  medFrequency: [
+    { value: '每天一次' },
+    { value: '每天两次' },
+    { value: '每天三次' },
+    { value: '每天四次' },
+    { value: '两天一次' },
+    { value: '每周一次' },
+    { value: '饭前' },
+    { value: '饭后' },
+    { value: '睡前' },
+    { value: '医嘱' }
+  ],
+  herbalRpUsages: [
+    {
+      id: 10,
+      clinic_id: 0,
+      dict_code: 'USAGE_RP_HERBAL',
+      value: '煎服',
+      code: ''
+    },
+    {
+      id: 15,
+      clinic_id: 0,
+      dict_code: 'USAGE_RP_HERBAL',
+      value: '泡水',
+      code: ''
+    },
+    {
+      id: 14,
+      clinic_id: 0,
+      dict_code: 'USAGE_RP_HERBAL',
+      value: '生吃',
+      code: ''
+    },
+    {
+      id: 13,
+      clinic_id: 0,
+      dict_code: 'USAGE_RP_HERBAL',
+      value: '直接服用',
+      code: ''
+    },
+    {
+      id: 12,
+      clinic_id: 0,
+      dict_code: 'USAGE_RP_HERBAL',
+      value: '温水助服',
+      code: ''
+    },
+    {
+      id: 11,
+      clinic_id: 0,
+      dict_code: 'USAGE_RP_HERBAL',
+      value: '外敷',
+      code: ''
+    }
+  ]
+  // 云处方开方被选中的tar栏 默认患者病历
 }
 export default state

@@ -5,40 +5,41 @@
   <div>
     <div class="tab">
       <section class="medical-tab" ref="headTab">
-        <div v-for="(item,index) in tabList" :key="item.id" :class="['flex-mid-center',{'nt-tab':navtiveIndex===item.id}]" @click="changeIndex(item.id)">{{item.value}}</div>
+        <div v-for="(item,index) in cloundTabList" :key="item.id" :class="['flex-mid-center',{'nt-tab':cloundTab.id===item.id}]" @click="changeIndex(item)">{{item.value}}</div>
       </section>
       <div></div>
       <div class="tab-add" @click="isShowList">
         <img src="@/assets/images/jia@2x.png" alt="库存统计">
+
       </div>
       <ul class="tab-list" v-show="isShowAdd">
         <li @click="addTab('CHINA_MEDICINE')"><span>+</span>中药饮片</li>
         <li @click="addTab('GRAIN')"><span>+</span>配方颗粒</li>
         <li @click="addTab('DONE_MEDICINE')"><span>+</span>成药处方</li>
+        <li @click="addTab('PROJECT')"><span>+</span>诊疗项目</li>
         <li @click="addTab('PRODUCT')"><span>+</span>产品处方</li>
+        <li @click="addTab('METERIAL')"><span>+</span>材料处方</li>
       </ul>
     </div>
     <div class="mt-184"></div>
   </div>
 </template>
 <script>
+import { mapState, mapMutations } from 'vuex';
 export default {
   data() {
     return {
-      navtiveIndex: 0,
       isShowAdd: false,
-      tabList: [
-        { key: 'PATIENT', value: "患者病历", id: 0 },
-        { key: 'GRAIN', value: "配方颗粒", id: 1 },
-        { key: 'CHINA_MEDICINE', value: "中药饮片", id: 2 },
-        { key: 'PRODUCT', value: "产品处方", id: 3 }
-      ],
       tabId: 3 //便于添加之后 跳转到新增的bar选项栏中
     }
   },
+  computed: {
+    ...mapState(["cloundTab", "cloundTabList"])
+  },
   methods: {
-    changeIndex(index) {
-      this.navtiveIndex = index;
+    ...mapMutations(["changeCloundTab", "addCloundTabList"]),
+    changeIndex(item) {
+      this.changeCloundTab(item)
       this.isShowAdd = false
     },
     isShowList() {
@@ -46,21 +47,29 @@ export default {
     },
     addTab(params) {
       this.tabId++;
+      let newTab = {}
       switch (params) {
         case "CHINA_MEDICINE":
-          this.tabList.push({ key: 'CHINA_MEDICINE', value: "中药饮片", id: this.tabId })
+          newTab = { key: 'CHINA_MEDICINE', value: "中药饮片", id: this.tabId }
           break;
         case "GRAIN":
-          this.tabList.push({ key: 'GRAIN', value: "配方颗粒", id: this.tabId })
+          newTab = { key: 'GRAIN', value: "配方颗粒", id: this.tabId }
           break;
         case "DONE_MEDICINE":
-          this.tabList.push({ key: 'DONE_MEDICINE', value: "成药处方", id: this.tabId })
+          newTab = { key: 'DONE_MEDICINE', value: "成药处方", id: this.tabId }
           break;
         case "PRODUCT":
-          this.tabList.push({ key: 'PRODUCT', value: "产品处方", id: this.tabId })
+          newTab = { key: 'PRODUCT', value: "产品处方", id: this.tabId }
+          break;
+        case "PROJECT":
+          newTab = { key: 'PROJECT', value: "诊疗项目", id: this.tabId }
+          break;
+        case "METERIAL":
+          newTab = { key: 'METERIAL', value: "材料处方", id: this.tabId }
           break;
       }
-      this.navtiveIndex = this.tabId
+      this.addCloundTabList(newTab)
+      this.changeCloundTab(newTab)
       this.isShowAdd = false
       let MaxWidth = this.$refs.headTab.scrollWidth
       this.$nextTick(() => {

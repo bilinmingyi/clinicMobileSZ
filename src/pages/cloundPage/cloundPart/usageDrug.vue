@@ -9,43 +9,53 @@
         <p class="right">￥568</p>
       </template>
     </input-select>
-    <section class="dosage">
-      <div class="dosage-first">
-        <p>药量(剂)</p>
-        <div>
-          <img src="@/assets/images/jian@2x.png" alt="" @click="reduceDosage">
-          <input type="number" v-model="dosage">
-          <span>剂</span>
-          <img src="@/assets/images/jia@2x.png" alt="" @click="addDosage">
+    <div v-show="isShowALLUsage">
+      <section class="dosage">
+        <div class="dosage-first">
+          <p>药量(剂)</p>
+          <div>
+            <img src="@/assets/images/jian@2x.png" alt="" @click="reduceDosage">
+            <input type="number" v-model="dosage">
+            <span>剂</span>
+            <img src="@/assets/images/jia@2x.png" alt="" @click="addDosage">
+          </div>
         </div>
-      </div>
-      <div class="dosage-second">
-        <div class="temp-btn" v-for="(item,index) in dosageList" :key="index" @click="changeDosage(item)">{{item}}剂</div>
-      </div>
-    </section>
-    <input-select :isShowInput="false" :isNopadding="true" :title="'频次'"></input-select>
-    <input-select :isShowInput="false" :isNopadding="true" :title="'用法'"></input-select>
-    <input-select :isShowSelect="false" :isShowInput="false" :isNopadding="true" :title="'用量'">
-      <template slot="rightValue">
-        <div class="drugWeight">
-          <input type="number" v-model="drugWeight" placeholder="请填写" @focus="mixinFocus($event)" @blur="mixinBlurs()">
-          <p>ml</p>
+        <div class="dosage-second">
+          <div class="temp-btn" v-for="(item,index) in dosageList" :key="index" @click="changeDosage(item)">{{item}}剂</div>
         </div>
-      </template>
-    </input-select>
+      </section>
+      <input-select :isShowInput="false" :isNopadding="true" :title="'频次'" :selectArray="herbalRpUsages" :cloundType="true"></input-select>
+      <input-select :isShowInput="false" :isNopadding="true" :title="'用法'" :selectArray="medFrequency" :cloundType="true"></input-select>
+      <input-select :isShowSelect="false" :isShowInput="false" :isNopadding="true" :title="'用量'">
+        <template slot="rightValue">
+          <div class="drugWeight">
+            <input type="number" v-model="drugWeight" placeholder="请填写" @focus="mixinFocus($event)" @blur="mixinBlurs()">
+            <p>ml</p>
+          </div>
+        </template>
+      </input-select>
+    </div>
     <input-select :isShowSelect="false" :title="'医嘱'" :isNopadding="true" :placeHolder="'请输入医嘱'" :noBorder="true"></input-select>
   </div>
 </template>
 <script>
 import { inputSelect } from "@/components/common"
 import inputToggle from "@/assets/js/inputToggle.js"
+import { mapState } from 'vuex';
 export default {
   mixins: [inputToggle('dosageBlur', 'dosageFoucs')],
   data() {
     return {
       dosage: 1,
       drugWeight: 0,
-      dosageList: [7, 14, 30]
+      dosageList: [7, 14, 30],
+      showAllUsage: ["GRAIN", "CHINA_MEDICINE"]
+    }
+  },
+  computed: {
+    ...mapState(["cloundTab", "medFrequency", "herbalRpUsages"]),
+    isShowALLUsage() {
+      return this.showAllUsage.includes(this.cloundTab.key)
     }
   },
   components: {
@@ -125,12 +135,13 @@ export default {
   }
   .drugWeight {
     @extend %aglinItem;
-    padding-left: 48px;
+    padding-left: 60px;
     input {
       position: static;
       width: 100px;
       border: 0px;
-      text-align: center;
+      margin-right: 30px;
+      text-align: left;
     }
   }
 }

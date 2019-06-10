@@ -1,5 +1,5 @@
-<!-- 云药房 配方颗粒组件 -->
-<template>
+<!-- 云药房 开药通用组件 -->
+<template >
   <div>
     <pharmacy></pharmacy>
     <selected-drug></selected-drug>
@@ -8,14 +8,22 @@
 </template>
 <script>
 import { Pharmacy, selectedDrug, usageDrug } from "./cloundPart"
+import { mapState } from 'vuex';
 export default {
   data() {
     return {}
+  },
+  computed: {
+    ...mapState(["cloundTab"])
   },
   components: {
     Pharmacy,
     selectedDrug,
     usageDrug
+  },
+  activated() {
+    // alert(23)
+
   }
 }
 </script>

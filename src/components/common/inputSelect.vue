@@ -15,13 +15,13 @@
   下拉框组件数组的数据格式[{key:'xx',value:'xx'}]
  -->
 <template>
-  <div class="select" :class="[{'no-padding':isNopadding,'no-border':noBorder}]">
+  <div class="select" :class="[{'no-padding':isNopadding,'no-border':noBorder,'clound-p':cloundType}]">
     <slot name="leftTitle">
       <p>{{title}}</p>
     </slot>
-
     <input type="text" name="makeupCo" :placeholder="placeHolder" v-model="inputValue" @focus="inputFocus($event)" @blur="inputBlur" v-if="isShowInput">
     <select name="makeupCoSe" v-model="select" @change="changeF()" @blur="selectBlur" v-if="isShowSelect" :selected="select">
+      <option value="" disabled v-if="cloundType">请选择</option>
       <option v-for="(item,index) in selectArray" :key="index" :id="index" :value="item.value">{{item.value}}</option>
     </select>
     <slot name="rightValue"></slot>
@@ -67,6 +67,10 @@ export default {
     isPullTop: {
       type: Boolean,
       default: true
+    },
+    cloundType: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -147,11 +151,19 @@ textarea {
   /* Firefox 18- */
   font-size: 32px;
 }
-
+.clound-p {
+  p {
+    margin-right: 80px !important;
+  }
+  select {
+    color: rgba(124, 124, 124, 1) !important;
+  }
+}
 .select {
   position: relative;
   width: 100%;
   height: 96px;
+
   @extend %aglinItem;
   padding: 0px 30px;
   background: $bgwhite2;
@@ -174,9 +186,9 @@ textarea {
   select::-ms-expand {
     display: none;
   }
+
   p {
     // width: 182px;
-
     margin-right: 24px;
     font-size: 32px;
     color: $grayColor;
