@@ -45,7 +45,8 @@ export default {
       isShowChat: false, // 兼容安卓机第一次进行的时候 图片自适应的抖动问题
       getDataSet: '',
       isShowOrder: false,
-      orderDetail: {}
+      orderDetail: {},
+      isLoadingData: true
     };
   },
   components: {
@@ -329,12 +330,23 @@ export default {
             this.$refs.wrapper.addEventListener(
               "scroll",
               () => {
-                clearTimeout(this.getDataSet)
-                this.getDataSet = setTimeout(() => {
-                  if (this.$refs.wrapper.scrollTop === 0 && this.unfinalPulling) {
-                    this.getUpLoadData();
-                  }
-                }, 100)
+
+                console.log(this.$refs.wrapper.scrollTop)
+                console.log(this.$refs.wrapper.clientHeight)
+                console.log(this.$refs.wrapper.scrollHeight)
+                if (this.$refs.wrapper.scrollTop <= 0 && this.unfinalPulling && this.isLoadingData) {
+                  console.log('lbl')
+                  console.log(this.$refs.wrapper.scrollTop)
+                  console.log(this.$refs.wrapper.clientHeight)
+                  console.log(this.$refs.wrapper.scrollHeight)
+                  this.getUpLoadData();
+                }
+                // clearTimeout(this.getDataSet)
+                // this.getDataSet = setTimeout(() => {
+                //   if (this.$refs.wrapper.scrollTop === 0 && this.unfinalPulling) {
+                //     this.getUpLoadData();
+                //   }
+                // }, 100)
               },
               false
             );
@@ -347,6 +359,7 @@ export default {
     },
     //向上加载的时候的操作数据
     getUpLoadData() {
+      this.isLoadingData = false
       this.first = this.$refs.wrapper.scrollHeight; //记录一开始得高度
       this.unPullingUp = false;
       this.isShowLoad = true;
@@ -359,6 +372,7 @@ export default {
       };
       chatMsgList(params).then(res => {
         this.isShowLoad = false;
+
         if (res.code == 1000) {
           this.$nextTick(() => {
             let newObject = [];
@@ -389,6 +403,10 @@ export default {
               let scroTo = Number(this.second - this.first);
               this.$refs.wrapper.scrollTo(0, scroTo);
             }, 0);
+
+            setTimeout(() => {
+              this.isLoadingData = true
+            }, 300)
           });
           if (res.data.msg_list.length != 10) {
             this.unfinalPulling = false;
