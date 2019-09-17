@@ -21,6 +21,9 @@ try {
 } catch (e) {}
 
 const state = {
+  clinicOrigin: 'wuHan',
+  SZLogo: require('@/assets/images/banner-yun.png'),
+  WHLogo: require('@/assets/images/wuHan.png'),
   clinic: {
     id: '',
     name: '',

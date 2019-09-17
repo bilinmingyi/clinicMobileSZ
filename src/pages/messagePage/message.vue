@@ -2,7 +2,7 @@
   <div class="message">
     <!-- <common-header :isShowLeft="false" :titleName="'首页'"></common-header> -->
     <div class="msg-img">
-      <img src="@/assets/images/banner-yun.png" alt>
+      <img :src="clinicOrigin==='wuHan'?WHLogo:SZLogo" alt>
     </div>
     <!-- <div class="msg-mid">
       <div class="msg-left ml30" @click="goMyNew">
@@ -15,24 +15,29 @@
         <img src="@/assets/images/xiayibu@2x.png" alt>
       </div>
     </div> -->
-      <msg-bottom></msg-bottom>
+    <msg-bottom></msg-bottom>
     <commonBottom :navtiveIndex="navtiveIndex"></commonBottom>
   </div>
 </template>
 <script>
-import {commonHeader,commonBottom} from "@/components/common";
+import { commonHeader, commonBottom } from "@/components/common";
 import msgBottom from "./messagePart/msgBottom";
+import { mapState } from 'vuex';
 export default {
   data() {
     return {
       navtiveIndex: 0,
-      newmsg: 1 //1代表有新消息
+      newmsg: 1, //1代表有新消息
+
     };
   },
   components: {
     commonHeader,
     commonBottom,
     msgBottom
+  },
+  computed: {
+    ...mapState(['clinicOrigin', 'SZLogo', 'WHLogo'])
   },
   methods: {
     goMyNew() {
