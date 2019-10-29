@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div class="d-load">
+    <div :class="['d-load',{'is-all':isAll}]">
       <div class="loader-wrapper">
         <div class="loading-three-point"></div>
       </div>
@@ -10,6 +10,12 @@
 
 <script>
 export default {
+  props: {
+    isAll: {
+      type: Boolean,
+      default: false
+    }
+  },
   name: 'blmyLoading',
   data() {
     return {}
@@ -24,6 +30,9 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+.is-all {
+  top: 0px !important;
 }
 .d-load {
   position: fixed;
@@ -59,7 +68,7 @@ export default {
   position: absolute;
   width: 32px;
   height: 32px;
-  content: '';
+  content: "";
 }
 .loading-three-point {
   position: relative;

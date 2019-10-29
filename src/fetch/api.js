@@ -40,6 +40,7 @@ const isShowPatient = params => fetch('/chat/enabled', params)
 const getPlatformList = params => fetch('/article/list', params)
 const getArticleDetail = params => fetch('/article/detail?id=' + params)
 const getCommentList = params => fetch('/contentComment/list', params)
+const getArticleType = params => fetch('/platform/article/type', params)
 
 /* 个人模块 */
 const userInfo = params => fetch('/user/info', params)
@@ -133,5 +134,6 @@ export {
   getClinicRegister,
   getClinicMedical,
   getClinicEnter,
-  getClinicCharge
+  getClinicCharge,
+  getArticleType
 }

@@ -1,25 +1,40 @@
 <template>
   <div>
     <section class="msg-bottom">
-      <p class="msg-title">平台动态</p>
+      <div>
+
+        <div class="msg-title">
+          <div :class="{'msg-left':true,'over-auto':isShowMore}">
+            <!-- <div v-for="(item,index) in typeList" :key="index" :class="{'nt-button':chooseNative==index}" @click="changeNative(index)">最新</div> -->
+            <div v-for="(item,index) in typeList" :key="index" :class="{'nt-button':chooseNative==index,'utn-btn':true}" @click="changeNative(item,index)">
+              {{item.key}}
+            </div>
+
+          </div>
+          <!-- <div class="msg-right" @click="showMore">
+            {{isShowMore?'收起':'更多'}}
+          </div> -->
+        </div>
+      </div>
       <div class="news pl30" v-for="(item,index) in platformList" :key="index" @click="goPlatform(item)">
         <img :src="item.img_url?item.img_url:normalPic" alt>
         <div class="news-mid">
           <p>{{item.title}}</p>
           <div class="news-mid-bottom">
-            <span class="news-mid-button">资讯类别</span>
-            <span class="news-mid-time">{{item.pubdate|dateFormat('yyyy-MM-dd')}}</span>
+            <span class="news-mid-button">{{item.type?item.type:'咨询类别'}}</span>
+            <span class="news-mid-time">{{item.start_time|dateFormat('yyyy-MM-dd')}}</span>
           </div>
         </div>
       </div>
       <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
-      <div class="no-platform" v-show="hasPlatform&&isLoad">暂时无平台动态</div>
+      <div class="no-platform" v-show="hasPlatform&&isLoad">暂时无数据</div>
     </section>
+    <loading v-if="isShowLoad" :isAll="true"></loading>
   </div>
 </template>
 <script>
-import { loadMore } from "@/components/common";
-import { getPlatformList } from "@/fetch/api";
+import { loadMore, Loading } from "@/components/common";
+import { getPlatformList, getArticleType } from "@/fetch/api";
 export default {
   data() {
     return {
@@ -29,14 +44,20 @@ export default {
       normalPic: require("@/assets/images/banner-yun.png"),
       isShowLoad: true,
       isLoad: false,
-      type: ''
+      type: '',
+      chooseNative: 0,
+      typeList: [{ key: '咨讯', value: '咨讯' }, { key: '平台动态', value: '平台动态' }],
+      isShowMore: false,
+      searchType: '咨讯'
     };
   },
   components: {
-    loadMore
+    loadMore,
+    Loading
   },
   created() {
     this.getPlatformData();
+    // this.getArticleType()
   },
   computed: {
     hasPlatform() {
@@ -44,6 +65,31 @@ export default {
     }
   },
   methods: {
+    getArticleType() {
+      getArticleType({}).then(res => {
+        console.log(res)
+        if (res.code === 1000) {
+          this.typeList = res.data
+        } else {
+          this.$Message.infor('网络出错！')
+
+        }
+      });
+    },
+    showMore() {
+      this.isShowMore = !this.isShowMore
+    },
+    changeNative(item, index) {
+      if (this.chooseNative == index) {
+        return
+      }
+      this.chooseNative = index
+      this.searchType = item.value
+      this.platformList = []
+      this.isShowLoad = true
+      this.isLoad = false
+      this.getPlatformData()
+    },
     goPlatform(item) {
       this.$router.push({
         name: "platformNewPage",
@@ -53,7 +99,8 @@ export default {
     getPlatformData() {
       let params = {
         page: this.page,
-        page_size: this.pageSize
+        page_size: this.pageSize,
+        type: this.searchType
       };
       getPlatformList(params).then(res => {
         if (res.code === 1000) {
@@ -69,7 +116,7 @@ export default {
           this.isLoad = true;
         } else {
           this.$Message.infor('网络出错！')
-          this.isLoad = true;
+          this.isShowLoad = false;
         }
       });
     },
@@ -82,14 +129,53 @@ export default {
 </script>
 <style lang="scss" scoped>
 .msg-bottom {
+  .over-auto {
+    overflow: auto !important;
+  }
   margin-top: 24px;
   background: $bgwhite2;
   .msg-title {
-    height: 96px;
-    padding-left: 30px;
-    line-height: 96px;
     @include commonBorder();
-    @extend %normalTitle;
+    // @extend %aglinItem;
+    display: flex;
+    .msg-left {
+      height: 96px;
+      padding-left: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      width: 91%;
+      height: 100%;
+      @extend %normalTitle;
+      @extend %aglinItem;
+      overflow: hidden;
+    }
+
+    .msg-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      color: rgba(8, 186, 198, 1);
+      cursor: pointer;
+      margin-top: 24px;
+      flex: 1;
+    }
+    .utn-btn {
+      @include blackWBtn();
+      font-size: 28px;
+      font-weight: 400;
+
+      margin: 10px !important;
+      margin-right: 40px;
+
+      &:nth-last-child(1) {
+        margin-right: 0;
+      }
+    }
+    .nt-button {
+      background: rgba(8, 186, 198, 1);
+      color: #ffffff;
+    }
   }
   .news {
     height: 184px;
