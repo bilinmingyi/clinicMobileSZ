@@ -46,8 +46,8 @@
             <span class="right">{{shipmentDetail.address}}</span>
           </p>
         </div>
-        <input-select :title="'物流公司'" :modelValue="selectLogistics.value" :placeHolder="'请选择物流公司'" ref="doctor" :selectArray="logisticsCompany" @selectChange="selectChange"
-          :isShowInput="false"></input-select>
+        <input-select :title="'物流公司'" :modelValue="selectLogistics.value" :placeHolder="'请选择物流公司'" ref="doctor" :selectArray="logisticsCompany"
+          @selectChange="selectChange" :isShowInput="false"></input-select>
         <!-- key为ZT的话 不显示物流单号 -->
         <input-select :isShowSelect="false" :title="'物流单号'" :placeHolder="'请输入单号'" ref="mark" v-show="selectLogistics.key!=='ZT'"></input-select>
         <div class="pb150"></div>
@@ -103,15 +103,15 @@ export default {
       })
     },
     goodsOperation(type) {
-      if (this.selectLogistics.key === '') {
-        this.$Message.infor("请选择物流公司!")
-        return
-      } else if (this.selectLogistics.key !== 'ZT' && this.$refs.mark.inputValue === '') {
-        this.$Message.infor("请输入物流单号!")
-        return
-      }
       let tips = type === 'pass' ? '提交发货订单？' : '确定取消订单？'
       if (type === 'pass') {
+        if (this.selectLogistics.key === '') {
+          this.$Message.infor("请选择物流公司!")
+          return
+        } else if (this.selectLogistics.key !== 'ZT' && this.$refs.mark.inputValue === '') {
+          this.$Message.infor("请输入物流单号!")
+          return
+        }
         let operationParams = {
           order_seqno: this.orderSeqno,
           deliver_code: this.selectLogistics.key,
