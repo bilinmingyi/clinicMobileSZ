@@ -39,6 +39,12 @@ const personInfo = () =>
   import(/* webpackChunkName: "personPage" */ '@/pages/personPage/personInfo')
 const bindPhone = () =>
   import(/* webpackChunkName: "personPage" */ '@/pages/personPage/bindPhone')
+const entryList = () =>
+  import(/* webpackChunkName: "personPage" */ '@/pages/personPage/entryList')
+const entryDetail = () =>
+  import(/* webpackChunkName: "personPage" */ '@/pages/personPage/entryDetail')
+const trainingCoure = () =>
+  import(/* webpackChunkName: "personPage" */ '@/pages/personPage/trainingCoure')
 
 /* 常用功能模块 深圳前6个功能为一个模块*/
 
@@ -186,6 +192,32 @@ const routes = [
         component: () => bindPhone(),
         meta: {
           title: '绑定手机'
+        }
+      },
+      {
+        path: 'entryList',
+        name: 'entryListPage',
+        component: () => entryList(),
+        meta: {
+          title: '我的报名'
+        }
+      },
+      {
+        path: 'entryDetail',
+        name: 'entryDetailPage',
+        component: () => entryDetail(),
+        props: route => route.query,
+        beforeEnter: (to, from, next) => {
+          to.meta.title = to.query.name
+          next()
+        }
+      },
+      {
+        path: 'trainingCoure',
+        name: 'trainingCourePage',
+        component: () => trainingCoure(),
+        meta: {
+          title: '培训报名'
         }
       }
     ]

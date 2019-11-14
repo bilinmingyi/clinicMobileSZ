@@ -20,6 +20,13 @@
         </div>
       </div>
     </div>
+    <div class="person-list">
+      <common-title v-for="(item,index) in transactionList" :key="index" :titleName="item.title" :haveLeft="false" @clickTitle="goRouter(item.goHref)">
+        <template slot="leftImg">
+          <img :src="item.icon" class="list-icon">
+        </template>
+      </common-title>
+    </div>
     <common-bottom :navtiveIndex="navtiveIndex"></common-bottom>
   </div>
 </template>
@@ -28,18 +35,26 @@
 import imgMixins from "@/assets/js/imgMixins";
 import { userInfo } from "@/fetch/api";
 import { mapState } from "vuex";
-import { commonHeader, commonBottom } from "@/components/common";
+import { commonHeader, commonBottom, commonTitle } from "@/components/common";
 export default {
   mixins: [imgMixins],
   data() {
     return {
       navtiveIndex: 3,
-      userData: {}
+      userData: {},
+      transactionList: [
+        {
+          icon: require('@/assets/images/training.png'),
+          title: '我的报名',
+          goHref: 'entryListPage'
+        }
+      ]
     };
   },
   components: {
     commonHeader,
-    commonBottom
+    commonBottom,
+    commonTitle
   },
   computed: {
     ...mapState(["userInfoState"])
@@ -47,6 +62,9 @@ export default {
   methods: {
     goPersonInfo() {
       this.$router.push({ name: "personInfoPage" });
+    },
+    goRouter(hrefName) {
+      this.$router.push({ name: hrefName });
     }
   }
 };
@@ -98,6 +116,14 @@ export default {
     img {
       @extend %searchIcon;
     }
+  }
+}
+.person-list {
+  margin-top: 40px;
+  font-size: 32px;
+  .list-icon {
+    margin-right: 12px;
+    @extend %searchIcon;
   }
 }
 </style>

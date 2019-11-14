@@ -1,8 +1,13 @@
 <!-- 公共标题 -->
 <template>
-  <div class="title">
+  <div class="title" @click="clickTitle">
     <div class="title-content">
-      <p :class="{'leftIcon':haveLeft}">{{titleName}}</p>
+      <div class="leftContent">
+        <slot name="leftImg"></slot>
+        <p :class="{'leftIcon':haveLeft}">{{titleName}}</p>
+        <slot name="otherContent"></slot>
+      </div>
+
       <slot name="rightContent"></slot>
     </div>
   </div>
@@ -22,6 +27,11 @@ export default {
   },
   data() {
     return {}
+  },
+  methods: {
+    clickTitle() {
+      this.$emit('clickTitle')
+    }
   }
 }
 </script>
@@ -30,6 +40,7 @@ export default {
   background: $bgwhite2;
   width: 100%;
   height: 96px;
+
   &-content {
     height: 100%;
     padding: 0 32px 0 48px;
@@ -42,9 +53,12 @@ export default {
     .leftIcon {
       position: relative;
     }
+    .leftContent {
+      @extend %aglinItem;
+    }
     .leftIcon::after {
       position: absolute;
-      content: '';
+      content: "";
       left: -20px;
       top: 2px;
       height: 40px;

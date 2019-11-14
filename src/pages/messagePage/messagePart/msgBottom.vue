@@ -16,16 +16,22 @@
           </div> -->
         </div>
       </div>
-      <div class="news pl30" v-for="(item,index) in platformList" :key="index" @click="goPlatform(item)">
-        <img :src="item.img_url?item.img_url:normalPic" alt>
-        <div class="news-mid">
-          <p>{{item.title}}</p>
-          <div class="news-mid-bottom">
-            <span class="news-mid-button">{{item.type?item.type:'咨询类别'}}</span>
-            <span class="news-mid-time">{{item.start_time|dateFormat('yyyy-MM-dd')}}</span>
+      <div v-if=" this.selectId===2">
+        <entry-item @goDetail="goDetail"></entry-item>
+      </div>
+      <div v-else>
+        <div class="news pl30" v-for="(item,index) in platformList" :key="index" @click="goPlatform(item)">
+          <img :src="item.img_url?item.img_url:normalPic" alt>
+          <div class="news-mid">
+            <p>{{item.title}}</p>
+            <div class="news-mid-bottom">
+              <span class="news-mid-button">{{item.type?item.type:'咨询类别'}}</span>
+              <span class="news-mid-time">{{item.start_time|dateFormat('yyyy-MM-dd')}}</span>
+            </div>
           </div>
         </div>
       </div>
+
       <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
       <div class="no-platform" v-show="hasPlatform&&isLoad">暂时无数据</div>
     </section>
@@ -33,7 +39,7 @@
   </div>
 </template>
 <script>
-import { loadMore, Loading } from "@/components/common";
+import { loadMore, Loading, entryItem } from "@/components/common";
 import { getPlatformList, getArticleType } from "@/fetch/api";
 export default {
   data() {
@@ -46,14 +52,16 @@ export default {
       isLoad: false,
       type: '',
       chooseNative: 0,
-      typeList: [{ key: '咨讯', value: '咨讯' }, { key: '平台动态', value: '平台动态' }],
+      typeList: [{ key: '咨讯', value: '咨讯', id: 0 }, { key: '平台动态', value: '平台动态', id: 1 }, { key: '培训报名', value: '培训报名', id: 2 }],
       isShowMore: false,
-      searchType: '咨讯'
+      searchType: '咨讯',
+      selectId: 0
     };
   },
   components: {
     loadMore,
-    Loading
+    Loading,
+    entryItem
   },
   created() {
     this.getPlatformData();
@@ -65,6 +73,9 @@ export default {
     }
   },
   methods: {
+    goDetail() {
+      this.$router.push({ path: '/personPage/entryDetail', query: { name: '伯伯培训专题', haveBtn: true } })
+    },
     getArticleType() {
       getArticleType({}).then(res => {
         console.log(res)
@@ -85,6 +96,7 @@ export default {
       }
       this.chooseNative = index
       this.searchType = item.value
+      this.selectId = item.id
       this.platformList = []
       this.isShowLoad = true
       this.isLoad = false

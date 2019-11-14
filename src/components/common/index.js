@@ -15,6 +15,8 @@ export { default as drugsItem } from './drugsItem'
 export { default as inputSelect } from './inputSelect'
 export { default as commonTar } from './commonTar'
 export { default as listItem } from './listItem'
+export { default as articleDetail } from './articleDetail'
+export { default as entryItem } from './entryItem'
 
 // import commonBottom from "./commonBottom"
 // import commonHeader from "./commonHeader"

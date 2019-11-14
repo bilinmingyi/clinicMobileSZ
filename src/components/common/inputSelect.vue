@@ -17,8 +17,8 @@
 <template>
   <div class="select">
     <p>{{title}}</p>
-    <input type="text" name="makeupCo" :placeholder="placeHolder" v-model="inputValue" @focus="inputFocus($event)"
-      @blur="inputBlur" v-if="isShowInput">
+    <input type="text" name="makeupCo" :placeholder="placeHolder" v-model="inputValue" @focus="inputFocus($event)" @blur="inputBlur" v-if="isShowInput"
+      :readonly="isReadonly" :class="[{'isRed':isRed}]">
     <select name="makeupCoSe" v-model="select" @change="changeF()" @blur="selectBlur" v-if="isShowSelect" :selected="select">
       <option v-for="(item,index) in selectArray" :key="index" :id="index" :value="item.value">{{item.value}}</option>
     </select>
@@ -51,6 +51,18 @@ export default {
     selectArray: {
       type: Array,
       default: () => []
+    },
+    isReadonly: {
+      type: Boolean,
+      default: false
+    },
+    isRed: {
+      type: Boolean,
+      default: false
+    },
+    hasFocus: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -70,14 +82,16 @@ export default {
 
     },
     inputFocus(e) {
-      setTimeout(function () {
-        e.target.scrollIntoView(true)
-      }, 500)
-      let self = this
-      self.bottomTimer = setInterval(function () {
-        document.body.scrollTop = document.body.clientHeight
-      }, 1000)
-      this.$emit("inputFocus")
+      if (this.hasFocus) {
+        setTimeout(function () {
+          e.target.scrollIntoView(true)
+        }, 500)
+        let self = this
+        self.bottomTimer = setInterval(function () {
+          document.body.scrollTop = document.body.clientHeight
+        }, 1000)
+        this.$emit("inputFocus")
+      }
     },
     inputBlur() {
       let self = this
@@ -124,6 +138,9 @@ textarea {
 :-moz-placeholder {
   /* Firefox 18- */
   font-size: 32px;
+}
+.isRed {
+  color: $redColor !important;
 }
 .select {
   position: relative;
