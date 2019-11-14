@@ -43,6 +43,7 @@ const entryList = () =>
   import(/* webpackChunkName: "personPage" */ '@/pages/personPage/entryList')
 const entryDetail = () =>
   import(/* webpackChunkName: "personPage" */ '@/pages/personPage/entryDetail')
+
 const trainingCoure = () =>
   import(/* webpackChunkName: "personPage" */ '@/pages/personPage/trainingCoure')
 
@@ -218,7 +219,8 @@ const routes = [
         component: () => trainingCoure(),
         meta: {
           title: '培训报名'
-        }
+        },
+        props: route => route.query
       }
     ]
   },

@@ -1,23 +1,68 @@
 <template>
   <div>
-    <entry-item @goDetail="goDetail"></entry-item>
-
+    <div v-for="(item,index) in entryList" :key="index">
+      <entry-item @goDetail="goDetail(item)" :entryData="item"></entry-item>
+    </div>
+    <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
+    <loading v-if="isShowLoading" :isAll="true"></loading>
   </div>
 </template>
 
 <script>
-import { entryItem } from "@/components/common";
+import { entryItem, loadMore, Loading } from "@/components/common";
+import { trainCourseList } from "@/fetch/api";
 export default {
   data() {
     return {
+      entryList: [],
+      isLoad: false,
+      isShowLoad: true,
+      isShowLoading: true,
+      page: 1,
+      pageSize: 10
     };
   },
   components: {
-    entryItem
+    entryItem,
+    loadMore,
+    Loading
+  },
+  created() {
+    this.getTrainingList()
   },
   methods: {
-    goDetail() {
-      this.$router.push({ path: '/personPage/entryDetail', query: { name: '伯伯培训专题', haveBtn: false } })
+    goDetail(item) {
+      this.$router.push({ path: '/personPage/entryDetail', query: { name: item.title, haveBtn: 'hide', id: item.article_id, register_name: item.register_name, register_mobile: item.register_mobile, status: item.status, order_seqno: item.order_seqno } })
+    },
+    loadMore() {
+      this.page++;
+      this.getTrainingList();
+    },
+    getTrainingList() {
+      this.isShowLoading = true
+      const params = {
+        page: this.page,
+        page_size: this.pageSize
+      }
+      trainCourseList(params).then(res => {
+        if (res.code == 1000) {
+          let ArrTmp = res.data
+          ArrTmp.forEach(element => {
+            element.pubdate = element.train_time
+            element.author = element.teacher
+          });
+          this.entryList.push(...ArrTmp)
+          if (ArrTmp.length == this.pageSize) {
+            this.isShowLoad = true;
+          } else {
+            this.isShowLoad = false;
+          }
+          this.isShowLoading = false
+          this.isLoad = true
+        } else {
+          this.$Message.infor('网络出错！')
+        }
+      });
     }
   }
 }

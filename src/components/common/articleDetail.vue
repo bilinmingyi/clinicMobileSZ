@@ -4,8 +4,8 @@
       <div class="article-top">
         <div><img :src="getNormalHead(1)" class="article-logo"></div>
         <div class="ml-24px">
-          <p class="normal-title">王大明医生</p>
-          <p class="mt-10px"><span class="left-gray-key">费用：</span> <span class="price f15">￥100</span></p>
+          <p class="normal-title">{{detailData.author}}</p>
+          <p class="mt-10px"><span class="left-gray-key">费用：</span> <span class="price f15">￥{{detailData.price}}</span></p>
         </div>
       </div>
       <div class="article-infor mt-20px">
@@ -23,6 +23,10 @@ import { sexImg } from "@/assets/js/toggleMinis.js"
 export default {
   mixins: [sexImg],
   props: {
+    detailData: {
+      type: Object,
+      default: () => ({})
+    },
     inforArr: {
       type: Array,
       default: () => [

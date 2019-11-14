@@ -17,7 +17,10 @@
         </div>
       </div>
       <div v-if=" this.selectId===2">
-        <entry-item @goDetail="goDetail"></entry-item>
+        <div v-for="(item,index) in platformList" :key="index">
+          <entry-item @goDetail="goDetail(item)" :entryData="item" :hasBorder="true"></entry-item>
+        </div>
+
       </div>
       <div v-else>
         <div class="news pl30" v-for="(item,index) in platformList" :key="index" @click="goPlatform(item)">
@@ -35,7 +38,7 @@
       <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
       <div class="no-platform" v-show="hasPlatform&&isLoad">暂时无数据</div>
     </section>
-    <loading v-if="isShowLoad" :isAll="true"></loading>
+    <loading v-if="isShowLoading" :isAll="true"></loading>
   </div>
 </template>
 <script>
@@ -49,6 +52,7 @@ export default {
       platformList: [],
       normalPic: require("@/assets/images/banner-yun.png"),
       isShowLoad: true,
+      isShowLoading: true,
       isLoad: false,
       type: '',
       chooseNative: 0,
@@ -73,8 +77,8 @@ export default {
     }
   },
   methods: {
-    goDetail() {
-      this.$router.push({ path: '/personPage/entryDetail', query: { name: '伯伯培训专题', haveBtn: true } })
+    goDetail(item) {
+      this.$router.push({ path: '/personPage/entryDetail', query: { name: item.title, haveBtn: 'show', id: item.id } })
     },
     getArticleType() {
       getArticleType({}).then(res => {
@@ -109,11 +113,16 @@ export default {
       });
     },
     getPlatformData() {
+      this.isShowLoading = true
+      let category = this.selectId == 2 ? 1 : 0
       let params = {
         page: this.page,
         page_size: this.pageSize,
-        type: this.searchType
+        category
       };
+      if (this.selectId != 2) {
+        params['type'] = this.searchType
+      }
       getPlatformList(params).then(res => {
         if (res.code === 1000) {
           this.type = res.data.type;
@@ -125,11 +134,13 @@ export default {
           } else {
             this.isShowLoad = false;
           }
+
           this.isLoad = true;
         } else {
           this.$Message.infor('网络出错！')
           this.isShowLoad = false;
         }
+        this.isShowLoading = false
       });
     },
     loadMore() {

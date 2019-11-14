@@ -1,15 +1,15 @@
 <template>
-  <div class="entry" @click="goDetail">
+  <div :class="['entry',{'hasBorder':hasBorder}]" @click="goDetail">
     <div class="entry-item">
       <div class="entry-logo">
-        <img :src="normalGoods" alt="" @error="error($event)">
+        <img :src="entryData.img_url" alt="" @error="error($event)">
       </div>
       <div class="logo-content ">
-        <p class="entry-title">宝宝辅食全攻略宝宝</p>
-        <p class="entry-time">时间：2019-05-12 下午2点-4点</p>
+        <p class="entry-title">{{entryData.title}}</p>
+        <p class="entry-time">时间：{{entryData.pubdate|dateFormat('yyyy-MM-dd hh:mm')}}</p>
         <p class="entry-detail">
-          <span>讲师：王大明</span>
-          <span>报名费：<span class="price">￥100</span></span>
+          <span>讲师：{{entryData.author}}</span>
+          <span>报名费：<span class="price">￥{{entryData.price}}</span></span>
         </p>
       </div>
     </div>
@@ -21,6 +21,22 @@
 import { errorImg } from "@/assets/js/toggleMinis.js"
 export default {
   mixins: [errorImg],
+  props: {
+    entryData: {
+      type: Object,
+      default: () => ({
+        title: '',
+        pubdate: '',
+        author: '',
+        price: '',
+        img_url: ''
+      })
+    },
+    hasBorder: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
     };
@@ -69,5 +85,8 @@ export default {
   .logo-content {
     margin-top: 30px;
   }
+}
+.hasBorder {
+  @include commonBorder();
 }
 </style>

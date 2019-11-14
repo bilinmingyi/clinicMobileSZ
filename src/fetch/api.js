@@ -48,6 +48,9 @@ const updateUserInfo = params => fetch('/user/update', params)
 const getMessageCode = params => fetch('/sms/chkCode/mobileBind', params)
 const updateMoblie = params => fetch('/user/mobile/update', params)
 const personPermission = params => fetch('/permissions', params)
+const trainCourseList = params => fetch('/trainCourseOrder/list', params)
+const trainCourseOrder = params => fetch('/trainCourseOrder/create', params)
+const trainCoursePay = params => fetch('/pay/szjk/qrcode', params)
 
 /* 常用功能模块 */
 //挂号统计
@@ -135,5 +138,8 @@ export {
   getClinicMedical,
   getClinicEnter,
   getClinicCharge,
-  getArticleType
+  getArticleType,
+  trainCourseOrder,
+  trainCourseList,
+  trainCoursePay
 }
