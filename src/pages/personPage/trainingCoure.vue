@@ -78,9 +78,16 @@ export default {
       }
       trainCourseOrder(operationParams).then(res => {
         if (res.code === 1000) {
-          this.$Message.infor("报名成功!<br/>点击确定跳转到支付页面！", () => {
+          if (this.price == 0) {
+            this.$Message.infor("报名成功!", () => {
+              this.$router.go(-1)
+            })
+          } else {
             this.goToPay(res.data)
-          })
+            // this.$Message.infor("报名成功!<br/>点击确定跳转到支付页面!", () => {
+
+            // })
+          }
         } else {
           this.$Message.infor("操作失败")
         }
