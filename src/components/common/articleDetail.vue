@@ -5,7 +5,7 @@
         <div><img :src="getNormalHead(1)" class="article-logo"></div>
         <div class="ml-24px">
           <p class="normal-title">{{detailData.author}}</p>
-          <p class="mt-10px"><span class="left-gray-key">费用：</span> <span class="price f15">￥{{detailData.price}}</span></p>
+          <p class="mt-10px"><span class="left-gray-key">费用：</span> <span class="price f15">{{detailData.price=='0'?'免费':'￥'+detailData.price}}</span></p>
         </div>
       </div>
       <div class="article-infor mt-20px">
@@ -25,7 +25,9 @@ export default {
   props: {
     detailData: {
       type: Object,
-      default: () => ({})
+      default: () => ({
+        price: ''
+      })
     },
     inforArr: {
       type: Array,

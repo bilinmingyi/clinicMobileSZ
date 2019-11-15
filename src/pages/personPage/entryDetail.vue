@@ -1,20 +1,24 @@
 <template>
   <div class="entry-detail">
-    <article-detail :detailData="detailData" :inforArr="inforArr">
-      <template slot="entryCourse" v-if="haveBtn==='show'">
-        <div class="btn mt-20px" @click="goEntry">我要报名</div>
-      </template>
-    </article-detail>
-    <loading v-if="isShowLoading" :isAll="true"></loading>
-    <common-title :titleName="'简介'" class="mt-20px">
-    </common-title>
-    <div class="platform">
-      <div class="platform-content " v-html="detailData.content"></div>
+    <div v-if="isComplete">
+      <article-detail :detailData="detailData" :inforArr="inforArr">
+        <template slot="entryCourse" v-if="haveBtn==='show'">
+          <div class="btn mt-20px" @click="goEntry">我要报名</div>
+        </template>
+      </article-detail>
+
+      <common-title :titleName="'简介'" class="mt-20px">
+      </common-title>
+      <div class="platform">
+        <div class="platform-content " v-html="detailData.content"></div>
+      </div>
+      <div class="mb-120px"></div>
+      <section class="pay-bottom" v-if="haveBtn!=='show'&&status=='UNPAID'">
+        <div class="pay-btn" @click="goToPay">微信支付</div>
+      </section>
     </div>
-    <div class="mb-120px"></div>
-    <section class="pay-bottom" v-if="haveBtn!=='show'&&status=='UNPAID'">
-      <div class="pay-btn" @click="goToPay">微信支付</div>
-    </section>
+    <loading v-if="isShowLoading" :isAll="true"></loading>
+
   </div>
 </template>
 
@@ -33,7 +37,8 @@ export default {
       detailData: {},
       inforArr: [],
       isShowLoading: true,
-      isShowBtn: true
+      isShowBtn: true,
+      isComplete: false
     };
   },
   created() {
@@ -90,6 +95,7 @@ export default {
           this.$Message.infor('网络出错！')
         }
         this.isShowLoading = false
+        this.isComplete = true
       });
     },
     orderStatus() {
