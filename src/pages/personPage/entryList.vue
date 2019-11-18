@@ -4,12 +4,15 @@
       <entry-item @goDetail="goDetail(item)" :entryData="item"></entry-item>
     </div>
     <load-more v-show="isShowLoad&&isLoad" @loadMore="loadMore"></load-more>
+
+    <without-data v-show="hasData&&isLoad"></without-data>
+
     <loading v-if="isShowLoading" :isAll="true"></loading>
   </div>
 </template>
 
 <script>
-import { entryItem, loadMore, Loading } from "@/components/common";
+import { entryItem, loadMore, Loading, withoutData } from "@/components/common";
 import { trainCourseList } from "@/fetch/api";
 export default {
   data() {
@@ -25,14 +28,20 @@ export default {
   components: {
     entryItem,
     loadMore,
-    Loading
+    Loading,
+    withoutData
+  },
+  computed: {
+    hasData() {
+      return this.entryList.length === 0
+    }
   },
   created() {
     this.getTrainingList()
   },
   methods: {
     goDetail(item) {
-      this.$router.push({ path: '/personPage/entryDetail', query: { name: item.title, haveBtn: 'hide', id: item.article_id, register_name: item.register_name, register_mobile: item.register_mobile, status: item.status, order_seqno: item.order_seqno } })
+      this.$router.push({ path: '/personPage/entryDetail', query: { name: item.title, haveBtn: 'hide', order_seqno: item.order_seqno } })
     },
     loadMore() {
       this.page++;

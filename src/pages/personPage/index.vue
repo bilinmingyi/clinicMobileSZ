@@ -12,6 +12,12 @@ export default {
   },
   components: {
     commonHeader
+  },
+  created() {
+
+  },
+  methods: {
+
   }
 }
 </script>

@@ -6,14 +6,13 @@
           <div class="btn mt-20px" @click="goEntry">我要报名</div>
         </template>
       </article-detail>
-
       <common-title :titleName="'简介'" class="mt-20px">
       </common-title>
       <div class="platform">
         <div class="platform-content " v-html="detailData.content"></div>
       </div>
       <div class="mb-120px"></div>
-      <section class="pay-bottom" v-if="haveBtn!=='show'&&status=='UNPAID'">
+      <section class="pay-bottom" v-if="haveBtn!=='show'&&detailData.status=='UNPAID'">
         <div class="pay-btn" @click="goToPay">微信支付</div>
       </section>
     </div>
@@ -23,10 +22,10 @@
 </template>
 
 <script>
-import { getArticleDetail, trainCoursePay } from "@/fetch/api";
+import { getArticleDetail, trainCoursePay, trainCourseList } from "@/fetch/api";
 import { articleDetail, Loading, commonTitle } from "@/components/common";
 export default {
-  props: ['name', 'haveBtn', 'id', 'register_name', 'register_mobile', 'status', 'order_seqno'],
+  props: ['name', 'haveBtn', 'id', 'order_seqno'],
   components: {
     articleDetail,
     Loading,
@@ -42,7 +41,7 @@ export default {
     };
   },
   created() {
-    this._initData()
+    this.order_seqno ? this._getDetailData() : this._initData()
   },
   mounted() {
 
@@ -75,21 +74,19 @@ export default {
         }
       })
     },
-    _initData() {
+    _getDetailData() {
       //获取动态的详情内容
-      getArticleDetail(this.id).then(res => {
+      trainCourseList({ order_seqnos: [this.order_seqno] }).then(res => {
         if (res.code == 1000) {
-          this.detailData = res.data;
+          this.detailData = res.data[0];
           //haveBtn 判断入口不一样 样式的不一样
-          this.inforArr = this.haveBtn === 'show' ?
+          this.inforArr =
             [
-              { key: '时间：', value: this.$options.filters.dateFormat(this.detailData.pubdate, "yyyy-MM-dd hh:mm") },
-              { key: '地点：', value: this.detailData.addr }
-            ] : [
-              { key: '时间：', value: this.$options.filters.dateFormat(this.detailData.pubdate, "yyyy-MM-dd hh:mm") },
-              { key: '地点：', value: this.detailData.addr },
-              { key: '报名人员：', value: this.register_name + '/' + this.register_mobile },
-              { key: '订单状态：', value: this.orderStatus() }
+              { key: '时间：', value: this.$options.filters.dateFormat(this.detailData.train_time, "yyyy-MM-dd hh:mm") },
+              { key: '地点：', value: this.detailData.address },
+              { key: '报名时间：', value: this.$options.filters.dateFormat(this.detailData.create_time, "yyyy-MM-dd hh:mm") },
+              { key: '报名人员：', value: this.detailData.register_name + '/' + this.detailData.register_mobile },
+              { key: '订单状态：', value: this.orderStatus(this.detailData.status) }
             ]
         } else {
           this.$Message.infor('网络出错！')
@@ -98,8 +95,27 @@ export default {
         this.isComplete = true
       });
     },
-    orderStatus() {
-      switch (this.status) {
+    _initData() {
+      //获取动态的详情内容
+      getArticleDetail(this.id).then(res => {
+        if (res.code == 1000) {
+          this.detailData = res.data;
+          console.log(this.detailData)
+          //haveBtn 判断入口不一样 样式的不一样
+          this.inforArr =
+            [
+              { key: '时间：', value: this.$options.filters.dateFormat(this.detailData.pubdate, "yyyy-MM-dd hh:mm") },
+              { key: '地点：', value: this.detailData.addr }
+            ]
+        } else {
+          this.$Message.infor('网络出错！')
+        }
+        this.isShowLoading = false
+        this.isComplete = true
+      });
+    },
+    orderStatus(item) {
+      switch (item) {
         case 'UNPAID':
           return '待支付'
         case 'CANCEL':

@@ -9,7 +9,7 @@
         <p class="entry-time">时间：{{entryData.pubdate|dateFormat('yyyy-MM-dd hh:mm')}}</p>
         <p class="entry-detail">
           <span>讲师：{{entryData.author}}</span>
-          <span>报名费：<span class="price">{{entryData.price=='0'?'免费':'￥'+entryData.price}}</span></span>
+          <span><span class="price">{{entryData.price=='0'?'免费':'￥'+entryData.price}}</span></span>
         </p>
       </div>
     </div>

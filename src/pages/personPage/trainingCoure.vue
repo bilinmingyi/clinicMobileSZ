@@ -56,6 +56,7 @@ export default {
     inputSelect,
     commonHeader
   },
+
   methods: {
     goodsOperation(type) {
       if (type === 'reject') {
@@ -80,16 +81,13 @@ export default {
         if (res.code === 1000) {
           if (this.price == 0) {
             this.$Message.infor("报名成功!", () => {
-              this.$router.go(-1)
+              this.$router.replace({ path: '/personPage/entryDetail', query: { name: this.title, haveBtn: 'hide', order_seqno: res.data } })
             })
           } else {
-            this.goToPay(res.data)
-            // this.$Message.infor("报名成功!<br/>点击确定跳转到支付页面!", () => {
-
-            // })
+            this.$router.replace({ path: '/personPage/entryDetail', query: { name: this.title, haveBtn: 'hide', order_seqno: res.data } })
           }
         } else {
-          this.$Message.infor("操作失败")
+          this.$Message.infor(res.msg)
         }
       })
     },
