@@ -68,6 +68,7 @@ export default {
     entryItem
   },
   created() {
+    this.chooseNative = this.selectId = this.$route.meta.isSelectId ? 2 : 0
     this.getPlatformData();
     // this.getArticleType()
   },
@@ -76,6 +77,7 @@ export default {
       return this.platformList.length == 0;
     }
   },
+
   methods: {
     goDetail(item) {
       this.$router.push({ path: '/personPage/entryDetail', query: { name: item.title, haveBtn: 'show', id: item.id } })

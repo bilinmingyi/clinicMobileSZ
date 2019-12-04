@@ -51,6 +51,7 @@ const personPermission = params => fetch('/permissions', params)
 const trainCourseList = params => fetch('/trainCourseOrder/list', params)
 const trainCourseOrder = params => fetch('/trainCourseOrder/create', params)
 const trainCoursePay = params => fetch('/pay/szjk/qrcode', params)
+const trainCourseCancel = params => fetch('/trainCourseOrder/cancel', params)
 
 /* 常用功能模块 */
 //挂号统计
@@ -91,6 +92,9 @@ const getClinicCharge = params => fetch('/clinics/payStreamStatList', params)
 // const goodsCheck = params => fetch('/treatmng/goodsorder/check', params)
 // const goodsDeliver = params => fetch('/treatmng/goodsorder/deliver', params)
 // const getGoodsList = params => fetch('/clinicmng/goods/list', params)
+
+// 获取分享配置
+const fetchWxConfig = params => fetch('/wechat/clinic/config', params)
 
 export {
   fetch,
@@ -141,5 +145,7 @@ export {
   getArticleType,
   trainCourseOrder,
   trainCourseList,
-  trainCoursePay
+  trainCoursePay,
+  trainCourseCancel,
+  fetchWxConfig
 }

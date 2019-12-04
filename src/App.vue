@@ -7,8 +7,14 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import { getClinc } from "@/fetch/api";
+import { getQueryString } from '@/assets/js/wx.js'
 export default {
   name: "App",
+  data() {
+    return {
+      isWxShare: ''
+    }
+  },
   methods: {
     ...mapActions(["set_clinic_info", "getUserInfo"]),
     getData() {
@@ -35,9 +41,18 @@ export default {
       });
     }
   },
-  mounted() {
-    this.getData();
-    this.getUserInfo();
+  created() {
+    const path = getQueryString('path')
+    if (path && path.indexOf('isWxShare') >= -1) {
+      window.location.href = `${window.location.origin}${window.location.pathname}#${path}`
+    }
+    if (window.location.href.indexOf('isWxShare') > -1) {
+      this.isWxShare = true
+    }
+    if (!this.isWxShare) {
+      this.getData();
+      this.getUserInfo();
+    }
   }
 };
 </script>

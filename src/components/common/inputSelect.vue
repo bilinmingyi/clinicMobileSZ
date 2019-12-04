@@ -17,7 +17,7 @@
 <template>
   <div class="select">
     <p>{{title}}</p>
-    <input type="text" name="makeupCo" :placeholder="placeHolder" v-model="inputValue" @focus="inputFocus($event)" @blur="inputBlur" v-if="isShowInput"
+    <input :type="iType" name="makeupCo" :placeholder="placeHolder" v-model="inputValue" @focus="inputFocus($event)" @blur="inputBlur" v-if="isShowInput"
       :readonly="isReadonly" :class="[{'isRed':isRed}]">
     <select name="makeupCoSe" v-model="select" @change="changeF()" @blur="selectBlur" v-if="isShowSelect" :selected="select">
       <option v-for="(item,index) in selectArray" :key="index" :id="index" :value="item.value">{{item.value}}</option>
@@ -63,6 +63,10 @@ export default {
     hasFocus: {
       type: Boolean,
       default: true
+    },
+    iType:{
+      type:String,
+      default:'text'
     }
   },
   data() {

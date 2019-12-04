@@ -1,6 +1,6 @@
 <template>
   <div class="platformNew">
-    <common-header :titleName="'平台动态'"></common-header>
+    <common-header :titleName="'平台动态'" :isShowLeft="!noShowLeft"></common-header>
     <div v-if="isComplete">
       <div class="platform">
         <div class="platform-title">{{platformTitle}}</div>
@@ -11,11 +11,11 @@
         <p class="platform-font">你把我读完了</p>
       </div>
 
-      <div class="comment">
+      <!-- <div class="comment">
         <div class="comment-title">
           <span>最新评论</span>
           <span class="comment-add"></span>
-          <!-- <span class="comment-add" @click="goAddComment">添加评论</span> -->
+          <span class="comment-add" @click="goAddComment">添加评论</span>
         </div>
         <div class="comment-content" v-for="(item,index) in commentList">
           <p class="comment-name">{{item.user_name}}</p>
@@ -28,7 +28,7 @@
           <span class="left"></span>没有更多评论
           <span class="right"></span>
         </div>
-      </div>
+      </div> -->
     </div>
 
   </div>
@@ -36,14 +36,23 @@
 <script>
 import { getArticleDetail, getCommentList } from "@/fetch/api";
 import { commonHeader } from "@/components/common";
+import { getWXSign, getQueryString } from '@/assets/js/wx.js'
+import menZhen from '@/assets/images/menzhen@2x.png'
+import { mapState } from 'vuex';
 export default {
   props: ["platformTitle", "id"],
   data() {
     return {
       detailData: {},
       commentList: [],
-      isComplete: false
+      isComplete: false,
+      noShowLeft: false
     };
+  },
+  computed: {
+    ...mapState({
+      clinic: state => state.clinic
+    })
   },
   methods: {
     goAddComment() {
@@ -54,30 +63,57 @@ export default {
       getArticleDetail(this.id).then(res => {
         if (res.code == 1000) {
           this.detailData = res.data;
+          // console.log(window.location.origin + window.location.pathname.replace(/homePage/, 'sharePage') + '?path=' + encodeURIComponent(window.location.href.split('#')[1] + '?isWxShare=1'))
+          try {
+            getWXSign.apply(this).then(({ wx, appId }) => {
+              wx.updateAppMessageShareData({
+                title: res.data.title, // 分享标题
+                desc: res.data.summary || res.data.remark, // 分享描述
+                link: window.location.origin + window.location.pathname.replace(/homePage/, 'sharePage') + '?path=' + encodeURIComponent(window.location.href.split('#')[1] + '?isWxShare=1'),
+                imgUrl: res.data.imgUrl ? res.data.imgUrl : (this.clinic.logo ? this.clinic.logo : menZhen), // 分享图标
+                success: function () {
+                  // 设置成功
+                }
+              })
+
+              wx.updateTimelineShareData({
+                title: res.data.title, // 分享标题
+                link: window.location.origin + window.location.pathname.replace(/homePage/, 'sharePage') + '?path=' + encodeURIComponent(window.location.href.split('#')[1] + '?isWxShare=1'),
+                imgUrl: res.data.imgUrl ? res.data.imgUrl : (this.clinic.logo ? this.clinic.logo : menZhen), // 分享图标
+                success: function () {
+                  // 设置成功
+                }
+              })
+            })
+          } catch (e) {
+            console.log(e)
+          }
         } else {
           this.$Message.infor('网络出错！')
         }
         this.isComplete = true
       });
       //获取评论的内容
-      let params = {
-        content_id: this.id,
-        content_type: 1
-      };
-      getCommentList(params).then(res => {
-        if (res.code === 1000) {
-          this.commentList = res.data;
-        } else {
-          this.$Message.infor(res.msg)
-        }
-
-      });
+      // let params = {
+      //   content_id: this.id,
+      //   content_type: 1
+      // };
+      // getCommentList(params).then(res => {
+      //   if (res.code === 1000) {
+      //     this.commentList = res.data;
+      //   } else {
+      //     this.$Message.infor(res.msg)
+      //   }
+      // });
     }
   },
   components: {
     commonHeader
   },
   created() {
+    if (window.location.href.indexOf('isWxShare') > -1) {
+      this.noShowLeft = true
+    }
     this._initData();
   }
 };

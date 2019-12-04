@@ -28,8 +28,12 @@ export default {
     return {
       navtiveIndex: 0,
       newmsg: 1, //1代表有新消息
-
+      initId: 1
     };
+  },
+  beforeRouteLeave(to, from, next) {
+    from.meta.isSelectId = 0
+    next()
   },
   components: {
     commonHeader,

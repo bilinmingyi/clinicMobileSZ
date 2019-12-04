@@ -26,9 +26,14 @@
           </p>
         </div>
         <input-select :isShowSelect="false" :title="'报名人员'" :placeHolder="'请输入报名人员'" ref="mark1" :hasFocus="false"></input-select>
-        <input-select :isShowSelect="false" :title="'联系电话'" :placeHolder="'请输入联系电话'" ref="mark2" :hasFocus="false"></input-select>
+        <input-select :isShowSelect="false" :title="'联系电话'" :placeHolder="'请输入联系电话'" ref="mark2" :hasFocus="false" iType="number"></input-select>
         <input-select :isShowSelect="false" :title="'缴费金额'" ref="mark3" :modelValue="price" :isReadonly="true" :isRed="true">
         </input-select>
+        <div class="mt-20px remark">
+          <p>备注信息：</p>
+          <textarea :placeholder="remark" v-model="entryRemark" @blur="textBlur"></textarea>
+        </div>
+
         <!-- <div class="pb150"></div> -->
       </div>
       <section class="auditDetail-bottom">
@@ -42,13 +47,14 @@
 import { commonTitle, inputSelect, commonHeader } from "@/components/common";
 import { trainCourseOrder, trainCoursePay } from "@/fetch/api"
 export default {
-  props: ['title', 'author', 'pubdate', 'addr', 'price', 'id'],
+  props: ['title', 'author', 'pubdate', 'addr', 'price', 'id', 'remark'],
   data() {
     return {
       auditMemo: '',
       auditDetail: {},
       uploadData: false,
-      allDoctor: []
+      allDoctor: [],
+      entryRemark: ''
     };
   },
   components: {
@@ -63,33 +69,42 @@ export default {
         this.$router.go(-1)
         return
       }
+      if (!/^\d{11}$/.test(this.$refs.mark2.inputValue.trim())) {
+        this.$Message.infor('请输入正确的联系电话')
+        return
+      }
       if (this.$refs.mark1.inputValue.trim() === '') {
         this.$Message.infor("请输入报名人员的名字")
         return
       }
-      if (this.$refs.mark2.inputValue.trim() === '') {
-        this.$Message.infor("请输入联系电话")
-        return
-      }
+
+      // if (this.$refs.mark2.inputValue.trim() === '') {
+      //   this.$Message.infor("请输入联系电话")
+      //   return
+      // }
       let operationParams = {
         article_id: this.id,
         register_name: this.$refs.mark1.inputValue,
         register_mobile: this.$refs.mark2.inputValue,
+        remark: this.entryRemark
         // register_name: this.$refs.mark.inputValue,
       }
       trainCourseOrder(operationParams).then(res => {
         if (res.code === 1000) {
           if (this.price == 0) {
             this.$Message.infor("报名成功!", () => {
-              this.$router.replace({ path: '/personPage/entryDetail', query: { name: this.title, haveBtn: 'hide', order_seqno: res.data } })
+              this.$router.replace({ path: '/personPage/entryDetail', query: { name: this.title, haveBtn: 'hide', order_seqno: res.data, isGOTwo: 1 } })
             })
           } else {
-            this.$router.replace({ path: '/personPage/entryDetail', query: { name: this.title, haveBtn: 'hide', order_seqno: res.data } })
+            this.$router.replace({ path: '/personPage/entryDetail', query: { name: this.title, haveBtn: 'hide', order_seqno: res.data, isGOTwo: 1 } })
           }
         } else {
           this.$Message.infor(res.msg)
         }
       })
+    },
+    textBlur() {
+      window.scrollTo(0, 0)
     },
     goToPay(order) {
       let params = {
@@ -111,4 +126,19 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "../mallPage/mallOrderPart/commonDetail.scss";
+.remark {
+  padding: 16px 30px;
+  background: #ffffff;
+  p {
+    @extend %normalTitle;
+  }
+  textarea {
+    margin-top: 20px;
+    border: 1px solid #666666;
+    padding: 10px;
+    width: 90%;
+    height: 140px;
+    font-size: 30px;
+  }
+}
 </style>
