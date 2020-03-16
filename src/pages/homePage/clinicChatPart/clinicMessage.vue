@@ -133,6 +133,8 @@ export default {
 }
 .reply-text {
   @extend %normalTitle;
+  white-space: pre-wrap;
+  text-align: left;
 }
 p {
   text-align: center;

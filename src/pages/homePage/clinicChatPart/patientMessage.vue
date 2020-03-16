@@ -114,6 +114,8 @@ p {
     border-radius: 16px;
     padding: 22px 30px;
     @extend %normalTitle;
+    white-space: pre-wrap;
+    text-align: left;
   }
   a {
     color: $deepBlue;

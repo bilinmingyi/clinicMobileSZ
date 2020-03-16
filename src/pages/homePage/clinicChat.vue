@@ -1,6 +1,6 @@
 <template>
   <div ref="allWrapper" class="allWrapper">
-    <common-header :titleName="queryData.username"></common-header>
+    <common-header :titleName="queryData.username" :hasLeft="true" @leftToggle="leftToggle"></common-header>
     <div class="clinic-chat">
       <div class="wrapper" ref="wrapper" @click="hideFuc">
         <p v-show="isShowLoad" class="loadData">正在加载数据...</p>
@@ -74,9 +74,13 @@ export default {
       console.log(now)
     },
     leftToggle() {
-      this.isShowOrder = false
-      this.$router.go(-1)
-
+      this.isShowOrder = false;
+      let employeeInfor = this.$route.query.employeeInfor;
+      if (employeeInfor) {
+        this.$router.push({ name: "homePage" })
+      } else {
+        this.$router.go(-1)
+      }
     },
     showOrder(val) {
       location.hash = "orderDetail"

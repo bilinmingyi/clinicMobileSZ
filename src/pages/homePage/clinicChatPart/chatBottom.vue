@@ -2,7 +2,9 @@
   <div class="chat-bottom">
     <div class="reply">
       <!-- <div @click="showReply"><span class="leftIcon iconfont">&#xe612;</span></div> -->
-      <input class="serach-input" type="text" @focus="hideFunc($event)" v-model="sendContent" @blur="inputBlur($event)" ref="inputText">
+      <!-- <input class="serach-input" type="text" @focus="hideFunc($event)" v-model="sendContent" @blur="inputBlur($event)" ref="inputText"> -->
+      <textarea rows="1" class="serach-input" type="textarea" @focus="hideFunc($event)" v-model="sendContent" @blur="inputBlur($event)" ref="inputText"
+        @input="autoHeight($event)"></textarea>
       <div class="ml24 pr16">
         <img src="@/assets/images/tianjia@2x.png" alt @click="addFunc" :class="{'translateImg':showFuc}" v-show="showIcon">
         <div class="send" v-show="!showIcon" @click="sendMessage">发送</div>
@@ -47,13 +49,23 @@ export default {
       sendContent: "",
       imgUrl: "",
       showLoad: false,
-      bottomTimer: null
+      bottomTimer: null,
+      rows: 1,
+      borderWidth: 0,
+      height: 0,
+      lineHeight: 0
     };
   },
   computed: {
     showIcon() {
       return this.sendContent == "";
     }
+  },
+  mounted() {
+    let el = this.$refs.inputText
+    this.borderWidth = Number((window.getComputedStyle(el).borderWidth.replace(/px/g, '') * 2).toFixed(0))
+    this.height = Math.ceil(window.getComputedStyle(el).height.replace(/px/g, '')) - this.borderWidth
+    this.lineHeight = Number(window.getComputedStyle(el).lineHeight.replace(/px/g, ''))
   },
   components: {
     imgPreview,
@@ -70,6 +82,17 @@ export default {
     },
     jumpToDrug() {
       this.$emit("goDocRecommond", 'goodsRecommond')
+    },
+    autoHeight(el) {
+      setTimeout(() => {
+        el.target.style.height = 'auto'
+        el.target.scrollTo = 0
+        if (el.target.scrollHeight >= (this.height + this.lineHeight * 3)) {
+          el.target.style.height = (this.height + this.lineHeight * 3) + 'px'
+        } else {
+          el.target.style.height = el.target.scrollHeight + 'px'
+        }
+      }, 0)
     },
     addFunc() {
       this.$emit("addFunc");
@@ -94,6 +117,7 @@ export default {
       // alert(this.sendContent)
       this.$emit("sendMessage", this.sendContent);
       this.sendContent = "";
+      this.autoHeight({ target: this.$refs.inputText })
     },
     sendImgMessage() {
       this.$emit("sendImg", this.imgUrl);
@@ -221,16 +245,19 @@ input {
   .reply {
     padding: 16px 0 16px 16px;
     @extend %aglinItem;
-    input {
+    .serach-input {
       padding: 20px;
-      // flex:1;
+      outline: medium;
       width: 584px;
       margin-left: 20px;
-      height: 80px;
+      height: 78px;
       @extend %normalTitle;
       background: rgba(249, 249, 249, 1);
       border-radius: 16px;
       border: 1px solid rgba(151, 151, 151, 1);
+      overflow: auto;
+      resize: none;
+      line-height: 38px;
     }
     img {
       width: 68px;

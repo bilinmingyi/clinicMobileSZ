@@ -20,7 +20,9 @@ import { commonTar, commonHeader } from "@/components/common";
 import myClinic from "./chainClinicPart/myClinic"
 import staticData from "./chainClinicPart/staticData"
 import { mapState, mapActions } from 'vuex';
-import { changeClinic } from "@/fetch/api"
+import { changeClinic } from "@/fetch/api";
+import { getClinicList } from '@/fetch/api'
+import { getQueryString } from '@/assets/js/wx.js'
 export default {
   beforeRouteLeave(to, from, next) {
     //如果不是进入统计数据 默认tar栏显示在我的诊所上
@@ -62,16 +64,54 @@ export default {
           this.showIndex = 2;
           break;
       }
+    },
+    toggleEmployee(cliniclist = []) {
+      let { clinic_id, employeeId, username, session_id, session_type } = this.$route.query;
+      let user = cliniclist.find(item => {
+        // console.log(item.clinic_id)
+        // console.log(clinic_id)
+        return item.clinic_id == clinic_id
+      })
+      console.log(cliniclist)
+      console.log(clinic_id)
+      console.log(user)
+      let params = {
+        user_id: Number(user.user_id) || '',
+        clinic_id: Number(clinic_id)
+      }
+      console.log(params)
+      changeClinic(params).then(res => {
+        if (res.code === 1000) {
+          // this.$router.push({ name: "homePage" })
+          window.location.href = `/yzshis/weixin/homePage#/homePage/clinicChat?employeeInfor=1&username=${username}&session_id=${session_id}&session_type=${session_type}&userId=${employeeId}&sex=0`;
+        } else {
+          this.$Message.infor("进去机构失败！！！" + res.msg);
+        }
+        this.isComplete = false
+      })
     }
   },
   async created() {
+    const { employeeInfor, mobile } = this.$route.query;
     this.showIndex = this.$route.meta.tarIndex
+    //处理客服信息问题
+    if (employeeInfor) {
+      let params = { mobile }
+      getClinicList(params).then(res => {
+        if (res.code == 1000) {
+          this.toggleEmployee(res.data)
+        } else {
+          this.$Message.infor('获取机构列表出错！')
+        }
+      })
+      return
+    }
     //   //兜底 防止某些手机有刷新功能 不刷新不会请求
     if (this.clinicsList.length === 0) {
       await this.getActClinic()
+
     }
     if (this.clinicsList.length === 1) {
-      console.log(this.clinicsList)
       let params = {
         user_id: this.clinicsList[0].user_id,
         clinic_id: this.clinicsList[0].clinic_id
